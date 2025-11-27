@@ -11,7 +11,7 @@ const CreateClass = () => {
   });
 
   const [tutors, setTutors] = useState([]);
-  const classLevels = ["8", "9", "10", "11", "12"];
+  const classLevels = ["4", "5", "6", "7", "8", "9", "10", "11", "12"];
 
   // Fetch all tutors for selection
   useEffect(() => {

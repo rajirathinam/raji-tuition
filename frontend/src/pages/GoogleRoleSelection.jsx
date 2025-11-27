@@ -225,6 +225,10 @@ const GoogleRoleSelection = () => {
                   style={{ ...inputStyle, background: 'white' }}
                 >
                   <option value="">Select your class</option>
+                  <option value="4">🎓 Class 4</option>
+                  <option value="5">🎓 Class 5</option>
+                  <option value="6">🎓 Class 6</option>
+                  <option value="7">🎓 Class 7</option>
                   <option value="8">🎓 Class 8</option>
                   <option value="9">🎓 Class 9</option>
                   <option value="10">🎓 Class 10</option>

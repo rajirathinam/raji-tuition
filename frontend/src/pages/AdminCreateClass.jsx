@@ -15,7 +15,7 @@ const AdminCreateClass = () => {
 
   const [tutors, setTutors] = useState([]);
   const [loading, setLoading] = useState(false);
-  const classLevels = ["8", "9", "10", "11", "12"];
+  const classLevels = ["4", "5", "6", "7", "8", "9", "10", "11", "12"];
   const toast = useToast();
 
   useEffect(() => {

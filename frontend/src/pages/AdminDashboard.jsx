@@ -14,6 +14,7 @@ const AdminDashboard = () => {
   const [announcementMessage, setAnnouncementMessage] = useState('');
   const [announcementType, setAnnouncementType] = useState('general');
   const [announcements, setAnnouncements] = useState([]);
+  const [selectedClass, setSelectedClass] = useState('all');
   const [stats, setStats] = useState({
     activeStudents: 0,
     expertTutors: 0,
@@ -122,8 +123,27 @@ const AdminDashboard = () => {
     }
   };
 
-  const data = activeTab === "student" ? students : tutors;
+  // Filter students by class
+  const filteredStudents = selectedClass === 'all' 
+    ? students 
+    : students.filter(s => s.className === selectedClass);
+  
+  const data = activeTab === "student" ? filteredStudents : tutors;
   const type = activeTab;
+
+  // Get class counts for badges
+  const classCounts = {
+    all: students.length,
+    '4': students.filter(s => s.className === '4').length,
+    '5': students.filter(s => s.className === '5').length,
+    '6': students.filter(s => s.className === '6').length,
+    '7': students.filter(s => s.className === '7').length,
+    '8': students.filter(s => s.className === '8').length,
+    '9': students.filter(s => s.className === '9').length,
+    '10': students.filter(s => s.className === '10').length,
+    '11': students.filter(s => s.className === '11').length,
+    '12': students.filter(s => s.className === '12').length,
+  };
 
   const handleCreateAnnouncement = async (e) => {
     e.preventDefault();
@@ -285,6 +305,66 @@ const AdminDashboard = () => {
           👨‍🏫 Tutors
         </button>
       </div>
+
+      {/* Class Filter - Only show for Students */}
+      {activeTab === "student" && !loading && !error && (
+        <div style={{
+          display: 'flex',
+          gap: '1rem',
+          marginBottom: '1.5rem',
+          alignItems: 'center'
+        }}>
+          <span style={{ color: '#64748b', fontWeight: 500 }}>Filter by Class:</span>
+          <select
+            value={selectedClass}
+            onChange={(e) => setSelectedClass(e.target.value)}
+            style={{
+              padding: '0.75rem 1rem',
+              paddingRight: '2.5rem',
+              background: 'white',
+              border: '2px solid #e2e8f0',
+              borderRadius: '10px',
+              fontWeight: 600,
+              fontSize: '0.95rem',
+              color: '#0f172a',
+              cursor: 'pointer',
+              outline: 'none',
+              appearance: 'none',
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E")`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'right 1rem center',
+              minWidth: '180px'
+            }}
+          >
+            <option value="all">📚 All Students ({classCounts.all})</option>
+            {['4', '5', '6', '7', '8', '9', '10', '11', '12'].map((cls) => (
+              <option key={cls} value={cls}>
+                🎓 Class {cls} ({classCounts[cls]})
+              </option>
+            ))}
+          </select>
+          {selectedClass !== 'all' && (
+            <button
+              onClick={() => setSelectedClass('all')}
+              style={{
+                padding: '0.5rem 1rem',
+                background: '#f1f5f9',
+                color: '#64748b',
+                border: 'none',
+                borderRadius: '8px',
+                fontWeight: 500,
+                cursor: 'pointer',
+                fontSize: '0.85rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.25rem'
+              }}
+            >
+              ✕ Clear
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Table */}
       {loading ? (

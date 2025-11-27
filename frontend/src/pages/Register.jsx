@@ -18,7 +18,7 @@ const Register = () => {
     className: ''
   });
 
-  const studentClasses = ["8", "9", "10", "11", "12"];
+  const studentClasses = ["4", "5", "6", "7", "8", "9", "10", "11", "12"];
 
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));

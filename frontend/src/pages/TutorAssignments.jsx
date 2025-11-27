@@ -15,7 +15,7 @@ const TutorAssignments = () => {
   const toast = useToast();
 
   const subjects = ['Mathematics', 'Science', 'English', 'Social Studies', 'Physics', 'Chemistry', 'Biology', 'Computer Science', 'Tamil', 'Hindi', 'Sanskrit', 'French', 'German'];
-  const classes = ['8', '9', '10', '11', '12'];
+  const classes = ['4', '5', '6', '7', '8', '9', '10', '11', '12'];
   const difficulties = ['Easy', 'Medium', 'Hard'];
 
   useEffect(() => {
