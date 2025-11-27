@@ -1,12 +1,145 @@
 import React from 'react';
-import '../styles/footer.css';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer id="footer" className="app-footer">
-      <div className="footer-content">
-        <p>📧 contact@mytuition.com</p>
-        <p>© 2025 MyTuition. All rights reserved.</p>
+    <footer 
+      id="footer"
+      style={{
+        background: 'linear-gradient(135deg, #0f172a 0%, #064e3b 100%)',
+        color: 'white',
+        padding: '3rem 2rem 1.5rem'
+      }}
+    >
+      <div style={{
+        maxWidth: '1200px',
+        margin: '0 auto'
+      }}>
+        {/* Main Content */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '2.5rem',
+          marginBottom: '2rem'
+        }}>
+          {/* Brand */}
+          <div>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              marginBottom: '0.75rem'
+            }}>
+              <div style={{
+                width: '36px',
+                height: '36px',
+                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                borderRadius: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1rem'
+              }}>
+                📚
+              </div>
+              <span style={{
+                fontSize: '1.3rem',
+                fontWeight: 700,
+                letterSpacing: '-0.02em'
+              }}>
+                Tuitix
+              </span>
+            </div>
+            <p style={{
+              color: '#94a3b8',
+              fontSize: '0.85rem',
+              lineHeight: 1.6,
+              margin: 0
+            }}>
+              Smart tuition platform connecting students with expert tutors.
+            </p>
+          </div>
+
+          {/* Navigation */}
+          <div>
+            <h4 style={{
+              fontSize: '0.9rem',
+              fontWeight: 600,
+              marginBottom: '1rem',
+              color: 'white'
+            }}>
+              Quick Links
+            </h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {[
+                { label: 'Home', to: '/' },
+                { label: 'About', to: '/about' },
+                { label: 'Login', to: '/login' },
+                { label: 'Register', to: '/register' }
+              ].map((link, index) => (
+                <Link
+                  key={index}
+                  to={link.to}
+                  style={{
+                    color: '#94a3b8',
+                    textDecoration: 'none',
+                    fontSize: '0.85rem',
+                    transition: 'color 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => e.target.style.color = '#10b981'}
+                  onMouseLeave={(e) => e.target.style.color = '#94a3b8'}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Contact Info */}
+          <div id="contact">
+            <h4 style={{
+              fontSize: '0.9rem',
+              fontWeight: 600,
+              marginBottom: '1rem',
+              color: 'white'
+            }}>
+              Contact Us
+            </h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span style={{ fontSize: '0.9rem' }}>📧</span>
+                <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>support@tuitix.com</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span style={{ fontSize: '0.9rem' }}>📞</span>
+                <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>+1 (555) 123-4567</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span style={{ fontSize: '0.9rem' }}>🕒</span>
+                <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Mon-Fri: 9AM-6PM</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div style={{
+          height: '1px',
+          background: 'rgba(255,255,255,0.1)',
+          marginBottom: '1.5rem'
+        }} />
+
+        {/* Copyright */}
+        <p style={{
+          color: '#64748b',
+          fontSize: '0.8rem',
+          margin: 0,
+          textAlign: 'center'
+        }}>
+          © {currentYear} Tuitix. All rights reserved.
+        </p>
       </div>
     </footer>
   );

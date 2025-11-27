@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 const TutorStudentProgress = () => {
   const [classesByLevel, setClassesByLevel] = useState({});
@@ -23,29 +23,20 @@ const TutorStudentProgress = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      console.log('Classes data:', classRes.data);
-
-      // Group students by their academic class level (8, 9, 10, 11, 12)
       const grouped = {};
       classRes.data.forEach(session => {
-        console.log('Session:', session.name, 'Students:', session.students);
         if (session.students && session.students.length > 0) {
           session.students.forEach(student => {
-            console.log('Student data:', student);
-            // Use student's academic className (8, 9, 10, 11, 12)
             const academicClass = student.className || 'Unknown';
             if (!grouped[academicClass]) {
               grouped[academicClass] = [];
             }
-            // Avoid duplicates
             if (!grouped[academicClass].find(s => s._id === student._id)) {
               grouped[academicClass].push(student);
             }
           });
         }
       });
-
-      console.log('Grouped classes:', grouped);
 
       setClassesByLevel(grouped);
       setLoading(false);
@@ -84,10 +75,38 @@ const TutorStudentProgress = () => {
     setPerformances([]);
   };
 
+  const getGradeStyle = (grade) => {
+    const styles = {
+      'A+': { bg: '#dcfce7', color: '#166534' },
+      'A': { bg: '#dbeafe', color: '#1e40af' },
+      'B+': { bg: '#fef3c7', color: '#92400e' },
+      'B': { bg: '#ffedd5', color: '#c2410c' },
+      'C': { bg: '#fee2e2', color: '#991b1b' },
+      'D': { bg: '#fee2e2', color: '#991b1b' },
+      'F': { bg: '#fee2e2', color: '#991b1b' }
+    };
+    return styles[grade] || { bg: '#f1f5f9', color: '#475569' };
+  };
+
   if (loading) {
     return (
-      <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center', padding: '3rem' }}>
-        <div style={{ fontSize: '1.2rem', color: '#666' }}>Loading student data...</div>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '50vh'
+      }}>
+        <div style={{
+          width: '48px',
+          height: '48px',
+          border: '3px solid #e2e8f0',
+          borderTopColor: '#10b981',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite'
+        }} />
+        <p style={{ color: '#64748b', marginTop: '1rem' }}>Loading student data...</p>
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
   }
@@ -95,19 +114,34 @@ const TutorStudentProgress = () => {
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
       {/* Breadcrumb Navigation */}
-      <div style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', color: '#6b7280' }}>
-        <span 
+      <div style={{
+        marginBottom: '1.5rem',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.5rem',
+        fontSize: '0.9rem',
+        color: '#64748b'
+      }}>
+        <span
           onClick={handleBackToClasses}
-          style={{ cursor: selectedClass ? 'pointer' : 'default', color: selectedClass ? '#3b82f6' : '#6b7280' }}
+          style={{
+            cursor: selectedClass ? 'pointer' : 'default',
+            color: selectedClass ? '#10b981' : '#64748b',
+            fontWeight: selectedClass ? 500 : 400
+          }}
         >
           Student Progress
         </span>
         {selectedClass && (
           <>
             <span>›</span>
-            <span 
+            <span
               onClick={handleBackToStudents}
-              style={{ cursor: selectedStudent ? 'pointer' : 'default', color: selectedStudent ? '#3b82f6' : '#6b7280' }}
+              style={{
+                cursor: selectedStudent ? 'pointer' : 'default',
+                color: selectedStudent ? '#10b981' : '#64748b',
+                fontWeight: selectedStudent ? 500 : 400
+              }}
             >
               Class {selectedClass}
             </span>
@@ -116,60 +150,104 @@ const TutorStudentProgress = () => {
         {selectedStudent && (
           <>
             <span>›</span>
-            <span style={{ color: '#374151', fontWeight: '500' }}>{selectedStudent.name}</span>
+            <span style={{ color: '#0f172a', fontWeight: 600 }}>{selectedStudent.name}</span>
           </>
         )}
       </div>
 
-      <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#20205c', marginBottom: '2rem', textAlign: 'center' }}>
-        {selectedStudent ? `${selectedStudent.name}'s Performance` : 
-         selectedClass ? `Class ${selectedClass} Students` : 
-         'Student Progress by Class'}
-      </h2>
+      {/* Header */}
+      <div style={{ marginBottom: '2rem' }}>
+        <h2 style={{
+          fontSize: '1.5rem',
+          fontWeight: 700,
+          color: '#0f172a',
+          margin: 0,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem'
+        }}>
+          {selectedStudent ? `📊 ${selectedStudent.name}'s Performance` :
+            selectedClass ? `👨‍🎓 Class ${selectedClass} Students` :
+              '📚 Student Progress by Class'}
+        </h2>
+        <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+          {selectedStudent ? 'View detailed performance records' :
+            selectedClass ? 'Select a student to view their progress' :
+              'Select a class to view enrolled students'}
+        </p>
+      </div>
 
       {!selectedClass ? (
         /* Class Level View */
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '1.5rem'
+        }}>
           {Object.keys(classesByLevel).length === 0 ? (
-            <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '3rem', backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 6px 20px rgba(0,0,0,0.1)' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📚</div>
-              <p style={{ fontSize: '1.2rem', color: '#666' }}>No students found in your classes</p>
+            <div style={{
+              gridColumn: '1 / -1',
+              textAlign: 'center',
+              padding: '4rem 2rem',
+              backgroundColor: 'white',
+              borderRadius: '16px',
+              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
+              border: '1px solid #e2e8f0'
+            }}>
+              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📚</div>
+              <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Students Found</h3>
+              <p style={{ color: '#64748b' }}>No students found in your classes</p>
             </div>
           ) : (
             Object.entries(classesByLevel)
               .sort(([a], [b]) => parseInt(a) - parseInt(b))
               .map(([className, students]) => (
-                <div 
+                <div
                   key={className}
                   onClick={() => setSelectedClass(className)}
                   style={{
                     backgroundColor: 'white',
                     padding: '2rem',
-                    borderRadius: '12px',
-                    boxShadow: '0 6px 20px rgba(0,0,0,0.1)',
+                    borderRadius: '16px',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
                     cursor: 'pointer',
-                    transition: 'transform 0.3s ease',
+                    transition: 'all 0.3s ease',
                     textAlign: 'center',
-                    border: '2px solid transparent'
+                    border: '2px solid #e2e8f0'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-5px)';
-                    e.currentTarget.style.borderColor = '#3b82f6';
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                    e.currentTarget.style.borderColor = '#10b981';
+                    e.currentTarget.style.boxShadow = '0 12px 30px rgba(16, 185, 129, 0.15)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.borderColor = 'transparent';
+                    e.currentTarget.style.borderColor = '#e2e8f0';
+                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.05)';
                   }}
                 >
-                  <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📚</div>
-                  <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#20205c', marginBottom: '0.5rem' }}>
+                  <div style={{
+                    width: '64px',
+                    height: '64px',
+                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                    borderRadius: '16px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: '0 auto 1rem',
+                    fontSize: '1.75rem',
+                    boxShadow: '0 8px 20px rgba(16, 185, 129, 0.3)'
+                  }}>
+                    📚
+                  </div>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>
                     Class {className}
                   </h3>
-                  <p style={{ color: '#666', fontSize: '1rem' }}>
+                  <p style={{ color: '#64748b', fontSize: '1rem', margin: 0 }}>
                     {students.length} student{students.length !== 1 ? 's' : ''}
                   </p>
-                  <div style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#3b82f6' }}>
-                    Click to view students →
+                  <div style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#10b981', fontWeight: 600 }}>
+                    View students →
                   </div>
                 </div>
               ))
@@ -177,111 +255,147 @@ const TutorStudentProgress = () => {
         </div>
       ) : !selectedStudent ? (
         /* Student List View */
-        <div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
-            {classesByLevel[selectedClass].map((student) => (
-              <div 
-                key={student._id}
-                onClick={() => handleStudentSelect(student)}
-                style={{
-                  backgroundColor: 'white',
-                  padding: '1.5rem',
-                  borderRadius: '8px',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  border: '2px solid transparent'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#3b82f6';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'transparent';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  <div style={{ 
-                    width: '50px', height: '50px', borderRadius: '50%', 
-                    backgroundColor: '#3b82f6', color: 'white',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '1.2rem', fontWeight: 'bold'
-                  }}>
-                    {student.name.charAt(0).toUpperCase()}
-                  </div>
-                  <div>
-                    <h4 style={{ margin: '0 0 0.25rem 0', color: '#374151', fontSize: '1.1rem' }}>{student.name}</h4>
-                    <p style={{ margin: 0, color: '#6b7280', fontSize: '0.9rem' }}>{student.email}</p>
-                  </div>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '1rem'
+        }}>
+          {classesByLevel[selectedClass].map((student) => (
+            <div
+              key={student._id}
+              onClick={() => handleStudentSelect(student)}
+              style={{
+                backgroundColor: 'white',
+                padding: '1.25rem',
+                borderRadius: '12px',
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                border: '2px solid #e2e8f0'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = '#10b981';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = '#e2e8f0';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <div style={{
+                  width: '50px',
+                  height: '50px',
+                  borderRadius: '12px',
+                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.2rem',
+                  fontWeight: 700
+                }}>
+                  {student.name.charAt(0).toUpperCase()}
                 </div>
-                <div style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#3b82f6', textAlign: 'right' }}>
-                  View Performance →
+                <div style={{ flex: 1 }}>
+                  <h4 style={{ margin: '0 0 0.25rem 0', color: '#0f172a', fontSize: '1rem', fontWeight: 600 }}>
+                    {student.name}
+                  </h4>
+                  <p style={{ margin: 0, color: '#64748b', fontSize: '0.85rem' }}>{student.email}</p>
                 </div>
+                <div style={{ color: '#10b981', fontSize: '1.2rem' }}>→</div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       ) : (
         /* Performance Details View */
-        <div style={{ background: 'white', borderRadius: '12px', boxShadow: '0 6px 20px rgba(0,0,0,0.1)', padding: '2rem' }}>
+        <div style={{
+          background: 'white',
+          borderRadius: '16px',
+          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
+          border: '1px solid #e2e8f0',
+          overflow: 'hidden'
+        }}>
           {performances.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '3rem', color: '#666' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📊</div>
-              <p style={{ fontSize: '1.2rem' }}>No performance records found for {selectedStudent.name}</p>
-              <p>Student hasn't added any school exam results yet.</p>
+            <div style={{ textAlign: 'center', padding: '4rem 2rem' }}>
+              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📊</div>
+              <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
+                No Performance Records
+              </h3>
+              <p style={{ color: '#64748b' }}>
+                {selectedStudent.name} hasn't added any school exam results yet.
+              </p>
             </div>
           ) : (
-            <div style={{ overflowX: 'auto' }}>
-              <div style={{ marginBottom: '1.5rem', padding: '1rem', backgroundColor: '#f8fafc', borderRadius: '8px' }}>
-                <h3 style={{ margin: '0 0 0.5rem 0', color: '#374151' }}>Performance Summary</h3>
-                <p style={{ margin: 0, color: '#6b7280', fontSize: '0.9rem' }}>
-                  Total Records: {performances.length} | 
-                  Average: {(performances.reduce((acc, p) => acc + p.percentage, 0) / performances.length).toFixed(1)}%
+            <>
+              {/* Summary */}
+              <div style={{
+                padding: '1.5rem',
+                background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
+                borderBottom: '1px solid #bbf7d0'
+              }}>
+                <h3 style={{ margin: '0 0 0.5rem 0', color: '#166534', fontWeight: 700 }}>Performance Summary</h3>
+                <p style={{ margin: 0, color: '#16a34a', fontSize: '0.9rem' }}>
+                  Total Records: {performances.length} | Average: {(performances.reduce((acc, p) => acc + p.percentage, 0) / performances.length).toFixed(1)}%
                 </p>
               </div>
-              
-              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead>
-                  <tr style={{ background: '#f8f9fa' }}>
-                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Subject</th>
-                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Exam Type</th>
-                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Marks</th>
-                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Percentage</th>
-                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Grade</th>
-                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Date</th>
-                    <th style={{ padding: '12px', textAlign: 'left', borderBottom: '1px solid #dee2e6' }}>Term</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {performances.map((performance) => (
-                    <tr key={performance._id}>
-                      <td style={{ padding: '12px', borderBottom: '1px solid #dee2e6' }}>{performance.subject}</td>
-                      <td style={{ padding: '12px', borderBottom: '1px solid #dee2e6' }}>{performance.examType}</td>
-                      <td style={{ padding: '12px', borderBottom: '1px solid #dee2e6' }}>
-                        {performance.obtainedMarks}/{performance.totalMarks}
-                      </td>
-                      <td style={{ padding: '12px', borderBottom: '1px solid #dee2e6' }}>
-                        {performance.percentage.toFixed(1)}%
-                      </td>
-                      <td style={{ padding: '12px', borderBottom: '1px solid #dee2e6' }}>
-                        <span style={{
-                          background: performance.grade === 'A+' ? '#28a745' : performance.grade === 'A' ? '#17a2b8' : 
-                                     performance.grade === 'B+' ? '#ffc107' : performance.grade === 'B' ? '#fd7e14' : '#dc3545',
-                          color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '12px'
-                        }}>
-                          {performance.grade}
-                        </span>
-                      </td>
-                      <td style={{ padding: '12px', borderBottom: '1px solid #dee2e6' }}>
-                        {new Date(performance.examDate).toLocaleDateString()}
-                      </td>
-                      <td style={{ padding: '12px', borderBottom: '1px solid #dee2e6' }}>{performance.term}</td>
+
+              {/* Table */}
+              <div style={{ overflowX: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                  <thead>
+                    <tr style={{ background: '#f8fafc' }}>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Subject</th>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Exam Type</th>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Marks</th>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>%</th>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Grade</th>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Date</th>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Term</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {performances.map((performance, index) => {
+                      const gradeStyle = getGradeStyle(performance.grade);
+                      return (
+                        <tr
+                          key={performance._id}
+                          style={{ background: index % 2 === 0 ? 'white' : '#f8fafc' }}
+                          onMouseEnter={(e) => e.currentTarget.style.background = '#f0fdf4'}
+                          onMouseLeave={(e) => e.currentTarget.style.background = index % 2 === 0 ? 'white' : '#f8fafc'}
+                        >
+                          <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', fontWeight: 600, color: '#0f172a' }}>{performance.subject}</td>
+                          <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>{performance.examType}</td>
+                          <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>
+                            <span style={{ fontWeight: 600, color: '#0f172a' }}>{performance.obtainedMarks}</span>/{performance.totalMarks}
+                          </td>
+                          <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', fontWeight: 600, color: '#0f172a' }}>
+                            {performance.percentage.toFixed(1)}%
+                          </td>
+                          <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9' }}>
+                            <span style={{
+                              background: gradeStyle.bg,
+                              color: gradeStyle.color,
+                              padding: '0.25rem 0.75rem',
+                              borderRadius: '20px',
+                              fontSize: '0.8rem',
+                              fontWeight: 700
+                            }}>
+                              {performance.grade}
+                            </span>
+                          </td>
+                          <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#64748b', fontSize: '0.9rem' }}>
+                            {new Date(performance.examDate).toLocaleDateString()}
+                          </td>
+                          <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>{performance.term}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
         </div>
       )}

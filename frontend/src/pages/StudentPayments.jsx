@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-
+import { useToast } from '../components/Toast';
 
 const StudentPayments = () => {
   const [qrCode, setQrCode] = useState('');
@@ -9,7 +9,7 @@ const StudentPayments = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     amount: '',
-    month: new Date().toISOString().slice(0, 7), // Current month
+    month: new Date().toISOString().slice(0, 7),
     transactionId: '',
     notes: '',
     paymentScreenshot: null
@@ -17,6 +17,7 @@ const StudentPayments = () => {
   const [resubmitPayment, setResubmitPayment] = useState(null);
 
   const token = localStorage.getItem('token');
+  const toast = useToast();
 
   const fetchQRCode = useCallback(async () => {
     try {
@@ -57,7 +58,7 @@ const StudentPayments = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.paymentScreenshot && !resubmitPayment) {
-      alert('Please upload payment screenshot');
+      toast.error('Please upload payment screenshot');
       return;
     }
 
@@ -72,20 +73,20 @@ const StudentPayments = () => {
         submitData.append('paymentScreenshot', formData.paymentScreenshot);
       }
 
-      const url = resubmitPayment 
+      const url = resubmitPayment
         ? `https://tuitionapp-yq06.onrender.com/api/payments/resubmit/${resubmitPayment._id}`
         : 'https://tuitionapp-yq06.onrender.com/api/payments/submit';
-      
+
       const method = resubmitPayment ? 'patch' : 'post';
 
       await axios[method](url, submitData, {
-        headers: { 
+        headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
         }
       });
 
-      alert(resubmitPayment ? 'Payment resubmitted successfully!' : 'Payment submitted successfully! Awaiting admin verification.');
+      toast.success(resubmitPayment ? 'Payment resubmitted successfully!' : 'Payment submitted! Awaiting verification.');
       setShowPaymentForm(false);
       setResubmitPayment(null);
       setFormData({
@@ -97,7 +98,7 @@ const StudentPayments = () => {
       });
       fetchPayments();
     } catch (error) {
-      alert(error.response?.data?.message || 'Error submitting payment');
+      toast.error(error.response?.data?.message || 'Error submitting payment');
     } finally {
       setLoading(false);
     }
@@ -105,15 +106,15 @@ const StudentPayments = () => {
 
   const handleCancelPayment = async (paymentId) => {
     if (!window.confirm('Are you sure you want to cancel this payment?')) return;
-    
+
     try {
       await axios.delete(`https://tuitionapp-yq06.onrender.com/api/payments/cancel/${paymentId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      alert('Payment cancelled successfully');
+      toast.success('Payment cancelled successfully');
       fetchPayments();
     } catch (error) {
-      alert(error.response?.data?.message || 'Error cancelling payment');
+      toast.error(error.response?.data?.message || 'Error cancelling payment');
     }
   };
 
@@ -129,36 +130,83 @@ const StudentPayments = () => {
     setShowPaymentForm(true);
   };
 
-  const getStatusColor = (status) => {
-    const colors = {
-      pending: '#f59e0b',
-      verified: '#10b981',
-      rejected: '#ef4444'
+  const getStatusStyle = (status) => {
+    const styles = {
+      pending: { bg: '#fef3c7', color: '#92400e', border: '#fbbf24' },
+      verified: { bg: '#dcfce7', color: '#166534', border: '#22c55e' },
+      rejected: { bg: '#fee2e2', color: '#991b1b', border: '#ef4444' }
     };
-    return colors[status] || '#6b7280';
+    return styles[status] || { bg: '#f1f5f9', color: '#475569', border: '#94a3b8' };
   };
 
   const getStatusIcon = (status) => {
-    const icons = {
-      pending: '⏳',
-      verified: '✅',
-      rejected: '❌'
-    };
+    const icons = { pending: '⏳', verified: '✅', rejected: '❌' };
     return icons[status] || '📄';
+  };
+
+  const inputStyle = {
+    width: '100%',
+    padding: '0.75rem 1rem',
+    fontSize: '0.95rem',
+    border: '2px solid #e2e8f0',
+    borderRadius: '10px',
+    outline: 'none',
+    transition: 'all 0.2s ease',
+    boxSizing: 'border-box'
   };
 
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-      <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#20205c', marginBottom: '2rem', textAlign: 'center' }}>
-        💳 Fee Payments
-      </h2>
+      {/* Header */}
+      <div style={{ marginBottom: '2rem' }}>
+        <h2 style={{
+          fontSize: '1.5rem',
+          fontWeight: 700,
+          color: '#0f172a',
+          margin: 0,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem'
+        }}>
+          💳 Fee Payments
+        </h2>
+        <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+          Submit and track your fee payments
+        </p>
+      </div>
 
       {/* Payment Instructions */}
-      <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', marginBottom: '2rem' }}>
-        <h3 style={{ color: '#20205c', marginBottom: '1rem' }}>📋 Payment Instructions</h3>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', alignItems: 'center' }}>
+      <div style={{
+        backgroundColor: 'white',
+        padding: '2rem',
+        borderRadius: '16px',
+        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
+        border: '1px solid #e2e8f0',
+        marginBottom: '1.5rem'
+      }}>
+        <h3 style={{
+          color: '#0f172a',
+          marginBottom: '1.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          fontWeight: 700
+        }}>
+          📋 Payment Instructions
+        </h3>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: '2rem',
+          alignItems: 'center'
+        }}>
           <div>
-            <ol style={{ color: '#666', lineHeight: '1.8' }}>
+            <ol style={{
+              color: '#475569',
+              lineHeight: '2',
+              paddingLeft: '1.5rem',
+              margin: 0
+            }}>
               <li>Scan the QR code using Google Pay (GPay)</li>
               <li>Pay the required fee amount</li>
               <li>Take a screenshot of the payment confirmation</li>
@@ -168,116 +216,166 @@ const StudentPayments = () => {
           </div>
           <div style={{ textAlign: 'center' }}>
             {qrCode ? (
-              <img 
-                src={qrCode} 
-                alt="GPay QR Code" 
-                style={{ maxWidth: '200px', border: '2px solid #3b82f6', borderRadius: '8px' }}
-              />
+              <div style={{
+                padding: '1rem',
+                background: 'white',
+                borderRadius: '16px',
+                border: '3px solid #10b981',
+                display: 'inline-block',
+                boxShadow: '0 8px 20px rgba(16, 185, 129, 0.2)'
+              }}>
+                <img
+                  src={qrCode}
+                  alt="GPay QR Code"
+                  style={{ maxWidth: '180px', display: 'block' }}
+                />
+              </div>
             ) : (
-              <div style={{ width: '200px', height: '200px', backgroundColor: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px' }}>
+              <div style={{
+                width: '200px',
+                height: '200px',
+                backgroundColor: '#f8fafc',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '16px',
+                border: '2px dashed #e2e8f0',
+                color: '#64748b'
+              }}>
                 Loading QR Code...
               </div>
             )}
-            <p style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: '#666' }}>Scan with GPay</p>
+            <p style={{ marginTop: '0.75rem', fontSize: '0.9rem', color: '#10b981', fontWeight: 600 }}>
+              Scan with GPay
+            </p>
           </div>
         </div>
       </div>
 
       {/* Submit Payment Button */}
-      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+      <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
         <button
           onClick={() => setShowPaymentForm(!showPaymentForm)}
           style={{
             padding: '1rem 2rem',
-            backgroundColor: '#10b981',
-            color: 'white',
+            background: showPaymentForm ? '#f1f5f9' : 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+            color: showPaymentForm ? '#64748b' : 'white',
             border: 'none',
-            borderRadius: '8px',
-            fontSize: '1.1rem',
-            fontWeight: '600',
+            borderRadius: '12px',
+            fontSize: '1rem',
+            fontWeight: 600,
             cursor: 'pointer',
-            transition: 'all 0.3s ease'
+            transition: 'all 0.3s ease',
+            boxShadow: showPaymentForm ? 'none' : '0 4px 15px rgba(16, 185, 129, 0.4)'
           }}
-          onMouseEnter={(e) => e.target.style.backgroundColor = '#059669'}
-          onMouseLeave={(e) => e.target.style.backgroundColor = '#10b981'}
         >
-          {showPaymentForm ? '❌ Cancel Payment' : '💰 Submit New Payment'}
+          {showPaymentForm ? '✕ Cancel' : '💰 Submit New Payment'}
         </button>
       </div>
 
       {/* Payment Form */}
       {showPaymentForm && (
-        <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', marginBottom: '2rem' }}>
-          <h3 style={{ color: '#20205c', marginBottom: '1.5rem' }}>
+        <div style={{
+          backgroundColor: 'white',
+          padding: '2rem',
+          borderRadius: '16px',
+          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
+          border: '1px solid #e2e8f0',
+          marginBottom: '1.5rem'
+        }}>
+          <h3 style={{
+            color: '#0f172a',
+            marginBottom: '1.5rem',
+            fontWeight: 700
+          }}>
             {resubmitPayment ? '🔄 Resubmit Payment' : '📤 Submit Payment'}
           </h3>
           {resubmitPayment && (
-            <div style={{ padding: '1rem', backgroundColor: '#fef3c7', border: '1px solid #f59e0b', borderRadius: '6px', marginBottom: '1rem' }}>
-              <strong>Resubmitting payment for:</strong> {resubmitPayment.month}<br/>
-              <strong>Previous rejection reason:</strong> {resubmitPayment.rejectionReason}
+            <div style={{
+              padding: '1rem',
+              backgroundColor: '#fef3c7',
+              border: '2px solid #fbbf24',
+              borderRadius: '10px',
+              marginBottom: '1.5rem'
+            }}>
+              <p style={{ margin: 0, fontWeight: 600, color: '#92400e' }}>
+                Resubmitting payment for: {resubmitPayment.month}
+              </p>
+              <p style={{ margin: '0.25rem 0 0', color: '#78350f', fontSize: '0.9rem' }}>
+                Previous rejection reason: {resubmitPayment.rejectionReason}
+              </p>
             </div>
           )}
           <form onSubmit={handleSubmit}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '1rem',
+              marginBottom: '1rem'
+            }}>
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600' }}>Amount (₹):</label>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Amount (₹)</label>
                 <input
                   type="number"
                   name="amount"
                   value={formData.amount}
                   onChange={handleInputChange}
                   required
-                  style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #d1d5db' }}
+                  style={inputStyle}
                 />
               </div>
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600' }}>Month:</label>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Month</label>
                 <input
                   type="month"
                   name="month"
                   value={formData.month}
                   onChange={handleInputChange}
                   required
-                  style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #d1d5db' }}
+                  style={inputStyle}
                 />
               </div>
             </div>
 
             <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600' }}>Transaction ID (from screenshot):</label>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Transaction ID</label>
               <input
                 type="text"
                 name="transactionId"
                 value={formData.transactionId}
                 onChange={handleInputChange}
                 placeholder="Enter transaction ID from payment"
-                style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #d1d5db' }}
+                style={inputStyle}
               />
             </div>
 
             <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600' }}>Payment Screenshot:</label>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Payment Screenshot</label>
               <input
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
                 required={!resubmitPayment}
-                style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #d1d5db' }}
+                style={{
+                  ...inputStyle,
+                  padding: '0.5rem',
+                  background: '#f8fafc'
+                }}
               />
-              <p style={{ fontSize: '0.8rem', color: '#666', marginTop: '0.25rem' }}>
-                {resubmitPayment ? 'Upload new screenshot (optional - leave empty to keep existing)' : 'Upload screenshot of your GPay payment confirmation'}
+              <p style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.25rem' }}>
+                {resubmitPayment ? 'Upload new screenshot (optional)' : 'Upload screenshot of payment confirmation'}
               </p>
             </div>
 
             <div style={{ marginBottom: '1.5rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600' }}>Notes (optional):</label>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Notes (optional)</label>
               <textarea
                 name="notes"
                 value={formData.notes}
                 onChange={handleInputChange}
                 rows="3"
                 placeholder="Any additional notes..."
-                style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #d1d5db' }}
+                style={{ ...inputStyle, resize: 'vertical', fontFamily: 'inherit' }}
               />
             </div>
 
@@ -287,118 +385,171 @@ const StudentPayments = () => {
               style={{
                 width: '100%',
                 padding: '1rem',
-                backgroundColor: loading ? '#9ca3af' : '#3b82f6',
+                background: loading ? '#94a3b8' : 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
                 color: 'white',
                 border: 'none',
-                borderRadius: '8px',
+                borderRadius: '10px',
                 fontSize: '1rem',
-                fontWeight: '600',
-                cursor: loading ? 'not-allowed' : 'pointer'
+                fontWeight: 600,
+                cursor: loading ? 'not-allowed' : 'pointer',
+                boxShadow: loading ? 'none' : '0 4px 12px rgba(16, 185, 129, 0.3)'
               }}
             >
-              {loading ? (resubmitPayment ? 'Resubmitting...' : 'Submitting...') : (resubmitPayment ? '🔄 Resubmit Payment' : '📤 Submit Payment')}
+              {loading ? 'Submitting...' : (resubmitPayment ? '🔄 Resubmit Payment' : '📤 Submit Payment')}
             </button>
           </form>
         </div>
       )}
 
       {/* Payment History */}
-      <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
-        <h3 style={{ color: '#20205c', marginBottom: '1.5rem' }}>📋 Payment History</h3>
-        
+      <div style={{
+        backgroundColor: 'white',
+        padding: '2rem',
+        borderRadius: '16px',
+        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
+        border: '1px solid #e2e8f0'
+      }}>
+        <h3 style={{
+          color: '#0f172a',
+          marginBottom: '1.5rem',
+          fontWeight: 700,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem'
+        }}>
+          📋 Payment History
+        </h3>
+
         {payments.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '3rem', color: '#666' }}>
-            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>💳</div>
-            <p style={{ fontSize: '1.2rem' }}>No payments submitted yet</p>
-            <p>Submit your first payment using the form above</p>
+          <div style={{ textAlign: 'center', padding: '3rem' }}>
+            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>💳</div>
+            <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
+              No Payments Yet
+            </h3>
+            <p style={{ color: '#64748b' }}>Submit your first payment using the form above</p>
           </div>
         ) : (
           <div style={{ display: 'grid', gap: '1rem' }}>
-            {payments.map((payment) => (
-              <div key={payment._id} style={{
-                padding: '1.5rem',
-                border: `2px solid ${getStatusColor(payment.status)}`,
-                borderRadius: '8px',
-                backgroundColor: '#f8fafc'
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                  <h4 style={{ margin: 0, color: '#20205c' }}>
-                    {getStatusIcon(payment.status)} Payment for {payment.month}
-                  </h4>
-                  <span style={{
-                    padding: '0.25rem 0.75rem',
-                    backgroundColor: getStatusColor(payment.status),
-                    color: 'white',
-                    borderRadius: '20px',
-                    fontSize: '0.8rem',
-                    fontWeight: 'bold',
-                    textTransform: 'uppercase'
+            {payments.map((payment) => {
+              const statusStyle = getStatusStyle(payment.status);
+              return (
+                <div
+                  key={payment._id}
+                  style={{
+                    padding: '1.5rem',
+                    border: `2px solid ${statusStyle.border}`,
+                    borderRadius: '12px',
+                    backgroundColor: statusStyle.bg
+                  }}
+                >
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: '1rem',
+                    flexWrap: 'wrap',
+                    gap: '0.5rem'
                   }}>
-                    {payment.status}
-                  </span>
-                </div>
-                
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', fontSize: '0.9rem', color: '#666' }}>
-                  <div><strong>Amount:</strong> ₹{payment.amount}</div>
-                  <div><strong>Submitted:</strong> {new Date(payment.submittedAt).toLocaleDateString()}</div>
-                  {payment.transactionId && <div><strong>Transaction ID:</strong> {payment.transactionId}</div>}
-                  {payment.verifiedAt && <div><strong>Verified:</strong> {new Date(payment.verifiedAt).toLocaleDateString()}</div>}
-                </div>
-                
-                {payment.rejectionReason && (
-                  <div style={{ marginTop: '1rem', padding: '0.75rem', backgroundColor: '#fef2f2', border: '1px solid #fecaca', borderRadius: '6px' }}>
-                    <strong style={{ color: '#dc2626' }}>Rejection Reason:</strong> {payment.rejectionReason}
+                    <h4 style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>
+                      {getStatusIcon(payment.status)} Payment for {payment.month}
+                    </h4>
+                    <span style={{
+                      padding: '0.25rem 0.75rem',
+                      backgroundColor: statusStyle.border,
+                      color: 'white',
+                      borderRadius: '20px',
+                      fontSize: '0.75rem',
+                      fontWeight: 700,
+                      textTransform: 'uppercase'
+                    }}>
+                      {payment.status}
+                    </span>
                   </div>
-                )}
-                
-                <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
-                  {payment.paymentScreenshot && (
-                    <a 
-                      href={`https://tuitionapp-yq06.onrender.com${payment.paymentScreenshot}`} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      style={{ color: '#3b82f6', textDecoration: 'none', fontSize: '0.9rem' }}
-                    >
-                      📷 View Screenshot
-                    </a>
+
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                    gap: '0.75rem',
+                    fontSize: '0.9rem',
+                    color: '#475569'
+                  }}>
+                    <div><strong>Amount:</strong> ₹{payment.amount}</div>
+                    <div><strong>Submitted:</strong> {new Date(payment.submittedAt).toLocaleDateString()}</div>
+                    {payment.transactionId && <div><strong>Transaction ID:</strong> {payment.transactionId}</div>}
+                    {payment.verifiedAt && <div><strong>Verified:</strong> {new Date(payment.verifiedAt).toLocaleDateString()}</div>}
+                  </div>
+
+                  {payment.rejectionReason && (
+                    <div style={{
+                      marginTop: '1rem',
+                      padding: '0.75rem',
+                      backgroundColor: '#fee2e2',
+                      border: '1px solid #fecaca',
+                      borderRadius: '8px'
+                    }}>
+                      <strong style={{ color: '#dc2626' }}>Rejection Reason:</strong> {payment.rejectionReason}
+                    </div>
                   )}
-                  
-                  {payment.status === 'pending' && (
-                    <button
-                      onClick={() => handleCancelPayment(payment._id)}
-                      style={{
-                        padding: '0.5rem 1rem',
-                        backgroundColor: '#ef4444',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        fontSize: '0.8rem'
-                      }}
-                    >
-                      ❌ Cancel Payment
-                    </button>
-                  )}
-                  
-                  {payment.status === 'rejected' && (
-                    <button
-                      onClick={() => handleResubmitPayment(payment)}
-                      style={{
-                        padding: '0.5rem 1rem',
-                        backgroundColor: '#f59e0b',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        fontSize: '0.8rem'
-                      }}
-                    >
-                      🔄 Resubmit Payment
-                    </button>
-                  )}
+
+                  <div style={{ marginTop: '1rem', display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                    {payment.paymentScreenshot && (
+                      <a
+                        href={`https://tuitionapp-yq06.onrender.com${payment.paymentScreenshot}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          color: '#10b981',
+                          textDecoration: 'none',
+                          fontSize: '0.9rem',
+                          fontWeight: 500,
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.25rem'
+                        }}
+                      >
+                        📷 View Screenshot
+                      </a>
+                    )}
+
+                    {payment.status === 'pending' && (
+                      <button
+                        onClick={() => handleCancelPayment(payment._id)}
+                        style={{
+                          padding: '0.5rem 1rem',
+                          background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '8px',
+                          cursor: 'pointer',
+                          fontSize: '0.85rem',
+                          fontWeight: 500
+                        }}
+                      >
+                        ❌ Cancel
+                      </button>
+                    )}
+
+                    {payment.status === 'rejected' && (
+                      <button
+                        onClick={() => handleResubmitPayment(payment)}
+                        style={{
+                          padding: '0.5rem 1rem',
+                          background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+                          color: '#0f172a',
+                          border: 'none',
+                          borderRadius: '8px',
+                          cursor: 'pointer',
+                          fontSize: '0.85rem',
+                          fontWeight: 500
+                        }}
+                      >
+                        🔄 Resubmit
+                      </button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

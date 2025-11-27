@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import {jwtDecode} from "jwt-decode"; // removed braces
-
+import { jwtDecode } from "jwt-decode";
 
 const StudentDashboard = () => {
   const [myClasses, setMyClasses] = useState([]);
@@ -10,6 +9,7 @@ const StudentDashboard = () => {
   const [announcements, setAnnouncements] = useState([]);
   const [showAllClasses, setShowAllClasses] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [loading, setLoading] = useState(true);
 
   const token = localStorage.getItem("token");
 
@@ -22,11 +22,11 @@ const StudentDashboard = () => {
   }, []);
 
   const formatClock = (date) => {
-    return date.toLocaleTimeString('en-US', { 
-      hour12: true, 
-      hour: '2-digit', 
-      minute: '2-digit', 
-      second: '2-digit' 
+    return date.toLocaleTimeString('en-US', {
+      hour12: true,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
     });
   };
 
@@ -35,28 +35,20 @@ const StudentDashboard = () => {
     if (!token) return;
     try {
       const decoded = jwtDecode(token);
-      const studentClassName = decoded.className;
-      console.log('Student className:', studentClassName);
-
-      // Get all classes and filter by student enrollment
       const res = await axios.get(
         'https://tuitionapp-yq06.onrender.com/api/classes',
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      
-      // Filter classes where this student is enrolled
-      const studentClasses = res.data.filter(cls => 
+      const studentClasses = res.data.filter(cls =>
         cls.students && cls.students.some(student => student._id === decoded.id)
       );
-      
-      console.log('Student enrolled sessions:', studentClasses);
       setMyClasses(studentClasses);
     } catch (err) {
       console.error("Failed to fetch sessions:", err);
     }
   }, [token]);
 
-  // Fetch files for student's enrolled sessions
+  // Fetch files
   const fetchFiles = useCallback(async () => {
     if (!token) return;
     try {
@@ -64,24 +56,17 @@ const StudentDashboard = () => {
         'https://tuitionapp-yq06.onrender.com/api/files',
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      
-      // Get student's enrolled class IDs first
       const decoded = jwtDecode(token);
       const classRes = await axios.get(
         'https://tuitionapp-yq06.onrender.com/api/classes',
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      
       const studentClassIds = classRes.data
         .filter(cls => cls.students && cls.students.some(student => student._id === decoded.id))
         .map(cls => cls._id);
-      
-      // Filter files that belong to student's enrolled sessions
-      const studentFiles = res.data.filter(file => 
+      const studentFiles = res.data.filter(file =>
         studentClassIds.includes(file.classId?._id)
       );
-      
-      console.log('Student files:', studentFiles);
       setFiles(studentFiles);
     } catch (err) {
       console.error("Failed to fetch files:", err);
@@ -104,246 +89,543 @@ const StudentDashboard = () => {
 
   useEffect(() => {
     const loadData = async () => {
+      setLoading(true);
       await Promise.all([
         fetchClasses(),
         fetchFiles(),
         fetchAnnouncements()
       ]);
+      setLoading(false);
     };
     loadData();
   }, [fetchClasses, fetchFiles, fetchAnnouncements]);
 
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '50vh' }}>
+        <div style={{
+          width: '48px',
+          height: '48px',
+          border: '3px solid #e2e8f0',
+          borderTopColor: '#10b981',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite'
+        }} />
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      </div>
+    );
+  }
+
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-      
+
       {/* Clock Widget */}
-      <div className="fade-in hover-lift" style={{ 
-        backgroundColor: 'white', 
-        padding: '1.5rem', 
-        borderRadius: '12px', 
-        boxShadow: '0 4px 12px rgba(0,0,0,0.1)', 
+      <div style={{
+        background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+        padding: '2rem',
+        borderRadius: '16px',
+        boxShadow: '0 10px 30px rgba(16, 185, 129, 0.3)',
         textAlign: 'center',
         marginBottom: '2rem',
-        border: '2px solid #3b82f6',
-        transition: 'all 0.3s ease'
+        color: 'white',
+        position: 'relative',
+        overflow: 'hidden'
       }}>
-        <div style={{ 
-          fontSize: '2.5rem', 
-          fontWeight: 'bold', 
-          color: '#3b82f6',
-          fontFamily: 'monospace',
-          marginBottom: '0.5rem'
+        <div style={{
+          position: 'absolute',
+          top: '-50%',
+          right: '-10%',
+          width: '200px',
+          height: '200px',
+          background: 'rgba(255, 255, 255, 0.1)',
+          borderRadius: '50%'
+        }} />
+        <div style={{
+          fontSize: '3rem',
+          fontWeight: 800,
+          fontFamily: "'JetBrains Mono', monospace",
+          marginBottom: '0.5rem',
+          textShadow: '0 2px 10px rgba(0, 0, 0, 0.2)'
         }}>
-          🕐 {formatClock(currentTime)}
+          ⏰ {formatClock(currentTime)}
         </div>
-        <div style={{ 
-          fontSize: '1rem', 
-          color: '#6b7280'
+        <div style={{
+          fontSize: '1rem',
+          opacity: 0.9
         }}>
-          {currentTime.toLocaleDateString('en-US', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
+          {currentTime.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
           })}
         </div>
       </div>
-        
-        {/* Global Announcements */}
-        {announcements.length > 0 && (
-          <div style={{ marginBottom: '2rem' }}>
-            <h2 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#20205c', marginBottom: '1rem', textAlign: 'center' }}>📢 Announcements</h2>
-            <div style={{ display: 'grid', gap: '1rem' }}>
-              {announcements.slice(0, 3).map((announcement) => (
+
+      {/* Announcements */}
+      {announcements.length > 0 && (
+        <div style={{ marginBottom: '2rem' }}>
+          <h2 style={{
+            fontSize: '1.5rem',
+            fontWeight: 700,
+            color: '#0f172a',
+            marginBottom: '1rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}>
+            📢 Announcements
+          </h2>
+          <div style={{ display: 'grid', gap: '1rem' }}>
+            {announcements.slice(0, 3).map((announcement) => {
+              const typeStyles = {
+                urgent: { bg: '#fef2f2', border: '#ef4444', icon: '🚨' },
+                holiday: { bg: '#f0fdf4', border: '#22c55e', icon: '🎉' },
+                general: { bg: '#f8fafc', border: '#10b981', icon: '📌' }
+              };
+              const style = typeStyles[announcement.type] || typeStyles.general;
+
+              return (
                 <div key={announcement._id} style={{
-                  backgroundColor: announcement.type === 'urgent' ? '#fef2f2' : announcement.type === 'holiday' ? '#f0fdf4' : '#f8fafc',
-                  border: `2px solid ${announcement.type === 'urgent' ? '#ef4444' : announcement.type === 'holiday' ? '#22c55e' : '#3b82f6'}`,
-                  padding: '1rem',
-                  borderRadius: '8px'
+                  backgroundColor: style.bg,
+                  border: `2px solid ${style.border}`,
+                  padding: '1.25rem',
+                  borderRadius: '12px',
+                  transition: 'all 0.2s ease'
                 }}>
-                  <h4 style={{ margin: '0 0 0.5rem 0', color: '#20205c' }}>{announcement.title}</h4>
-                  <p style={{ margin: '0 0 0.5rem 0', color: '#666' }}>{announcement.message}</p>
-                  <small style={{ color: '#999' }}>{new Date(announcement.createdAt).toLocaleDateString()}</small>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+                    <span style={{ fontSize: '1.5rem' }}>{style.icon}</span>
+                    <div style={{ flex: 1 }}>
+                      <h4 style={{ margin: '0 0 0.5rem 0', color: '#0f172a', fontWeight: 600 }}>
+                        {announcement.title}
+                      </h4>
+                      <p style={{ margin: '0 0 0.5rem 0', color: '#475569', lineHeight: 1.5 }}>
+                        {announcement.message}
+                      </p>
+                      <small style={{ color: '#94a3b8' }}>
+                        {new Date(announcement.createdAt).toLocaleDateString()}
+                      </small>
+                    </div>
+                  </div>
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
-        )}
+        </div>
+      )}
 
-
-        {myClasses.length > 0 && (
-          <>
-            <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#20205c', marginBottom: '2rem', textAlign: 'center' }}>My Sessions</h2>
-          <div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '1.5rem', marginBottom: '1rem' }}>
-              {(showAllClasses ? myClasses : myClasses.slice(0, 4)).map((cls) => (
-              <div key={cls._id} style={{
-                backgroundColor: 'white',
-                padding: '1.5rem',
-                borderRadius: '12px',
-                boxShadow: '0 6px 20px rgba(0,0,0,0.1)',
-                transition: 'transform 0.3s ease',
-                cursor: 'pointer'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-              onClick={() => setSelectedClass(cls)}>
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#20205c', marginBottom: '0.5rem' }}>{cls.name}</h3>
-                <p style={{ color: '#666', marginBottom: '0.5rem' }}><strong>Subject:</strong> {cls.subject}</p>
-                <p style={{ color: '#666', marginBottom: '0.5rem' }}><strong>Schedule:</strong> {cls.schedule}</p>
-                <p style={{ color: '#666' }}><strong>Tutor:</strong> {cls.tutor?.name || "N/A"}</p>
-                <p style={{ fontSize: '0.9rem', color: '#2563eb', marginTop: '1rem', textAlign: 'center' }}>Click for details</p>
-              </div>
-              ))}
-            </div>
-            
-            {myClasses.length > 4 && (
-              <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-                <button 
-                  onClick={() => setShowAllClasses(!showAllClasses)}
-                  style={{
-                    padding: '0.75rem 1.5rem',
-                    backgroundColor: '#2563eb',
-                    color: 'white',
-                    border: 'none',
+      {/* My Sessions */}
+      {myClasses.length > 0 && (
+        <div style={{ marginBottom: '2rem' }}>
+          <h2 style={{
+            fontSize: '1.5rem',
+            fontWeight: 700,
+            color: '#0f172a',
+            marginBottom: '1rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}>
+            📚 My Sessions
+          </h2>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '1.5rem'
+          }}>
+            {(showAllClasses ? myClasses : myClasses.slice(0, 4)).map((cls) => (
+              <div
+                key={cls._id}
+                onClick={() => setSelectedClass(cls)}
+                style={{
+                  backgroundColor: 'white',
+                  padding: '1.5rem',
+                  borderRadius: '16px',
+                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
+                  border: '1px solid #e2e8f0',
+                  transition: 'all 0.3s ease',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.1)';
+                  e.currentTarget.style.borderColor = '#10b981';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.05)';
+                  e.currentTarget.style.borderColor = '#e2e8f0';
+                }}
+              >
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  justifyContent: 'space-between',
+                  marginBottom: '1rem'
+                }}>
+                  <div style={{
+                    width: '48px',
+                    height: '48px',
+                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
                     borderRadius: '12px',
-                    cursor: 'pointer',
-                    fontWeight: '600',
-                    transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)',
-                    transform: 'translateY(0)'
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.5rem'
+                  }}>
+                    📖
+                  </div>
+                  <span style={{
+                    padding: '0.25rem 0.75rem',
+                    background: '#ecfdf5',
+                    color: '#059669',
+                    borderRadius: '20px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600
+                  }}>
+                    Active
+                  </span>
+                </div>
+                <h3 style={{
+                  fontSize: '1.2rem',
+                  fontWeight: 700,
+                  color: '#0f172a',
+                  marginBottom: '0.75rem'
+                }}>
+                  {cls.name}
+                </h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span>📘</span> {cls.subject}
+                  </p>
+                  <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span>📅</span> {cls.schedule}
+                  </p>
+                  <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span>👨‍🏫</span> {cls.tutor?.name || "N/A"}
+                  </p>
+                </div>
+                <div style={{
+                  marginTop: '1rem',
+                  paddingTop: '1rem',
+                  borderTop: '1px solid #f1f5f9',
+                  textAlign: 'center'
+                }}>
+                  <span style={{ color: '#10b981', fontSize: '0.85rem', fontWeight: 500 }}>
+                    Click for details →
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {myClasses.length > 4 && (
+            <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+              <button
+                onClick={() => setShowAllClasses(!showAllClasses)}
+                style={{
+                  padding: '0.75rem 2rem',
+                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '10px',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  fontSize: '0.9rem',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = '0 6px 20px rgba(16, 185, 129, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = '0 4px 15px rgba(16, 185, 129, 0.3)';
+                }}
+              >
+                {showAllClasses ? 'Show Less' : `Show All (${myClasses.length} sessions)`}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Study Materials */}
+      {files.length > 0 && (
+        <div>
+          <h2 style={{
+            fontSize: '1.5rem',
+            fontWeight: 700,
+            color: '#0f172a',
+            marginBottom: '1rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}>
+            📄 Study Materials
+          </h2>
+          <div style={{
+            backgroundColor: 'white',
+            padding: '1.5rem',
+            borderRadius: '16px',
+            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
+            border: '1px solid #e2e8f0'
+          }}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '1rem'
+            }}>
+              {files.map((file) => (
+                <a
+                  key={file._id}
+                  href={`https://tuitionapp-yq06.onrender.com/${file.url}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem',
+                    padding: '1rem',
+                    background: '#f8fafc',
+                    borderRadius: '10px',
+                    textDecoration: 'none',
+                    transition: 'all 0.2s ease',
+                    border: '1px solid transparent'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#1e40af';
-                    e.target.style.transform = 'translateY(-2px)';
-                    e.target.style.boxShadow = '0 6px 16px rgba(37, 99, 235, 0.4)';
+                    e.currentTarget.style.background = '#f0fdf4';
+                    e.currentTarget.style.borderColor = '#10b981';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = '#2563eb';
-                    e.target.style.transform = 'translateY(0)';
-                    e.target.style.boxShadow = '0 4px 12px rgba(37, 99, 235, 0.3)';
+                    e.currentTarget.style.background = '#f8fafc';
+                    e.currentTarget.style.borderColor = 'transparent';
                   }}
                 >
-                  {showAllClasses ? 'Show Less' : `Show All (${myClasses.length} sessions)`}
-                </button>
-              </div>
-            )}
-          </div>
-          </>
-        )}
-
-        {files.length > 0 && (
-          <>
-            <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#20205c', marginBottom: '2rem', textAlign: 'center' }}>Study Materials</h2>
-            
-            <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '12px', boxShadow: '0 6px 20px rgba(0,0,0,0.1)' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
-                {files.map((file) => (
-                  <div key={file._id} style={{
-                    padding: '1rem',
-                    border: '1px solid #e0e0e0',
+                  <div style={{
+                    width: '40px',
+                    height: '40px',
+                    background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
                     borderRadius: '8px',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9ff'}
-                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}>
-                    <a href={`https://tuitionapp-yq06.onrender.com/${file.url}`} target="_blank" rel="noopener noreferrer" 
-                       style={{ color: '#2563eb', textDecoration: 'none', fontWeight: '600' }}>
-                      📄 {file.title}
-                    </a>
-                    <p style={{ fontSize: '0.9rem', color: '#666', marginTop: '0.5rem' }}>Session: {file.classId?.name}</p>
-                    <p style={{ fontSize: '0.8rem', color: '#999' }}>Uploaded by: {file.uploadedBy?.name}</p>
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.2rem',
+                    flexShrink: 0
+                  }}>
+                    📄
                   </div>
-                ))}
-              </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <p style={{
+                      margin: 0,
+                      color: '#0f172a',
+                      fontWeight: 600,
+                      fontSize: '0.9rem',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis'
+                    }}>
+                      {file.title}
+                    </p>
+                    <p style={{ margin: '0.25rem 0 0', color: '#64748b', fontSize: '0.8rem' }}>
+                      {file.classId?.name} • {file.uploadedBy?.name}
+                    </p>
+                  </div>
+                  <span style={{ color: '#10b981', fontSize: '1.2rem' }}>↓</span>
+                </a>
+              ))}
             </div>
-          </>
-        )}
-        
-        {/* Class Details Modal */}
-        {selectedClass && (
-          <div style={{
+          </div>
+        </div>
+      )}
+
+      {/* Class Details Modal */}
+      {selectedClass && (
+        <div
+          onClick={() => setSelectedClass(null)}
+          style={{
             position: 'fixed',
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.5)',
+            backgroundColor: 'rgba(15, 23, 42, 0.7)',
+            backdropFilter: 'blur(4px)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            zIndex: 1000
-          }} onClick={() => setSelectedClass(null)}>
-            <div style={{
+            zIndex: 1000,
+            padding: '1rem',
+            animation: 'fadeIn 0.2s ease'
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
               backgroundColor: 'white',
               padding: '2rem',
-              borderRadius: '12px',
+              borderRadius: '20px',
               maxWidth: '500px',
-              width: '90%',
-              maxHeight: '80vh',
-              overflowY: 'auto'
-            }} onClick={(e) => e.stopPropagation()}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                <h3 style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#20205c', margin: 0 }}>{selectedClass.name}</h3>
-                <button onClick={() => setSelectedClass(null)} style={{ 
-                  background: '#f3f4f6', 
-                  border: 'none', 
-                  fontSize: '1.5rem', 
+              width: '100%',
+              maxHeight: '85vh',
+              overflowY: 'auto',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+              animation: 'slideUp 0.3s ease'
+            }}
+          >
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-start',
+              marginBottom: '1.5rem'
+            }}>
+              <div>
+                <h3 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 700,
+                  color: '#0f172a',
+                  margin: 0
+                }}>
+                  {selectedClass.name}
+                </h3>
+                <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+                  {selectedClass.subject}
+                </p>
+              </div>
+              <button
+                onClick={() => setSelectedClass(null)}
+                style={{
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '10px',
+                  background: '#f1f5f9',
+                  border: 'none',
                   cursor: 'pointer',
-                  borderRadius: '50%',
-                  width: '2rem',
-                  height: '2rem',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  transition: 'all 0.3s ease'
+                  fontSize: '1.2rem',
+                  color: '#64748b',
+                  transition: 'all 0.2s ease'
                 }}
-                onMouseEnter={(e) => e.target.style.backgroundColor = '#ef4444'}
-                onMouseLeave={(e) => e.target.style.backgroundColor = '#f3f4f6'}>×</button>
-              </div>
-              
-              <div style={{ marginBottom: '1rem' }}>
-                <p style={{ marginBottom: '0.5rem' }}><strong>Subject:</strong> {selectedClass.subject}</p>
-                <p style={{ marginBottom: '0.5rem' }}><strong>Schedule:</strong> {selectedClass.schedule}</p>
-                <p style={{ marginBottom: '1rem' }}><strong>Tutor:</strong> {selectedClass.tutor?.name || "N/A"}</p>
-              </div>
-              
-              {/* Resources */}
-              {selectedClass.resources && selectedClass.resources.length > 0 && (
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <h4 style={{ color: '#20205c', marginBottom: '0.5rem' }}>📚 Resources</h4>
-                  {selectedClass.resources.map((resource, index) => (
-                    <div key={index} style={{ marginBottom: '0.5rem' }}>
-                      <a href={resource.link} target="_blank" rel="noopener noreferrer" 
-                         style={{ color: '#2563eb', textDecoration: 'none', display: 'block', padding: '0.5rem', backgroundColor: '#f8f9ff', borderRadius: '4px' }}>
-                        🔗 Resource Link {index + 1}
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              )}
-              
-              {/* Announcements */}
-              {selectedClass.announcements && selectedClass.announcements.length > 0 && (
-                <div>
-                  <h4 style={{ color: '#20205c', marginBottom: '0.5rem' }}>📢 Announcements</h4>
-                  {selectedClass.announcements.slice().reverse().map((announcement, index) => (
-                    <div key={index} style={{
-                      backgroundColor: '#f0f9ff',
-                      padding: '1rem',
-                      borderRadius: '6px',
-                      borderLeft: '4px solid #2563eb',
-                      marginBottom: '0.5rem'
-                    }}>
-                      <p style={{ margin: 0, color: '#666' }}>{announcement.text}</p>
-                      <small style={{ color: '#999' }}>{new Date(announcement.postedAt).toLocaleDateString()}</small>
-                    </div>
-                  ))}
-                </div>
-              )}
+                onMouseEnter={(e) => {
+                  e.target.style.background = '#fee2e2';
+                  e.target.style.color = '#ef4444';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = '#f1f5f9';
+                  e.target.style.color = '#64748b';
+                }}
+              >
+                ×
+              </button>
             </div>
+
+            {/* Class Info */}
+            <div style={{
+              display: 'grid',
+              gap: '0.75rem',
+              marginBottom: '1.5rem'
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.75rem',
+                padding: '0.75rem',
+                background: '#f8fafc',
+                borderRadius: '10px'
+              }}>
+                <span>📅</span>
+                <span style={{ color: '#475569' }}>{selectedClass.schedule}</span>
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.75rem',
+                padding: '0.75rem',
+                background: '#f8fafc',
+                borderRadius: '10px'
+              }}>
+                <span>👨‍🏫</span>
+                <span style={{ color: '#475569' }}>{selectedClass.tutor?.name || "N/A"}</span>
+              </div>
+            </div>
+
+            {/* Resources */}
+            {selectedClass.resources && selectedClass.resources.length > 0 && (
+              <div style={{ marginBottom: '1.5rem' }}>
+                <h4 style={{ color: '#0f172a', marginBottom: '0.75rem', fontWeight: 600 }}>
+                  📚 Resources
+                </h4>
+                {selectedClass.resources.map((resource, index) => (
+                  <a
+                    key={index}
+                    href={resource.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'block',
+                      padding: '0.75rem',
+                      marginBottom: '0.5rem',
+                      background: '#f0fdf4',
+                      color: '#059669',
+                      textDecoration: 'none',
+                      borderRadius: '8px',
+                      fontSize: '0.9rem',
+                      transition: 'all 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.background = '#dcfce7'}
+                    onMouseLeave={(e) => e.target.style.background = '#f0fdf4'}
+                  >
+                    🔗 Resource Link {index + 1}
+                  </a>
+                ))}
+              </div>
+            )}
+
+            {/* Announcements */}
+            {selectedClass.announcements && selectedClass.announcements.length > 0 && (
+              <div>
+                <h4 style={{ color: '#0f172a', marginBottom: '0.75rem', fontWeight: 600 }}>
+                  📢 Class Announcements
+                </h4>
+                {selectedClass.announcements.slice().reverse().map((announcement, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      backgroundColor: '#f8fafc',
+                      padding: '1rem',
+                      borderRadius: '10px',
+                      borderLeft: '3px solid #10b981',
+                      marginBottom: '0.75rem'
+                    }}
+                  >
+                    <p style={{ margin: 0, color: '#475569', lineHeight: 1.5 }}>
+                      {announcement.text}
+                    </p>
+                    <small style={{ color: '#94a3b8' }}>
+                      {new Date(announcement.postedAt).toLocaleDateString()}
+                    </small>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-        )}
+        </div>
+      )}
+
+      {/* Animation styles */}
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes slideUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 };

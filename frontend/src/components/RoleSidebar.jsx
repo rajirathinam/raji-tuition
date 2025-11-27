@@ -7,7 +7,7 @@ const RoleSidebar = ({ role, onWidthChange }) => {
 
   // Notify parent of width changes
   React.useEffect(() => {
-    const width = isCollapsed ? 70 : 250;
+    const width = isCollapsed ? 70 : 260;
     if (onWidthChange) {
       onWidthChange(width);
     }
@@ -36,93 +36,203 @@ const RoleSidebar = ({ role, onWidthChange }) => {
 
   const menuItems = role === 'student' ? studentMenuItems : tutorMenuItems;
 
-  const sidebarStyle = {
-    width: isCollapsed ? '70px' : '250px',
-    backgroundColor: '#1f2937',
-    minHeight: '100vh',
-    padding: '1rem 0',
-    position: 'fixed',
-    left: 0,
-    top: 0,
-    zIndex: 1000,
-    boxShadow: '2px 0 10px rgba(0,0,0,0.1)',
-    transition: 'all 0.3s ease'
-  };
-
-  const menuItemStyle = (isActive) => ({
-    display: 'flex',
-    alignItems: 'center',
-    padding: '0.75rem 1.5rem',
-    color: isActive ? '#3b82f6' : '#d1d5db',
-    textDecoration: 'none',
-    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-    backgroundColor: isActive ? '#374151' : 'transparent',
-    borderRight: isActive ? '3px solid #3b82f6' : '3px solid transparent',
-    transform: 'translateX(0)',
-    position: 'relative',
-    overflow: 'hidden'
-  });
-
   return (
-    <div style={sidebarStyle}>
-      <div style={{ padding: '1rem 1.5rem', borderBottom: '1px solid #374151', marginBottom: '1rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div style={{
+      width: isCollapsed ? '70px' : '260px',
+      background: 'linear-gradient(180deg, #0f172a 0%, #064e3b 100%)',
+      minHeight: '100vh',
+      padding: '1rem 0',
+      position: 'fixed',
+      left: 0,
+      top: 0,
+      zIndex: 1000,
+      boxShadow: '4px 0 20px rgba(0, 0, 0, 0.15)',
+      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      display: 'flex',
+      flexDirection: 'column'
+    }}>
+      {/* Header */}
+      <div style={{
+        padding: isCollapsed ? '1rem 0.5rem' : '1rem 1.5rem',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        marginBottom: '1rem'
+      }}>
+        <div style={{
+          display: 'flex',
+          justifyContent: isCollapsed ? 'center' : 'space-between',
+          alignItems: 'center'
+        }}>
           {!isCollapsed && (
-            <h2 style={{ color: '#f9fafb', fontSize: '1.2rem', margin: 0, textTransform: 'capitalize' }}>
-              {role} Portal
-            </h2>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <div style={{
+                width: '36px',
+                height: '36px',
+                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                borderRadius: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1rem',
+                boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
+              }}>
+                {role === 'student' ? '🎓' : '👨‍🏫'}
+              </div>
+              <div>
+                <h2 style={{
+                  color: 'white',
+                  fontSize: '1rem',
+                  fontWeight: 700,
+                  margin: 0,
+                  textTransform: 'capitalize'
+                }}>
+                  {role} Portal
+                </h2>
+              </div>
+            </div>
           )}
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             style={{
-              background: 'none',
+              background: 'rgba(255, 255, 255, 0.1)',
               border: 'none',
-              color: '#d1d5db',
-              fontSize: '1.2rem',
+              color: '#94a3b8',
+              width: '32px',
+              height: '32px',
+              borderRadius: '8px',
               cursor: 'pointer',
-              padding: '0.25rem',
-              borderRadius: '4px',
-              transition: 'all 0.3s ease'
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.2s ease',
+              fontSize: '0.9rem'
             }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = '#374151'}
-            onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+            onMouseEnter={(e) => {
+              e.target.style.background = 'rgba(16, 185, 129, 0.2)';
+              e.target.style.color = '#10b981';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = 'rgba(255, 255, 255, 0.1)';
+              e.target.style.color = '#94a3b8';
+            }}
           >
             {isCollapsed ? '→' : '←'}
           </button>
         </div>
       </div>
-      
-      <nav>
+
+      {/* Navigation */}
+      <nav style={{ flex: 1, padding: '0 0.5rem', overflowY: 'auto' }}>
         {menuItems.map((item) => {
           const isActive = location.pathname === item.path;
           return (
             <Link
               key={item.path}
               to={item.path}
-              style={menuItemStyle(isActive)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.75rem',
+                padding: isCollapsed ? '0.75rem' : '0.75rem 1rem',
+                margin: '0.25rem 0',
+                borderRadius: '10px',
+                color: isActive ? 'white' : '#94a3b8',
+                textDecoration: 'none',
+                transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                background: isActive 
+                  ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.3) 0%, rgba(16, 185, 129, 0.1) 100%)'
+                  : 'transparent',
+                borderLeft: isActive ? '3px solid #10b981' : '3px solid transparent',
+                justifyContent: isCollapsed ? 'center' : 'flex-start',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
               onMouseEnter={(e) => {
                 if (!isActive) {
-                  e.target.style.backgroundColor = '#374151';
-                  e.target.style.color = '#f9fafb';
-                  e.target.style.transform = 'translateX(5px)';
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                  e.currentTarget.style.color = 'white';
+                  e.currentTarget.style.transform = 'translateX(4px)';
                 }
               }}
               onMouseLeave={(e) => {
                 if (!isActive) {
-                  e.target.style.backgroundColor = 'transparent';
-                  e.target.style.color = '#d1d5db';
-                  e.target.style.transform = 'translateX(0)';
+                  e.currentTarget.style.background = 'transparent';
+                  e.currentTarget.style.color = '#94a3b8';
+                  e.currentTarget.style.transform = 'translateX(0)';
                 }
               }}
+              title={isCollapsed ? item.label : ''}
             >
-              <span style={{ fontSize: '1.2rem', marginRight: isCollapsed ? '0' : '0.75rem', transition: 'all 0.3s ease' }}>{item.icon}</span>
+              <span style={{
+                fontSize: '1.1rem',
+                width: '24px',
+                textAlign: 'center',
+                flexShrink: 0
+              }}>
+                {item.icon}
+              </span>
               {!isCollapsed && (
-                <span style={{ fontSize: '0.9rem', fontWeight: '500', opacity: 1, transition: 'opacity 0.3s ease' }}>{item.label}</span>
+                <span style={{
+                  fontSize: '0.9rem',
+                  fontWeight: 500,
+                  whiteSpace: 'nowrap'
+                }}>
+                  {item.label}
+                </span>
+              )}
+              {/* Active indicator glow */}
+              {isActive && (
+                <div style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  width: '3px',
+                  height: '60%',
+                  background: '#10b981',
+                  borderRadius: '0 3px 3px 0',
+                  boxShadow: '0 0 10px rgba(16, 185, 129, 0.5)'
+                }} />
               )}
             </Link>
           );
         })}
       </nav>
+
+      {/* Footer */}
+      <div style={{
+        padding: isCollapsed ? '1rem 0.5rem' : '1rem 1.5rem',
+        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+        marginTop: 'auto'
+      }}>
+        <Link
+          to="/"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            padding: '0.75rem',
+            borderRadius: '10px',
+            color: '#94a3b8',
+            textDecoration: 'none',
+            transition: 'all 0.2s ease',
+            justifyContent: isCollapsed ? 'center' : 'flex-start'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+            e.currentTarget.style.color = 'white';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'transparent';
+            e.currentTarget.style.color = '#94a3b8';
+          }}
+          title={isCollapsed ? 'Back to Home' : ''}
+        >
+          <span style={{ fontSize: '1.1rem' }}>🏠</span>
+          {!isCollapsed && (
+            <span style={{ fontSize: '0.9rem', fontWeight: 500 }}>Back to Home</span>
+          )}
+        </Link>
+      </div>
     </div>
   );
 };

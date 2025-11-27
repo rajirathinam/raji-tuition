@@ -1,14 +1,19 @@
+/* ============================================
+   TUITIX - Main Stylesheet
+   Import order matters!
+   ============================================ */
+
+/* Google Fonts - Plus Jakarta Sans (Modern, Distinctive) */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* Theme Variables & Base Styles */
+@import './styles/theme.css';
+
+/* Animation Utilities */
 @import './styles/animations.css';
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f0f2f5;
-  color: #333;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
+/* Legacy styles (gradually phase these out) */
+/* @import './styles/home.css'; */
+/* @import './styles/login.css'; */
+/* @import './styles/header.css'; */
+/* @import './styles/footer.css'; */

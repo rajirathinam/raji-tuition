@@ -28,7 +28,43 @@ const Dashboard = () => {
     }
   }, [navigate, token, user]);
 
-  return <p>Redirecting to dashboard...</p>;
+  return (
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+      background: 'linear-gradient(135deg, #064e3b 0%, #0f172a 50%, #1e293b 100%)'
+    }}>
+      <div style={{
+        background: 'white',
+        padding: '3rem',
+        borderRadius: '24px',
+        textAlign: 'center',
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+      }}>
+        <div style={{
+          width: '48px',
+          height: '48px',
+          border: '3px solid #e2e8f0',
+          borderTopColor: '#10b981',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite',
+          margin: '0 auto 1rem'
+        }} />
+        <p style={{ color: '#64748b', margin: 0, fontSize: '1rem' }}>
+          Redirecting to dashboard...
+        </p>
+      </div>
+
+      <style>{`
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
+    </div>
+  );
 };
 
 export default Dashboard;

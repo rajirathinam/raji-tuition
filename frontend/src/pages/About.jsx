@@ -18,158 +18,373 @@ const About = () => {
     fetchTestimonials();
   }, []);
 
+  const features = [
+    { icon: '🤖', title: 'Smart Technology', desc: 'AI-powered class matching, automated scheduling, and intelligent progress tracking for optimal learning outcomes.', color: '#10b981' },
+    { icon: '✅', title: 'Verified Tutors', desc: 'Rigorous screening process ensures only qualified, experienced educators join our platform.', color: '#fbbf24' },
+    { icon: '⚡', title: 'Real-time Platform', desc: 'Instant notifications, live progress tracking, and seamless communication between students and tutors.', color: '#3b82f6' },
+    { icon: '🎨', title: 'Personalized Learning', desc: 'Tailored learning paths and customized study materials based on individual student needs and goals.', color: '#8b5cf6' },
+    { icon: '🔒', title: 'Trust & Safety', desc: 'Secure platform with verified users, safe payment processing, and comprehensive privacy protection.', color: '#ef4444' },
+    { icon: '📊', title: 'Progress Tracking', desc: 'Comprehensive analytics and reporting to monitor learning progress and identify areas for improvement.', color: '#06b6d4' }
+  ];
+
+  const values = [
+    { icon: '🎯', title: 'Quality Education', desc: 'Committed to providing the highest standard of educational support through verified, experienced tutors.' },
+    { icon: '🌍', title: 'Accessibility', desc: 'Making quality education accessible to students from all backgrounds and locations.' },
+    { icon: '🚀', title: 'Innovation', desc: 'Leveraging cutting-edge technology to create smarter, more effective learning experiences.' }
+  ];
+
   return (
-    <div style={{ backgroundColor: '#f8fafc' }}>
+    <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh' }}>
       <Header />
-      
+
       {/* Hero Section */}
-      <section style={{ padding: '4rem 2rem', backgroundColor: '#1e293b', color: 'white', textAlign: 'center' }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h1 style={{ fontSize: '3rem', fontWeight: 'bold', marginBottom: '1rem' }}>About Tuitix</h1>
-          <p style={{ fontSize: '1.3rem', opacity: '0.9', lineHeight: '1.6' }}>
-            Revolutionizing education through smart tuition management and personalized learning experiences.
+      <section style={{
+        background: 'linear-gradient(135deg, #064e3b 0%, #0f172a 100%)',
+        color: 'white',
+        padding: '5rem 2rem',
+        textAlign: 'center',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          position: 'absolute',
+          top: '10%',
+          left: '5%',
+          width: '300px',
+          height: '300px',
+          background: 'radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%)',
+          borderRadius: '50%'
+        }} />
+        <div style={{
+          position: 'absolute',
+          bottom: '20%',
+          right: '10%',
+          width: '400px',
+          height: '400px',
+          background: 'radial-gradient(circle, rgba(251, 191, 36, 0.1) 0%, transparent 70%)',
+          borderRadius: '50%'
+        }} />
+
+        <div style={{ maxWidth: '800px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+          <span style={{
+            display: 'inline-block',
+            background: 'rgba(16, 185, 129, 0.2)',
+            padding: '0.5rem 1rem',
+            borderRadius: '9999px',
+            fontSize: '0.9rem',
+            fontWeight: 500,
+            marginBottom: '1.5rem',
+            border: '1px solid rgba(16, 185, 129, 0.3)'
+          }}>
+            ✨ About Tuitix
+          </span>
+          <h1 style={{
+            fontSize: '3rem',
+            fontWeight: 800,
+            marginBottom: '1.5rem',
+            letterSpacing: '-0.02em',
+            lineHeight: 1.2
+          }}>
+            Revolutionizing Education Through
+            <br />
+            <span style={{
+              background: 'linear-gradient(135deg, #10b981 0%, #fbbf24 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>
+              Smart Technology
+            </span>
+          </h1>
+          <p style={{
+            fontSize: '1.2rem',
+            color: '#94a3b8',
+            lineHeight: 1.6,
+            maxWidth: '600px',
+            margin: '0 auto'
+          }}>
+            We're building the future of personalized learning, connecting students with expert tutors for transformative educational experiences.
           </p>
         </div>
       </section>
 
       {/* Mission Section */}
-      <section style={{ padding: '4rem 2rem', backgroundColor: 'white' }}>
+      <section style={{ padding: '5rem 2rem', backgroundColor: 'white' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#1e293b', marginBottom: '2rem' }}>Our Mission</h2>
-          <p style={{ fontSize: '1.2rem', color: '#64748b', lineHeight: '1.8', marginBottom: '3rem' }}>
-            To bridge the gap between students and quality education by creating a seamless, technology-driven platform 
-            that connects learners with expert tutors, making personalized learning accessible to everyone.
-          </p>
-          
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
-            <div style={{ padding: '2rem', backgroundColor: '#f1f5f9', borderRadius: '16px' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🎯</div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1e293b', marginBottom: '1rem' }}>Quality Education</h3>
-              <p style={{ color: '#64748b', lineHeight: '1.6' }}>Committed to providing the highest standard of educational support through verified, experienced tutors.</p>
-            </div>
-            <div style={{ padding: '2rem', backgroundColor: '#f1f5f9', borderRadius: '16px' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🌍</div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1e293b', marginBottom: '1rem' }}>Accessibility</h3>
-              <p style={{ color: '#64748b', lineHeight: '1.6' }}>Making quality education accessible to students from all backgrounds and locations.</p>
-            </div>
-            <div style={{ padding: '2rem', backgroundColor: '#f1f5f9', borderRadius: '16px' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🚀</div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1e293b', marginBottom: '1rem' }}>Innovation</h3>
-              <p style={{ color: '#64748b', lineHeight: '1.6' }}>Leveraging cutting-edge technology to create smarter, more effective learning experiences.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* What Makes Us Different */}
-      <section style={{ padding: '4rem 2rem', backgroundColor: '#f8fafc' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#1e293b', marginBottom: '3rem', textAlign: 'center' }}>
-            What Makes Tuitix Different
+          <span style={{
+            display: 'inline-block',
+            background: '#f0fdf4',
+            color: '#059669',
+            padding: '0.5rem 1rem',
+            borderRadius: '9999px',
+            fontSize: '0.85rem',
+            fontWeight: 600,
+            marginBottom: '1rem'
+          }}>
+            🎯 Our Mission
+          </span>
+          <h2 style={{
+            fontSize: '2.5rem',
+            fontWeight: 800,
+            color: '#0f172a',
+            marginBottom: '1.5rem',
+            letterSpacing: '-0.02em'
+          }}>
+            Bridging Students & Quality Education
           </h2>
-          
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-            <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🤖</div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1e293b', marginBottom: '1rem' }}>Smart Technology</h3>
-              <p style={{ color: '#64748b', lineHeight: '1.6' }}>
-                AI-powered class matching, automated scheduling, and intelligent progress tracking for optimal learning outcomes.
-              </p>
-            </div>
-            
-            <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✅</div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1e293b', marginBottom: '1rem' }}>Verified Tutors</h3>
-              <p style={{ color: '#64748b', lineHeight: '1.6' }}>
-                Rigorous screening process ensures only qualified, experienced educators join our platform.
-              </p>
-            </div>
-            
-            <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>⚡</div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1e293b', marginBottom: '1rem' }}>Real-time Platform</h3>
-              <p style={{ color: '#64748b', lineHeight: '1.6' }}>
-                Instant notifications, live progress tracking, and seamless communication between students and tutors.
-              </p>
-            </div>
-            
-            <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🎨</div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1e293b', marginBottom: '1rem' }}>Personalized Learning</h3>
-              <p style={{ color: '#64748b', lineHeight: '1.6' }}>
-                Tailored learning paths and customized study materials based on individual student needs and goals.
-              </p>
-            </div>
-            
-            <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🔒</div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1e293b', marginBottom: '1rem' }}>Trust & Safety</h3>
-              <p style={{ color: '#64748b', lineHeight: '1.6' }}>
-                Secure platform with verified users, safe payment processing, and comprehensive privacy protection.
-              </p>
-            </div>
-            
-            <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📊</div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1e293b', marginBottom: '1rem' }}>Progress Tracking</h3>
-              <p style={{ color: '#64748b', lineHeight: '1.6' }}>
-                Comprehensive analytics and reporting to monitor learning progress and identify areas for improvement.
-              </p>
-            </div>
+          <p style={{
+            fontSize: '1.1rem',
+            color: '#64748b',
+            lineHeight: 1.8,
+            marginBottom: '3rem',
+            maxWidth: '700px',
+            margin: '0 auto 3rem'
+          }}>
+            To create a seamless, technology-driven platform that connects learners with expert tutors, making personalized learning accessible to everyone regardless of their background or location.
+          </p>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '2rem'
+          }}>
+            {values.map((value, index) => (
+              <div
+                key={index}
+                style={{
+                  padding: '2rem',
+                  background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
+                  borderRadius: '20px',
+                  border: '1px solid #e2e8f0',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-5px)';
+                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                <div style={{
+                  width: '60px',
+                  height: '60px',
+                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                  borderRadius: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.5rem',
+                  margin: '0 auto 1rem',
+                  boxShadow: '0 8px 20px rgba(16, 185, 129, 0.3)'
+                }}>
+                  {value.icon}
+                </div>
+                <h3 style={{
+                  fontSize: '1.3rem',
+                  fontWeight: 700,
+                  color: '#0f172a',
+                  marginBottom: '0.75rem'
+                }}>
+                  {value.title}
+                </h3>
+                <p style={{ color: '#64748b', lineHeight: 1.6 }}>{value.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Student Testimonials */}
-      <section style={{ padding: '3rem 2rem', backgroundColor: '#1e293b', color: 'white' }}>
+      {/* Features Section */}
+      <section style={{ padding: '5rem 2rem', backgroundColor: '#f8fafc' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <span style={{
+              display: 'inline-block',
+              background: '#fef3c7',
+              color: '#d97706',
+              padding: '0.5rem 1rem',
+              borderRadius: '9999px',
+              fontSize: '0.85rem',
+              fontWeight: 600,
+              marginBottom: '1rem'
+            }}>
+              ⚡ Why Choose Us
+            </span>
+            <h2 style={{
+              fontSize: '2.5rem',
+              fontWeight: 800,
+              color: '#0f172a',
+              letterSpacing: '-0.02em'
+            }}>
+              What Makes Tuitix Different
+            </h2>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+            gap: '1.5rem'
+          }}>
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                style={{
+                  backgroundColor: 'white',
+                  padding: '2rem',
+                  borderRadius: '20px',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
+                  border: '1px solid #e2e8f0',
+                  transition: 'all 0.3s ease',
+                  cursor: 'default'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-5px)';
+                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.1)';
+                  e.currentTarget.style.borderColor = feature.color;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.05)';
+                  e.currentTarget.style.borderColor = '#e2e8f0';
+                }}
+              >
+                <div style={{
+                  width: '50px',
+                  height: '50px',
+                  background: `${feature.color}20`,
+                  borderRadius: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.5rem',
+                  marginBottom: '1rem'
+                }}>
+                  {feature.icon}
+                </div>
+                <h3 style={{
+                  fontSize: '1.25rem',
+                  fontWeight: 700,
+                  color: '#0f172a',
+                  marginBottom: '0.75rem'
+                }}>
+                  {feature.title}
+                </h3>
+                <p style={{ color: '#64748b', lineHeight: 1.6, fontSize: '0.95rem' }}>{feature.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section style={{
+        padding: '5rem 2rem',
+        background: 'linear-gradient(135deg, #064e3b 0%, #0f172a 100%)',
+        color: 'white'
+      }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '2rem' }}>What Our Students Say</h2>
-          
+          <span style={{
+            display: 'inline-block',
+            background: 'rgba(251, 191, 36, 0.2)',
+            color: '#fbbf24',
+            padding: '0.5rem 1rem',
+            borderRadius: '9999px',
+            fontSize: '0.85rem',
+            fontWeight: 600,
+            marginBottom: '1rem'
+          }}>
+            💬 Testimonials
+          </span>
+          <h2 style={{
+            fontSize: '2.5rem',
+            fontWeight: 800,
+            marginBottom: '3rem',
+            letterSpacing: '-0.02em'
+          }}>
+            What Our Students Say
+          </h2>
+
           {testimonials.length === 0 ? (
-            <p style={{ textAlign: 'center', fontSize: '1.2rem', opacity: '0.8' }}>No testimonials available yet. Be the first to share your experience!</p>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.1)',
+              padding: '3rem',
+              borderRadius: '20px',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(255, 255, 255, 0.1)'
+            }}>
+              <span style={{ fontSize: '3rem', marginBottom: '1rem', display: 'block' }}>💭</span>
+              <p style={{ fontSize: '1.1rem', opacity: 0.9 }}>
+                No testimonials available yet. Be the first to share your experience!
+              </p>
+            </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: '1.5rem'
+            }}>
               {testimonials.map((testimonial, index) => {
-                const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
+                const colors = ['#10b981', '#fbbf24', '#3b82f6', '#ef4444', '#8b5cf6', '#06b6d4'];
                 const bgColor = colors[index % colors.length];
-                
+
                 return (
-                  <div key={testimonial._id} style={{ 
-                    backgroundColor: 'rgba(255,255,255,0.1)', 
-                    padding: '1.5rem', 
-                    borderRadius: '12px',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255,255,255,0.2)'
-                  }}>
-                    <div style={{ fontSize: '1.5rem', marginBottom: '1rem', display: 'flex' }}>
+                  <div
+                    key={testimonial._id}
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.1)',
+                      padding: '2rem',
+                      borderRadius: '20px',
+                      backdropFilter: 'blur(10px)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      textAlign: 'left',
+                      transition: 'all 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-5px)';
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+                    }}
+                  >
+                    <div style={{ marginBottom: '1rem', display: 'flex' }}>
                       {[...Array(5)].map((_, i) => (
-                        <span key={i} style={{ 
-                          color: i < testimonial.rating ? '#f59e0b' : 'rgba(255,255,255,0.3)',
-                          marginRight: '2px'
+                        <span key={i} style={{
+                          color: i < testimonial.rating ? '#fbbf24' : 'rgba(255, 255, 255, 0.2)',
+                          fontSize: '1.2rem'
                         }}>★</span>
                       ))}
                     </div>
-                    <p style={{ fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '1.5rem', fontStyle: 'italic' }}>
+                    <p style={{
+                      fontSize: '1rem',
+                      lineHeight: 1.7,
+                      marginBottom: '1.5rem',
+                      fontStyle: 'italic',
+                      color: '#e2e8f0'
+                    }}>
                       "{testimonial.message}"
                     </p>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                       <div style={{
-                        width: '50px',
-                        height: '50px',
+                        width: '45px',
+                        height: '45px',
                         backgroundColor: bgColor,
-                        borderRadius: '50%',
+                        borderRadius: '12px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '1.5rem',
-                        fontWeight: 'bold',
+                        fontSize: '1.2rem',
+                        fontWeight: 700,
                         color: 'white'
                       }}>
                         {testimonial.name.charAt(0).toUpperCase()}
                       </div>
                       <div>
-                        <p style={{ margin: '0', fontWeight: '600', fontSize: '1.1rem' }}>{testimonial.name}</p>
-                        <p style={{ margin: '0', opacity: '0.8', fontSize: '0.9rem' }}>{testimonial.role}</p>
+                        <p style={{ margin: 0, fontWeight: 600 }}>{testimonial.name}</p>
+                        <p style={{ margin: 0, opacity: 0.7, fontSize: '0.85rem' }}>{testimonial.role}</p>
                       </div>
                     </div>
                   </div>
@@ -177,36 +392,6 @@ const About = () => {
               })}
             </div>
           )}
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section style={{ padding: '3rem 2rem', backgroundColor: 'white' }}>
-        <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1e293b', marginBottom: '1rem' }}>Get in Touch</h2>
-          <p style={{ fontSize: '1rem', color: '#64748b', marginBottom: '2rem' }}>
-            Have questions about Tuitix? We'd love to help you get started.
-          </p>
-          
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '3rem', flexWrap: 'wrap' }}>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>📧</div>
-              <h3 style={{ fontSize: '1rem', fontWeight: '600', color: '#1e293b', marginBottom: '0.25rem' }}>Email</h3>
-              <p style={{ color: '#64748b', fontSize: '0.9rem' }}>support@tuitix.com</p>
-            </div>
-            
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>📞</div>
-              <h3 style={{ fontSize: '1rem', fontWeight: '600', color: '#1e293b', marginBottom: '0.25rem' }}>Phone</h3>
-              <p style={{ color: '#64748b', fontSize: '0.9rem' }}>+1 (555) 123-4567</p>
-            </div>
-            
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🕒</div>
-              <h3 style={{ fontSize: '1rem', fontWeight: '600', color: '#1e293b', marginBottom: '0.25rem' }}>Hours</h3>
-              <p style={{ color: '#64748b', fontSize: '0.9rem' }}>Mon-Fri: 9AM-6PM</p>
-            </div>
-          </div>
         </div>
       </section>
 

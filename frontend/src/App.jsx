@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastProvider } from './components/Toast';
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -41,6 +42,7 @@ import AdminReports from './pages/AdminReports';
 
 const App = () => {
   return (
+    <ToastProvider>
     <Router>
       <Routes>
 
@@ -99,6 +101,7 @@ const App = () => {
 
       </Routes>
     </Router>
+    </ToastProvider>
   );
 };
 

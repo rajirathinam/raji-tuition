@@ -10,11 +10,9 @@ const AuthSuccess = () => {
     const role = searchParams.get('role');
 
     if (token && role) {
-      // Store token and user info
       localStorage.setItem('token', token);
       localStorage.setItem('role', role);
-      
-      // Redirect based on role
+
       if (role === 'admin') navigate('/admin');
       else if (role === 'tutor') navigate('/tutor');
       else navigate('/student');
@@ -24,14 +22,48 @@ const AuthSuccess = () => {
   }, [navigate, searchParams]);
 
   return (
-    <div style={{ 
-      display: 'flex', 
-      justifyContent: 'center', 
-      alignItems: 'center', 
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
       height: '100vh',
-      fontSize: '18px'
+      background: 'linear-gradient(135deg, #064e3b 0%, #0f172a 50%, #1e293b 100%)'
     }}>
-      Signing you in...
+      <div style={{
+        background: 'white',
+        padding: '3rem',
+        borderRadius: '24px',
+        textAlign: 'center',
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+      }}>
+        <div style={{
+          width: '60px',
+          height: '60px',
+          border: '3px solid #e2e8f0',
+          borderTopColor: '#10b981',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite',
+          margin: '0 auto 1.5rem'
+        }} />
+        <h2 style={{
+          fontSize: '1.25rem',
+          fontWeight: 700,
+          color: '#0f172a',
+          margin: '0 0 0.5rem'
+        }}>
+          Signing you in...
+        </h2>
+        <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem' }}>
+          Please wait while we set up your account
+        </p>
+      </div>
+
+      <style>{`
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 };

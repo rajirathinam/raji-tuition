@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/home.css';
-import booksImage from '../assets/book.png';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FeedbackForm from '../components/FeedbackForm';
-import axios from 'axios';
+import bookImage from '../assets/book.png';
 
 const Home = () => {
   const navigate = useNavigate();
   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
   const [galleryImages, setGalleryImages] = useState([]);
-  const handleGetStarted = () => navigate('/welcomeportal');
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    setIsVisible(true);
     const fetchGalleryImages = async () => {
       try {
         const res = await axios.get('https://tuitionapp-yq06.onrender.com/api/gallery');
-        setGalleryImages(res.data.slice(0, 3)); // Show only first 3 images
+        setGalleryImages(res.data.slice(0, 3));
       } catch (err) {
         console.error('Error fetching gallery:', err);
       }
@@ -25,253 +25,582 @@ const Home = () => {
     fetchGalleryImages();
   }, []);
 
-  return (
-    <div className="hero-section">
-      <Header />
-      <main className="hero-content">
-        <section className="text-content">
-          <h1>Learn Smarter, Learn Better!</h1>
-          <p>
-            Join our real-time tuition platform with the best tutors and
-            personalized learning tools.
-          </p>
-          <button className="btn btn-primary" onClick={handleGetStarted}>
-            Get Started
-          </button>
-        </section>
+  const features = [
+    {
+      icon: '📚',
+      title: 'Smart Class Management',
+      description: 'Automated scheduling, easy enrollment, and seamless class organization for better learning.',
+      gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
+    },
+    {
+      icon: '👨‍🏫',
+      title: 'Expert Tutors',
+      description: 'Learn from verified, experienced educators passionate about helping you succeed.',
+      gradient: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)'
+    },
+    {
+      icon: '📱',
+      title: 'Real-time Updates',
+      description: 'Stay connected with instant notifications, announcements, and progress tracking.',
+      gradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)'
+    }
+  ];
 
-        <aside className="image-content">
-          <img src={booksImage} alt="Books representing learning" />
-        </aside>
-      </main>
-      <div className="wave-background"></div>
+  const steps = [
+    { number: '01', title: 'Register & Get Verified', description: 'Sign up as a student or tutor and get verified by our admin team.', color: '#10b981' },
+    { number: '02', title: 'Join or Create Classes', description: 'Browse available classes to enroll or create your own to teach.', color: '#fbbf24' },
+    { number: '03', title: 'Learn & Track Progress', description: 'Access materials, attend classes, and monitor your progress.', color: '#3b82f6' }
+  ];
+
+
+  return (
+    <div style={{ backgroundColor: 'var(--bg-secondary)', minHeight: '100vh' }}>
+      <Header />
       
+      {/* Hero Section */}
+      <section style={{
+        background: 'linear-gradient(135deg, #064e3b 0%, #0f172a 50%, #1e293b 100%)',
+        color: 'white',
+        position: 'relative',
+        overflow: 'hidden',
+        paddingTop: '4rem',
+        paddingBottom: '6rem'
+      }}>
+        {/* Animated Background Elements */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          overflow: 'hidden',
+          pointerEvents: 'none'
+        }}>
+          <div style={{
+            position: 'absolute',
+            top: '10%',
+            left: '5%',
+            width: '300px',
+            height: '300px',
+            background: 'radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%)',
+            borderRadius: '50%',
+            animation: 'pulse 4s ease-in-out infinite'
+          }} />
+          <div style={{
+            position: 'absolute',
+            bottom: '20%',
+            right: '10%',
+            width: '400px',
+            height: '400px',
+            background: 'radial-gradient(circle, rgba(251, 191, 36, 0.1) 0%, transparent 70%)',
+            borderRadius: '50%',
+            animation: 'pulse 5s ease-in-out infinite 1s'
+          }} />
+        </div>
+
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '0 2rem',
+          position: 'relative',
+          zIndex: 1
+        }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '4rem',
+            alignItems: 'center'
+          }}>
+            {/* Left Content */}
+            <div style={{
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+              transition: 'all 0.8s ease-out'
+            }}>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                background: 'rgba(16, 185, 129, 0.2)',
+                padding: '0.5rem 1rem',
+                borderRadius: '9999px',
+                marginBottom: '1.5rem',
+                border: '1px solid rgba(16, 185, 129, 0.3)'
+              }}>
+                <span style={{ fontSize: '0.8rem' }}>🚀</span>
+                <span style={{ fontSize: '0.85rem', fontWeight: 500 }}>Smart Learning Platform</span>
+              </div>
+
+              <h1 style={{
+                fontSize: '3.5rem',
+                fontWeight: 800,
+                lineHeight: 1.1,
+                marginBottom: '1.5rem',
+                letterSpacing: '-0.02em'
+              }}>
+                Learn Smarter,
+                <br />
+                <span style={{
+                  background: 'linear-gradient(135deg, #10b981 0%, #fbbf24 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}>
+                  Achieve More
+                </span>
+              </h1>
+
+              <p style={{
+                fontSize: '1.2rem',
+                color: '#94a3b8',
+                lineHeight: 1.6,
+                marginBottom: '2rem',
+                maxWidth: '500px'
+              }}>
+                Join our real-time tuition platform connecting students with expert tutors. 
+                Personalized learning, progress tracking, and gamified achievements.
+              </p>
+
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                <button
+                  onClick={() => navigate('/register')}
+                  style={{
+                    padding: '1rem 2rem',
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '12px',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 4px 20px rgba(16, 185, 129, 0.4)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.transform = 'translateY(-2px)';
+                    e.target.style.boxShadow = '0 8px 30px rgba(16, 185, 129, 0.5)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.transform = 'translateY(0)';
+                    e.target.style.boxShadow = '0 4px 20px rgba(16, 185, 129, 0.4)';
+                  }}
+                >
+                  Get Started Free
+                  <span>→</span>
+                </button>
+
+                <button
+                  onClick={() => navigate('/about')}
+                  style={{
+                    padding: '1rem 2rem',
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    color: 'white',
+                    border: '2px solid rgba(255, 255, 255, 0.2)',
+                    borderRadius: '12px',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    backdropFilter: 'blur(10px)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = 'rgba(255, 255, 255, 0.2)';
+                    e.target.style.borderColor = 'rgba(255, 255, 255, 0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = 'rgba(255, 255, 255, 0.1)';
+                    e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                  }}
+                >
+                  Learn More
+                </button>
+              </div>
+            </div>
+
+            {/* Right Content - Hero Image */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(30px) scale(0.95)',
+              transition: 'all 0.8s ease-out 0.2s'
+            }}>
+              <img
+                src={bookImage}
+                alt="Learning illustration"
+                style={{
+                  maxWidth: '100%',
+                  width: '400px',
+                  height: 'auto',
+                  filter: 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3))',
+                  animation: 'float 3s ease-in-out infinite'
+                }}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Wave Divider */}
+        <div style={{
+          position: 'absolute',
+          bottom: -2,
+          left: 0,
+          width: '100%',
+          overflow: 'hidden',
+          lineHeight: 0
+        }}>
+          <svg viewBox="0 0 1200 120" preserveAspectRatio="none" style={{ width: '100%', height: '80px' }}>
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="var(--bg-secondary)" opacity=".8"></path>
+            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" fill="var(--bg-secondary)" opacity=".5"></path>
+            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="var(--bg-secondary)"></path>
+          </svg>
+        </div>
+      </section>
+
       {/* Features Section */}
-      <section style={{ padding: '4rem 2rem', backgroundColor: '#f8fafc' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#1e293b', marginBottom: '3rem' }}>Why Choose Tuitix?</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
-            <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📚</div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1e293b', marginBottom: '1rem' }}>Smart Class Management</h3>
-              <p style={{ color: '#64748b', lineHeight: '1.6' }}>Automated scheduling, easy enrollment, and seamless class organization for better learning experience.</p>
-            </div>
-            <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>👨🏫</div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1e293b', marginBottom: '1rem' }}>Expert Tutors</h3>
-              <p style={{ color: '#64748b', lineHeight: '1.6' }}>Learn from verified, experienced educators who are passionate about helping you succeed.</p>
-            </div>
-            <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📱</div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1e293b', marginBottom: '1rem' }}>Real-time Updates</h3>
-              <p style={{ color: '#64748b', lineHeight: '1.6' }}>Stay connected with instant notifications, announcements, and progress tracking.</p>
-            </div>
+      <section style={{ padding: '5rem 2rem', backgroundColor: 'var(--bg-secondary)' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <span style={{
+              display: 'inline-block',
+              background: 'var(--primary-100)',
+              color: 'var(--primary-700)',
+              padding: '0.5rem 1rem',
+              borderRadius: '9999px',
+              fontSize: '0.85rem',
+              fontWeight: 600,
+              marginBottom: '1rem'
+            }}>
+              ✨ Why Choose Us
+            </span>
+            <h2 style={{
+              fontSize: '2.5rem',
+              fontWeight: 800,
+              color: 'var(--text-primary)',
+              marginBottom: '1rem',
+              letterSpacing: '-0.02em'
+            }}>
+              Everything You Need to Excel
+            </h2>
+            <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>
+              Our platform provides all the tools students and tutors need for effective learning and teaching.
+            </p>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '2rem'
+          }}>
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                style={{
+                  background: 'var(--bg-primary)',
+                  borderRadius: '20px',
+                  padding: '2rem',
+                  boxShadow: 'var(--shadow-md)',
+                  border: '1px solid var(--border-light)',
+                  transition: 'all 0.3s ease',
+                  cursor: 'default'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-8px)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-xl)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+                }}
+              >
+                <div style={{
+                  width: '60px',
+                  height: '60px',
+                  background: feature.gradient,
+                  borderRadius: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.8rem',
+                  marginBottom: '1.5rem',
+                  boxShadow: `0 8px 20px ${feature.gradient.includes('10b981') ? 'rgba(16, 185, 129, 0.3)' : feature.gradient.includes('fbbf24') ? 'rgba(251, 191, 36, 0.3)' : 'rgba(59, 130, 246, 0.3)'}`
+                }}>
+                  {feature.icon}
+                </div>
+                <h3 style={{
+                  fontSize: '1.3rem',
+                  fontWeight: 700,
+                  color: 'var(--text-primary)',
+                  marginBottom: '0.75rem'
+                }}>
+                  {feature.title}
+                </h3>
+                <p style={{
+                  color: 'var(--text-muted)',
+                  lineHeight: 1.6
+                }}>
+                  {feature.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
-      
+
       {/* How It Works Section */}
-      <section style={{ padding: '4rem 2rem', backgroundColor: 'white' }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#1e293b', marginBottom: '3rem' }}>How It Works</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
-            <div style={{ padding: '1.5rem' }}>
-              <div style={{ 
-                width: '60px', 
-                height: '60px', 
-                backgroundColor: '#3b82f6', 
-                borderRadius: '50%', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center', 
-                margin: '0 auto 1rem', 
-                color: 'white', 
-                fontSize: '1.5rem', 
-                fontWeight: 'bold' 
-              }}>1</div>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: '600', color: '#1e293b', marginBottom: '1rem' }}>Register & Get Verified</h3>
-              <p style={{ color: '#64748b', lineHeight: '1.6' }}>Sign up as a student or tutor and get verified by our admin team for a secure learning environment.</p>
-            </div>
-            <div style={{ padding: '1.5rem' }}>
-              <div style={{ 
-                width: '60px', 
-                height: '60px', 
-                backgroundColor: '#10b981', 
-                borderRadius: '50%', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center', 
-                margin: '0 auto 1rem', 
-                color: 'white', 
-                fontSize: '1.5rem', 
-                fontWeight: 'bold' 
-              }}>2</div>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: '600', color: '#1e293b', marginBottom: '1rem' }}>Join or Create Classes</h3>
-              <p style={{ color: '#64748b', lineHeight: '1.6' }}>Browse available classes to enroll or create your own classes to teach your expertise.</p>
-            </div>
-            <div style={{ padding: '1.5rem' }}>
-              <div style={{ 
-                width: '60px', 
-                height: '60px', 
-                backgroundColor: '#f59e0b', 
-                borderRadius: '50%', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center', 
-                margin: '0 auto 1rem', 
-                color: 'white', 
-                fontSize: '1.5rem', 
-                fontWeight: 'bold' 
-              }}>3</div>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: '600', color: '#1e293b', marginBottom: '1rem' }}>Learn & Track Progress</h3>
-              <p style={{ color: '#64748b', lineHeight: '1.6' }}>Access study materials, attend classes, and monitor your learning progress in real-time.</p>
-            </div>
+      <section style={{ padding: '5rem 2rem', backgroundColor: 'var(--bg-primary)' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <span style={{
+              display: 'inline-block',
+              background: 'var(--accent-100)',
+              color: 'var(--accent-700)',
+              padding: '0.5rem 1rem',
+              borderRadius: '9999px',
+              fontSize: '0.85rem',
+              fontWeight: 600,
+              marginBottom: '1rem'
+            }}>
+              🎯 Getting Started
+            </span>
+            <h2 style={{
+              fontSize: '2.5rem',
+              fontWeight: 800,
+              color: 'var(--text-primary)',
+              letterSpacing: '-0.02em'
+            }}>
+              How It Works
+            </h2>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
+            {steps.map((step, index) => (
+              <div key={index} style={{ textAlign: 'center', position: 'relative' }}>
+                <div style={{
+                  width: '80px',
+                  height: '80px',
+                  borderRadius: '50%',
+                  background: `linear-gradient(135deg, ${step.color}20 0%, ${step.color}10 100%)`,
+                  border: `3px solid ${step.color}`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 1.5rem',
+                  position: 'relative'
+                }}>
+                  <span style={{
+                    fontSize: '1.5rem',
+                    fontWeight: 800,
+                    color: step.color
+                  }}>
+                    {step.number}
+                  </span>
+                </div>
+                <h3 style={{
+                  fontSize: '1.2rem',
+                  fontWeight: 700,
+                  color: 'var(--text-primary)',
+                  marginBottom: '0.75rem'
+                }}>
+                  {step.title}
+                </h3>
+                <p style={{
+                  color: 'var(--text-muted)',
+                  lineHeight: 1.6,
+                  fontSize: '0.95rem'
+                }}>
+                  {step.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
-      
+
       {/* Gallery Section */}
-      <section style={{ padding: '4rem 2rem', backgroundColor: '#f1f5f9' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#1e293b', marginBottom: '3rem' }}>Our Learning Environment</h2>
-          {galleryImages.length === 0 ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-              {/* Placeholder images when no gallery images */}
-              <div style={{ borderRadius: '16px', overflow: 'hidden', boxShadow: '0 8px 25px rgba(0,0,0,0.1)' }}>
-                <div style={{ 
-                  height: '200px', 
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'white',
-                  fontSize: '3rem'
-                }}>📚</div>
-                <div style={{ padding: '1rem', backgroundColor: 'white' }}>
-                  <h3 style={{ margin: '0 0 0.5rem 0', color: '#1e293b' }}>Modern Classrooms</h3>
-                  <p style={{ margin: '0', color: '#64748b', fontSize: '0.9rem' }}>State-of-the-art learning spaces</p>
+      <section style={{ padding: '5rem 2rem', backgroundColor: 'var(--bg-secondary)' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <h2 style={{
+              fontSize: '2.5rem',
+              fontWeight: 800,
+              color: 'var(--text-primary)',
+              marginBottom: '1rem',
+              letterSpacing: '-0.02em'
+            }}>
+              Our Learning Environment
+            </h2>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+            {galleryImages.length === 0 ? (
+              // Placeholder cards
+              [
+                { icon: '📚', title: 'Modern Classrooms', desc: 'State-of-the-art learning spaces', gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)' },
+                { icon: '🎓', title: 'Student Success', desc: 'Celebrating achievements', gradient: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)' },
+                { icon: '👥', title: 'Interactive Learning', desc: 'Engaging group activities', gradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)' }
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  style={{
+                    borderRadius: '20px',
+                    overflow: 'hidden',
+                    boxShadow: 'var(--shadow-lg)',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-8px)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                >
+                  <div style={{
+                    height: '200px',
+                    background: item.gradient,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '4rem'
+                  }}>
+                    {item.icon}
+                  </div>
+                  <div style={{ padding: '1.5rem', backgroundColor: 'var(--bg-primary)' }}>
+                    <h3 style={{ margin: '0 0 0.5rem 0', color: 'var(--text-primary)', fontWeight: 700 }}>{item.title}</h3>
+                    <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.9rem' }}>{item.desc}</p>
+                  </div>
                 </div>
-              </div>
-              <div style={{ borderRadius: '16px', overflow: 'hidden', boxShadow: '0 8px 25px rgba(0,0,0,0.1)' }}>
-                <div style={{ 
-                  height: '200px', 
-                  background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'white',
-                  fontSize: '3rem'
-                }}>🎓</div>
-                <div style={{ padding: '1rem', backgroundColor: 'white' }}>
-                  <h3 style={{ margin: '0 0 0.5rem 0', color: '#1e293b' }}>Student Success</h3>
-                  <p style={{ margin: '0', color: '#64748b', fontSize: '0.9rem' }}>Celebrating achievements</p>
-                </div>
-              </div>
-              <div style={{ borderRadius: '16px', overflow: 'hidden', boxShadow: '0 8px 25px rgba(0,0,0,0.1)' }}>
-                <div style={{ 
-                  height: '200px', 
-                  background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'white',
-                  fontSize: '3rem'
-                }}>👥</div>
-                <div style={{ padding: '1rem', backgroundColor: 'white' }}>
-                  <h3 style={{ margin: '0 0 0.5rem 0', color: '#1e293b' }}>Interactive Learning</h3>
-                  <p style={{ margin: '0', color: '#64748b', fontSize: '0.9rem' }}>Engaging group activities</p>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
-              {galleryImages.map((image) => (
-                <div key={image._id} style={{ borderRadius: '16px', overflow: 'hidden', boxShadow: '0 8px 25px rgba(0,0,0,0.1)' }}>
-                  <img 
+              ))
+            ) : (
+              galleryImages.map((image) => (
+                <div
+                  key={image._id}
+                  style={{
+                    borderRadius: '20px',
+                    overflow: 'hidden',
+                    boxShadow: 'var(--shadow-lg)',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-8px)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                >
+                  <img
                     src={`https://tuitionapp-yq06.onrender.com${image.imageUrl}`}
                     alt={image.title}
-                    style={{ 
-                      width: '100%', 
-                      height: '250px', 
+                    style={{
+                      width: '100%',
+                      height: '220px',
                       objectFit: 'cover',
-                      objectPosition: 'center',
                       display: 'block'
                     }}
                   />
-                  <div style={{ padding: '1rem', backgroundColor: 'white' }}>
-                    <h3 style={{ margin: '0 0 0.5rem 0', color: '#1e293b' }}>{image.title}</h3>
-                    <p style={{ margin: '0', color: '#64748b', fontSize: '0.9rem' }}>{image.description || `Our ${image.category}`}</p>
+                  <div style={{ padding: '1.5rem', backgroundColor: 'var(--bg-primary)' }}>
+                    <h3 style={{ margin: '0 0 0.5rem 0', color: 'var(--text-primary)', fontWeight: 700 }}>{image.title}</h3>
+                    <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.9rem' }}>{image.description || `Our ${image.category}`}</p>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
+              ))
+            )}
+          </div>
         </div>
       </section>
-      
+
       {/* CTA Section */}
-      <section style={{ padding: '4rem 2rem', backgroundColor: '#1e293b', color: 'white', textAlign: 'center' }}>
+      <section style={{
+        padding: '5rem 2rem',
+        background: 'linear-gradient(135deg, #064e3b 0%, #0f172a 100%)',
+        color: 'white',
+        textAlign: 'center'
+      }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>Ready to Start Your Learning Journey?</h2>
-          <p style={{ fontSize: '1.2rem', marginBottom: '2rem', opacity: '0.9' }}>Join thousands of students and tutors who are already part of our learning community.</p>
+          <h2 style={{
+            fontSize: '2.5rem',
+            fontWeight: 800,
+            marginBottom: '1rem',
+            letterSpacing: '-0.02em'
+          }}>
+            Ready to Start Your Learning Journey?
+          </h2>
+          <p style={{
+            fontSize: '1.2rem',
+            marginBottom: '2.5rem',
+            opacity: 0.9,
+            color: '#cbd5e1'
+          }}>
+            Join thousands of students and tutors who are already part of our learning community.
+          </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button 
-              onClick={() => navigate('/register')} 
+            <button
+              onClick={() => navigate('/register')}
               style={{
                 padding: '1rem 2rem',
-                fontSize: '1.1rem',
-                backgroundColor: '#3b82f6',
+                fontSize: '1rem',
+                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
                 color: 'white',
                 border: 'none',
                 borderRadius: '12px',
-                fontWeight: '600',
+                fontWeight: 600,
                 cursor: 'pointer',
-                transition: 'all 0.3s ease'
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 20px rgba(16, 185, 129, 0.4)'
               }}
-              onMouseEnter={(e) => e.target.style.backgroundColor = '#2563eb'}
-              onMouseLeave={(e) => e.target.style.backgroundColor = '#3b82f6'}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 8px 30px rgba(16, 185, 129, 0.5)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = '0 4px 20px rgba(16, 185, 129, 0.4)';
+              }}
             >
-              Join as Student
+              🎓 Join as Student
             </button>
-            <button 
-              onClick={() => navigate('/register')} 
+            <button
+              onClick={() => navigate('/register')}
               style={{
                 padding: '1rem 2rem',
-                fontSize: '1.1rem',
-                backgroundColor: 'transparent',
+                fontSize: '1rem',
+                background: 'transparent',
                 color: 'white',
-                border: '2px solid white',
+                border: '2px solid rgba(255,255,255,0.3)',
                 borderRadius: '12px',
-                fontWeight: '600',
+                fontWeight: 600,
                 cursor: 'pointer',
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
-                e.target.style.backgroundColor = 'white';
-                e.target.style.color = '#1e293b';
+                e.target.style.background = 'rgba(255,255,255,0.1)';
+                e.target.style.borderColor = 'rgba(255,255,255,0.5)';
               }}
               onMouseLeave={(e) => {
-                e.target.style.backgroundColor = 'transparent';
-                e.target.style.color = 'white';
+                e.target.style.background = 'transparent';
+                e.target.style.borderColor = 'rgba(255,255,255,0.3)';
               }}
             >
-              Become a Tutor
+              👨‍🏫 Become a Tutor
             </button>
-            <button 
-              onClick={() => setShowFeedbackForm(true)} 
+            <button
+              onClick={() => setShowFeedbackForm(true)}
               style={{
                 padding: '1rem 2rem',
-                fontSize: '1.1rem',
-                backgroundColor: '#10b981',
-                color: 'white',
+                fontSize: '1rem',
+                background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+                color: '#0f172a',
                 border: 'none',
                 borderRadius: '12px',
-                fontWeight: '600',
+                fontWeight: 600,
                 cursor: 'pointer',
-                transition: 'all 0.3s ease'
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 20px rgba(251, 191, 36, 0.4)'
               }}
-              onMouseEnter={(e) => e.target.style.backgroundColor = '#059669'}
-              onMouseLeave={(e) => e.target.style.backgroundColor = '#10b981'}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 8px 30px rgba(251, 191, 36, 0.5)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = '0 4px 20px rgba(251, 191, 36, 0.4)';
+              }}
             >
               💬 Share Feedback
             </button>
@@ -279,30 +608,31 @@ const Home = () => {
         </div>
       </section>
 
-      <style>{`
-        .btn {
-          padding: 12px 20px;
-          font-size: 16px;
-          border-radius: 8px;
-          border: none;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.2s ease-in-out;
-        }
-        .btn-primary {
-          background-color: #2563eb;
-          color: white;
-        }
-        .btn-primary:hover {
-          background-color: #1e40af;
-        }
-      `}</style>
-      
       <Footer />
-      
+
       {showFeedbackForm && (
         <FeedbackForm onClose={() => setShowFeedbackForm(false)} />
       )}
+
+      {/* Animation styles */}
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); opacity: 0.5; }
+          50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-15px); }
+        }
+        
+        @media (max-width: 768px) {
+          .hero-grid {
+            grid-template-columns: 1fr !important;
+            text-align: center;
+          }
+        }
+      `}</style>
     </div>
   );
 };
