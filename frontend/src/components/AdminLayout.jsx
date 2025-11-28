@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import kalviLogo from '../assets/logo.png';
 
 const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }) => {
   const [isMinimized, setIsMinimized] = useState(false);
@@ -7,14 +8,14 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
   const navigate = useNavigate();
 
   const menuItems = [
-    { path: '/admin', icon: '📊', label: 'Dashboard' },
-    { path: '/admin/files', icon: '📁', label: 'View All Files' },
-    { path: '/admin/classes', icon: '📚', label: 'View Sessions' },
-    { path: '/admin/create-class', icon: '➕', label: 'Create Session' },
-    { path: '/admin/feedback', icon: '💬', label: 'Manage Feedback' },
-    { path: '/admin/gallery', icon: '🖼️', label: 'Gallery' },
-    { path: '/admin/payments', icon: '💰', label: 'Payment Management' },
-    { path: '/admin/reports', icon: '📈', label: 'Reports & Analytics' }
+    { path: '/admin', icon: '◇', label: 'Dashboard' },
+    { path: '/admin/files', icon: '▣', label: 'View All Files' },
+    { path: '/admin/classes', icon: '○', label: 'View Sessions' },
+    { path: '/admin/create-class', icon: '⊕', label: 'Create Session' },
+    { path: '/admin/feedback', icon: '✧', label: 'Manage Feedback' },
+    { path: '/admin/gallery', icon: '⬡', label: 'Gallery' },
+    { path: '/admin/payments', icon: '◈', label: 'Payment Management' },
+    { path: '/admin/reports', icon: '△', label: 'Reports & Analytics' }
   ];
 
   const handleLogout = () => {
@@ -56,19 +57,15 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
           }}>
             {!isMinimized && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <div style={{
-                  width: '36px',
-                  height: '36px',
-                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                  borderRadius: '10px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1rem',
-                  boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
-                }}>
-                  🛡️
-                </div>
+                <img 
+                  src={kalviLogo} 
+                  alt="Kalvi Logo" 
+                  style={{
+                    width: '36px',
+                    height: '36px',
+                    objectFit: 'contain'
+                  }}
+                />
                 <div>
                   <h2 style={{
                     color: 'white',
@@ -188,7 +185,7 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
             }}
             title={isMinimized ? 'Post Announcement' : ''}
           >
-            <span style={{ fontSize: '1.1rem', width: '24px', textAlign: 'center' }}>📢</span>
+            <span style={{ fontSize: '1.1rem', width: '24px', textAlign: 'center' }}>✦</span>
             {!isMinimized && <span style={{ fontSize: '0.9rem', fontWeight: 500 }}>Post Announcement</span>}
           </button>
         </nav>
@@ -222,7 +219,7 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
               e.currentTarget.style.color = '#94a3b8';
             }}
           >
-            <span style={{ fontSize: '1.1rem' }}>🏠</span>
+            <span style={{ fontSize: '1.1rem' }}>⌂</span>
             {!isMinimized && <span style={{ fontSize: '0.9rem', fontWeight: 500 }}>Back to Home</span>}
           </Link>
 
@@ -249,7 +246,7 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
               e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)';
             }}
           >
-            <span style={{ fontSize: '1.1rem' }}>🚪</span>
+            <span style={{ fontSize: '1.1rem' }}>⊗</span>
             {!isMinimized && <span style={{ fontSize: '0.9rem', fontWeight: 500 }}>Logout</span>}
           </button>
         </div>
@@ -315,7 +312,7 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
               fontWeight: 700,
               fontSize: '0.9rem'
             }}>
-              🛡️
+              ✦
             </div>
             <div>
               <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: '#0f172a' }}>Administrator</p>
@@ -343,7 +340,7 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
           textAlign: 'center'
         }}>
           <p style={{ margin: 0, fontSize: '0.85rem', color: '#94a3b8' }}>
-            © {new Date().getFullYear()} Tuitix Admin Panel
+            © {new Date().getFullYear()} Kalvi Admin Panel
           </p>
         </footer>
       </div>

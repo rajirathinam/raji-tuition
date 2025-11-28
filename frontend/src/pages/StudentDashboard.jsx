@@ -147,7 +147,7 @@ const StudentDashboard = () => {
           marginBottom: '0.5rem',
           textShadow: '0 2px 10px rgba(0, 0, 0, 0.2)'
         }}>
-          ⏰ {formatClock(currentTime)}
+          {formatClock(currentTime)}
         </div>
         <div style={{
           fontSize: '1rem',
@@ -169,19 +169,16 @@ const StudentDashboard = () => {
             fontSize: '1.5rem',
             fontWeight: 700,
             color: '#0f172a',
-            marginBottom: '1rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem'
+            marginBottom: '1rem'
           }}>
-            📢 Announcements
+            Announcements
           </h2>
           <div style={{ display: 'grid', gap: '1rem' }}>
             {announcements.slice(0, 3).map((announcement) => {
               const typeStyles = {
-                urgent: { bg: '#fef2f2', border: '#ef4444', icon: '🚨' },
-                holiday: { bg: '#f0fdf4', border: '#22c55e', icon: '🎉' },
-                general: { bg: '#f8fafc', border: '#10b981', icon: '📌' }
+                urgent: { bg: '#fef2f2', border: '#ef4444' },
+                holiday: { bg: '#f0fdf4', border: '#22c55e' },
+                general: { bg: '#f8fafc', border: '#10b981' }
               };
               const style = typeStyles[announcement.type] || typeStyles.general;
 
@@ -193,19 +190,16 @@ const StudentDashboard = () => {
                   borderRadius: '12px',
                   transition: 'all 0.2s ease'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
-                    <span style={{ fontSize: '1.5rem' }}>{style.icon}</span>
-                    <div style={{ flex: 1 }}>
-                      <h4 style={{ margin: '0 0 0.5rem 0', color: '#0f172a', fontWeight: 600 }}>
-                        {announcement.title}
-                      </h4>
-                      <p style={{ margin: '0 0 0.5rem 0', color: '#475569', lineHeight: 1.5 }}>
-                        {announcement.message}
-                      </p>
-                      <small style={{ color: '#94a3b8' }}>
-                        {new Date(announcement.createdAt).toLocaleDateString()}
-                      </small>
-                    </div>
+                  <div style={{ flex: 1 }}>
+                    <h4 style={{ margin: '0 0 0.5rem 0', color: '#0f172a', fontWeight: 600 }}>
+                      {announcement.title}
+                    </h4>
+                    <p style={{ margin: '0 0 0.5rem 0', color: '#475569', lineHeight: 1.5 }}>
+                      {announcement.message}
+                    </p>
+                    <small style={{ color: '#94a3b8' }}>
+                      {new Date(announcement.createdAt).toLocaleDateString()}
+                    </small>
                   </div>
                 </div>
               );
@@ -221,12 +215,9 @@ const StudentDashboard = () => {
             fontSize: '1.5rem',
             fontWeight: 700,
             color: '#0f172a',
-            marginBottom: '1rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem'
+            marginBottom: '1rem'
           }}>
-            📚 My Sessions
+            My Sessions
           </h2>
           <div style={{
             display: 'grid',
@@ -271,9 +262,11 @@ const StudentDashboard = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '1.5rem'
+                    color: 'white',
+                    fontWeight: 700,
+                    fontSize: '1.2rem'
                   }}>
-                    📖
+                    {cls.name?.charAt(0) || 'S'}
                   </div>
                   <span style={{
                     padding: '0.25rem 0.75rem',
@@ -295,14 +288,14 @@ const StudentDashboard = () => {
                   {cls.name}
                 </h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span>📘</span> {cls.subject}
+                  <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem' }}>
+                    Subject: {cls.subject}
                   </p>
-                  <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span>📅</span> {cls.schedule}
+                  <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem' }}>
+                    Schedule: {cls.schedule}
                   </p>
-                  <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span>👨‍🏫</span> {cls.tutor?.name || "N/A"}
+                  <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem' }}>
+                    Tutor: {cls.tutor?.name || "N/A"}
                   </p>
                 </div>
                 <div style={{
@@ -358,12 +351,9 @@ const StudentDashboard = () => {
             fontSize: '1.5rem',
             fontWeight: 700,
             color: '#0f172a',
-            marginBottom: '1rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem'
+            marginBottom: '1rem'
           }}>
-            📄 Study Materials
+            Study Materials
           </h2>
           <div style={{
             backgroundColor: 'white',
@@ -411,10 +401,12 @@ const StudentDashboard = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '1.2rem',
+                    color: 'white',
+                    fontWeight: 700,
+                    fontSize: '0.9rem',
                     flexShrink: 0
                   }}>
-                    📄
+                    PDF
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <p style={{
@@ -529,26 +521,18 @@ const StudentDashboard = () => {
               marginBottom: '1.5rem'
             }}>
               <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
                 padding: '0.75rem',
                 background: '#f8fafc',
                 borderRadius: '10px'
               }}>
-                <span>📅</span>
-                <span style={{ color: '#475569' }}>{selectedClass.schedule}</span>
+                <span style={{ color: '#475569' }}>Schedule: {selectedClass.schedule}</span>
               </div>
               <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
                 padding: '0.75rem',
                 background: '#f8fafc',
                 borderRadius: '10px'
               }}>
-                <span>👨‍🏫</span>
-                <span style={{ color: '#475569' }}>{selectedClass.tutor?.name || "N/A"}</span>
+                <span style={{ color: '#475569' }}>Tutor: {selectedClass.tutor?.name || "N/A"}</span>
               </div>
             </div>
 
@@ -556,7 +540,7 @@ const StudentDashboard = () => {
             {selectedClass.resources && selectedClass.resources.length > 0 && (
               <div style={{ marginBottom: '1.5rem' }}>
                 <h4 style={{ color: '#0f172a', marginBottom: '0.75rem', fontWeight: 600 }}>
-                  📚 Resources
+                  Resources
                 </h4>
                 {selectedClass.resources.map((resource, index) => (
                   <a
@@ -578,7 +562,7 @@ const StudentDashboard = () => {
                     onMouseEnter={(e) => e.target.style.background = '#dcfce7'}
                     onMouseLeave={(e) => e.target.style.background = '#f0fdf4'}
                   >
-                    🔗 Resource Link {index + 1}
+                    Resource Link {index + 1}
                   </a>
                 ))}
               </div>
@@ -588,7 +572,7 @@ const StudentDashboard = () => {
             {selectedClass.announcements && selectedClass.announcements.length > 0 && (
               <div>
                 <h4 style={{ color: '#0f172a', marginBottom: '0.75rem', fontWeight: 600 }}>
-                  📢 Class Announcements
+                  Class Announcements
                 </h4>
                 {selectedClass.announcements.slice().reverse().map((announcement, index) => (
                   <div

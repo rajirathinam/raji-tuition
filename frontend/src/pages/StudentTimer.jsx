@@ -33,7 +33,7 @@ const StudentTimer = () => {
       }, 1000);
     } else if (timerTime === 0 && timerActive) {
       setTimerActive(false);
-      toast.success('⏰ Timer finished! Great work!');
+      toast.success('Timer finished! Great work!');
     }
     return () => clearInterval(interval);
   }, [timerActive, timerTime, toast]);
@@ -96,7 +96,7 @@ const StudentTimer = () => {
           justifyContent: 'center',
           gap: '0.5rem'
         }}>
-          ⏲️ Study Timer
+          Study Timer
         </h2>
         <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
           Track your study sessions and stay focused
@@ -113,8 +113,8 @@ const StudentTimer = () => {
         borderRadius: '12px'
       }}>
         {[
-          { id: 'timer', icon: '⏲️', label: 'Timer' },
-          { id: 'stopwatch', icon: '⏱️', label: 'Stopwatch' }
+          { id: 'timer', label: 'Timer' },
+          { id: 'stopwatch', label: 'Stopwatch' }
         ].map(tab => (
           <button
             key={tab.id}

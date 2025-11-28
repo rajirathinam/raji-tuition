@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import kalviLogo from '../assets/logo.png';
 
 const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -50,26 +51,22 @@ const Header = () => {
           alignItems: 'center',
           gap: '0.5rem'
         }}>
-          <div style={{
-            width: '40px',
-            height: '40px',
-            background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-            borderRadius: '10px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '1.2rem',
-            boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
-          }}>
-            📚
-          </div>
+          <img 
+            src={kalviLogo} 
+            alt="Kalvi Logo" 
+            style={{
+              width: '40px',
+              height: '40px',
+              objectFit: 'contain'
+            }}
+          />
           <span style={{
             fontSize: '1.5rem',
             fontWeight: 800,
             color: 'white',
             letterSpacing: '-0.02em'
           }}>
-            Tuitix
+            Kalvi
           </span>
         </Link>
 
@@ -153,9 +150,10 @@ const Header = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '0.8rem'
+                  fontSize: '0.7rem',
+                  fontWeight: 600
                 }}>
-                  👤
+                  A
                 </span>
                 My Account
                 <span style={{ fontSize: '0.7rem', transition: 'transform 0.2s ease', transform: showDropdown ? 'rotate(180deg)' : 'rotate(0)' }}>▼</span>
@@ -208,7 +206,6 @@ const Header = () => {
                       onMouseEnter={(e) => e.target.style.background = '#f8fafc'}
                       onMouseLeave={(e) => e.target.style.background = 'transparent'}
                     >
-                      <span>📊</span>
                       Dashboard
                     </Link>
                     <button
@@ -231,7 +228,6 @@ const Header = () => {
                       onMouseEnter={(e) => e.target.style.background = '#fef2f2'}
                       onMouseLeave={(e) => e.target.style.background = 'transparent'}
                     >
-                      <span>🚪</span>
                       Logout
                     </button>
                   </div>

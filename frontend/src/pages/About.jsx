@@ -19,18 +19,18 @@ const About = () => {
   }, []);
 
   const features = [
-    { icon: '🤖', title: 'Smart Technology', desc: 'AI-powered class matching, automated scheduling, and intelligent progress tracking for optimal learning outcomes.', color: '#10b981' },
-    { icon: '✅', title: 'Verified Tutors', desc: 'Rigorous screening process ensures only qualified, experienced educators join our platform.', color: '#fbbf24' },
-    { icon: '⚡', title: 'Real-time Platform', desc: 'Instant notifications, live progress tracking, and seamless communication between students and tutors.', color: '#3b82f6' },
-    { icon: '🎨', title: 'Personalized Learning', desc: 'Tailored learning paths and customized study materials based on individual student needs and goals.', color: '#8b5cf6' },
-    { icon: '🔒', title: 'Trust & Safety', desc: 'Secure platform with verified users, safe payment processing, and comprehensive privacy protection.', color: '#ef4444' },
-    { icon: '📊', title: 'Progress Tracking', desc: 'Comprehensive analytics and reporting to monitor learning progress and identify areas for improvement.', color: '#06b6d4' }
+    { title: 'Smart Technology', desc: 'AI-powered class matching, automated scheduling, and intelligent progress tracking for optimal learning outcomes.', color: '#10b981' },
+    { title: 'Verified Tutors', desc: 'Rigorous screening process ensures only qualified, experienced educators join our platform.', color: '#fbbf24' },
+    { title: 'Real-time Platform', desc: 'Instant notifications, live progress tracking, and seamless communication between students and tutors.', color: '#3b82f6' },
+    { title: 'Personalized Learning', desc: 'Tailored learning paths and customized study materials based on individual student needs and goals.', color: '#8b5cf6' },
+    { title: 'Trust & Safety', desc: 'Secure platform with verified users, safe payment processing, and comprehensive privacy protection.', color: '#ef4444' },
+    { title: 'Progress Tracking', desc: 'Comprehensive analytics and reporting to monitor learning progress and identify areas for improvement.', color: '#06b6d4' }
   ];
 
   const values = [
-    { icon: '🎯', title: 'Quality Education', desc: 'Committed to providing the highest standard of educational support through verified, experienced tutors.' },
-    { icon: '🌍', title: 'Accessibility', desc: 'Making quality education accessible to students from all backgrounds and locations.' },
-    { icon: '🚀', title: 'Innovation', desc: 'Leveraging cutting-edge technology to create smarter, more effective learning experiences.' }
+    { title: 'Quality Education', desc: 'Committed to providing the highest standard of educational support through verified, experienced tutors.' },
+    { title: 'Accessibility', desc: 'Making quality education accessible to students from all backgrounds and locations.' },
+    { title: 'Innovation', desc: 'Leveraging cutting-edge technology to create smarter, more effective learning experiences.' }
   ];
 
   return (
@@ -75,8 +75,8 @@ const About = () => {
             fontWeight: 500,
             marginBottom: '1.5rem',
             border: '1px solid rgba(16, 185, 129, 0.3)'
-          }}>
-            ✨ About Tuitix
+          }}          >
+            About Kalvi
           </span>
           <h1 style={{
             fontSize: '3rem',
@@ -120,8 +120,8 @@ const About = () => {
             fontSize: '0.85rem',
             fontWeight: 600,
             marginBottom: '1rem'
-          }}>
-            🎯 Our Mission
+          }}          >
+            Our Mission
           </span>
           <h2 style={{
             fontSize: '2.5rem',
@@ -175,11 +175,15 @@ const About = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '1.5rem',
                   margin: '0 auto 1rem',
                   boxShadow: '0 8px 20px rgba(16, 185, 129, 0.3)'
                 }}>
-                  {value.icon}
+                  <div style={{
+                    width: '24px',
+                    height: '24px',
+                    borderRadius: '6px',
+                    background: 'rgba(255,255,255,0.3)'
+                  }} />
                 </div>
                 <h3 style={{
                   fontSize: '1.3rem',
@@ -209,8 +213,8 @@ const About = () => {
               fontSize: '0.85rem',
               fontWeight: 600,
               marginBottom: '1rem'
-            }}>
-              ⚡ Why Choose Us
+            }}            >
+              Why Choose Us
             </span>
             <h2 style={{
               fontSize: '2.5rem',
@@ -218,7 +222,7 @@ const About = () => {
               color: '#0f172a',
               letterSpacing: '-0.02em'
             }}>
-              What Makes Tuitix Different
+              What Makes Kalvi Different
             </h2>
           </div>
 
@@ -258,10 +262,14 @@ const About = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '1.5rem',
                   marginBottom: '1rem'
                 }}>
-                  {feature.icon}
+                  <div style={{
+                    width: '20px',
+                    height: '20px',
+                    borderRadius: '4px',
+                    background: feature.color
+                  }} />
                 </div>
                 <h3 style={{
                   fontSize: '1.25rem',
@@ -294,8 +302,8 @@ const About = () => {
             fontSize: '0.85rem',
             fontWeight: 600,
             marginBottom: '1rem'
-          }}>
-            💬 Testimonials
+          }}          >
+            Testimonials
           </span>
           <h2 style={{
             fontSize: '2.5rem',
@@ -314,7 +322,6 @@ const About = () => {
               backdropFilter: 'blur(10px)',
               border: '1px solid rgba(255, 255, 255, 0.1)'
             }}>
-              <span style={{ fontSize: '3rem', marginBottom: '1rem', display: 'block' }}>💭</span>
               <p style={{ fontSize: '1.1rem', opacity: 0.9 }}>
                 No testimonials available yet. Be the first to share your experience!
               </p>

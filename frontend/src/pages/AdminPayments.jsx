@@ -79,11 +79,11 @@ const AdminPayments = () => {
   };
 
   const statCards = [
-    { icon: '👥', value: stats.totalStudents || 0, label: 'Total Students', color: '#3b82f6' },
-    { icon: '✅', value: stats.paidStudents || 0, label: 'Paid Students', color: '#10b981' },
-    { icon: '⏳', value: stats.pendingStudents || 0, label: 'Pending Verification', color: '#fbbf24' },
-    { icon: '❌', value: stats.unpaidStudents || 0, label: 'Unpaid Students', color: '#ef4444' },
-    { icon: '💰', value: `₹${stats.totalRevenue || 0}`, label: 'Total Revenue', color: '#10b981' }
+    { value: stats.totalStudents || 0, label: 'Total Students', color: '#3b82f6' },
+    { value: stats.paidStudents || 0, label: 'Paid Students', color: '#10b981' },
+    { value: stats.pendingStudents || 0, label: 'Pending Verification', color: '#fbbf24' },
+    { value: stats.unpaidStudents || 0, label: 'Unpaid Students', color: '#ef4444' },
+    { value: `₹${stats.totalRevenue || 0}`, label: 'Total Revenue', color: '#10b981' }
   ];
 
   return (
@@ -100,7 +100,7 @@ const AdminPayments = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
-            💰 Payment Management
+            Payment Management
           </h2>
           <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
             Verify payments and track revenue
@@ -180,7 +180,7 @@ const AdminPayments = () => {
               boxShadow: loading ? 'none' : '0 4px 15px rgba(251, 191, 36, 0.4)'
             }}
           >
-            {loading ? 'Sending...' : '📧 Send Payment Reminders'}
+            {loading ? 'Sending...' : 'Send Payment Reminders'}
           </button>
         </div>
 
@@ -200,12 +200,12 @@ const AdminPayments = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
-            ⏳ Pending Payments ({pendingPayments.length})
+            Pending Payments ({pendingPayments.length})
           </h3>
 
           {pendingPayments.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '3rem' }}>
-              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>✅</div>
+              <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>✓</div>
               <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
                 All Caught Up!
               </h3>
@@ -297,7 +297,7 @@ const AdminPayments = () => {
                         fontWeight: 500
                       }}
                     >
-                      ✅ Approve
+                      Approve
                     </button>
 
                     <button
@@ -314,7 +314,7 @@ const AdminPayments = () => {
                         fontWeight: 500
                       }}
                     >
-                      ❌ Reject
+                      Reject
                     </button>
                   </div>
                 </div>
@@ -354,7 +354,7 @@ const AdminPayments = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <h3 style={{ margin: '0 0 1rem 0', color: '#0f172a', fontWeight: 700 }}>
-                ❌ Reject Payment
+                Reject Payment
               </h3>
               <p style={{ marginBottom: '1rem', color: '#64748b' }}>
                 Student: <strong>{selectedPayment.studentId.name}</strong> - {selectedPayment.month}

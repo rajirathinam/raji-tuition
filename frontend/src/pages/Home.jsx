@@ -27,19 +27,16 @@ const Home = () => {
 
   const features = [
     {
-      icon: '📚',
       title: 'Smart Class Management',
       description: 'Automated scheduling, easy enrollment, and seamless class organization for better learning.',
       gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
     },
     {
-      icon: '👨‍🏫',
       title: 'Expert Tutors',
       description: 'Learn from verified, experienced educators passionate about helping you succeed.',
       gradient: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)'
     },
     {
-      icon: '📱',
       title: 'Real-time Updates',
       description: 'Stay connected with instant notifications, announcements, and progress tracking.',
       gradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)'
@@ -127,7 +124,6 @@ const Home = () => {
                 marginBottom: '1.5rem',
                 border: '1px solid rgba(16, 185, 129, 0.3)'
               }}>
-                <span style={{ fontSize: '0.8rem' }}>🚀</span>
                 <span style={{ fontSize: '0.85rem', fontWeight: 500 }}>Smart Learning Platform</span>
               </div>
 
@@ -275,7 +271,7 @@ const Home = () => {
               fontWeight: 600,
               marginBottom: '1rem'
             }}>
-              ✨ Why Choose Us
+              Why Choose Us
             </span>
             <h2 style={{
               fontSize: '2.5rem',
@@ -325,11 +321,15 @@ const Home = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '1.8rem',
                   marginBottom: '1.5rem',
                   boxShadow: `0 8px 20px ${feature.gradient.includes('10b981') ? 'rgba(16, 185, 129, 0.3)' : feature.gradient.includes('fbbf24') ? 'rgba(251, 191, 36, 0.3)' : 'rgba(59, 130, 246, 0.3)'}`
                 }}>
-                  {feature.icon}
+                  <div style={{
+                    width: '24px',
+                    height: '24px',
+                    borderRadius: '4px',
+                    background: 'rgba(255,255,255,0.3)'
+                  }} />
                 </div>
                 <h3 style={{
                   fontSize: '1.3rem',
@@ -365,7 +365,7 @@ const Home = () => {
               fontWeight: 600,
               marginBottom: '1rem'
             }}>
-              🎯 Getting Started
+              Getting Started
             </span>
             <h2 style={{
               fontSize: '2.5rem',
@@ -440,9 +440,9 @@ const Home = () => {
             {galleryImages.length === 0 ? (
               // Placeholder cards
               [
-                { icon: '📚', title: 'Modern Classrooms', desc: 'State-of-the-art learning spaces', gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)' },
-                { icon: '🎓', title: 'Student Success', desc: 'Celebrating achievements', gradient: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)' },
-                { icon: '👥', title: 'Interactive Learning', desc: 'Engaging group activities', gradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)' }
+                { title: 'Modern Classrooms', desc: 'State-of-the-art learning spaces', gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)' },
+                { title: 'Student Success', desc: 'Celebrating achievements', gradient: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)' },
+                { title: 'Interactive Learning', desc: 'Engaging group activities', gradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)' }
               ].map((item, index) => (
                 <div
                   key={index}
@@ -460,10 +460,15 @@ const Home = () => {
                     background: item.gradient,
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '4rem'
+                    justifyContent: 'center'
                   }}>
-                    {item.icon}
+                    <div style={{
+                      width: '80px',
+                      height: '80px',
+                      borderRadius: '20px',
+                      background: 'rgba(255,255,255,0.2)',
+                      backdropFilter: 'blur(10px)'
+                    }} />
                   </div>
                   <div style={{ padding: '1.5rem', backgroundColor: 'var(--bg-primary)' }}>
                     <h3 style={{ margin: '0 0 0.5rem 0', color: 'var(--text-primary)', fontWeight: 700 }}>{item.title}</h3>
@@ -553,7 +558,7 @@ const Home = () => {
                 e.target.style.boxShadow = '0 4px 20px rgba(16, 185, 129, 0.4)';
               }}
             >
-              🎓 Join as Student
+              Join as Student
             </button>
             <button
               onClick={() => navigate('/register')}
@@ -577,7 +582,7 @@ const Home = () => {
                 e.target.style.borderColor = 'rgba(255,255,255,0.3)';
               }}
             >
-              👨‍🏫 Become a Tutor
+              Become a Tutor
             </button>
             <button
               onClick={() => setShowFeedbackForm(true)}
@@ -602,7 +607,7 @@ const Home = () => {
                 e.target.style.boxShadow = '0 4px 20px rgba(251, 191, 36, 0.4)';
               }}
             >
-              💬 Share Feedback
+              Share Feedback
             </button>
           </div>
         </div>

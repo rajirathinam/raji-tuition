@@ -251,7 +251,7 @@ const AdminGallery = () => {
                           fontWeight: 500
                         }}
                       >
-                        🗑️ Delete
+                        Delete
                       </button>
                     </div>
                   </div>
@@ -346,10 +346,10 @@ const AdminGallery = () => {
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                     style={{ ...inputStyle, background: 'white' }}
                   >
-                    <option value="classroom">🏫 Classroom</option>
-                    <option value="students">👨‍🎓 Students</option>
-                    <option value="events">🎉 Events</option>
-                    <option value="achievements">🏆 Achievements</option>
+                    <option value="classroom">Classroom</option>
+                    <option value="students">Students</option>
+                    <option value="events">Events</option>
+                    <option value="achievements">Achievements</option>
                   </select>
                 </div>
 

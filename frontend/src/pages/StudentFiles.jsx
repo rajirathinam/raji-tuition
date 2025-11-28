@@ -60,22 +60,22 @@ const StudentFiles = () => {
   const getFileIcon = (filename) => {
     const ext = filename?.split('.').pop()?.toLowerCase();
     const icons = {
-      pdf: '📕',
-      doc: '📘',
-      docx: '📘',
-      ppt: '📙',
-      pptx: '📙',
-      xls: '📗',
-      xlsx: '📗',
-      txt: '📄',
-      jpg: '🖼️',
-      jpeg: '🖼️',
-      png: '🖼️',
-      mp4: '🎬',
-      mp3: '🎵',
-      zip: '📦'
+      pdf: '▣',
+      doc: '▣',
+      docx: '▣',
+      ppt: '◇',
+      pptx: '◇',
+      xls: '△',
+      xlsx: '△',
+      txt: '☰',
+      jpg: '⬡',
+      jpeg: '⬡',
+      png: '⬡',
+      mp4: '▷',
+      mp3: '♫',
+      zip: '◈'
     };
-    return icons[ext] || '📄';
+    return icons[ext] || '▣';
   };
 
   if (loading) {
@@ -114,7 +114,7 @@ const StudentFiles = () => {
           alignItems: 'center',
           gap: '0.5rem'
         }}>
-          📚 Study Materials
+          Study Materials
         </h2>
         <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
           Access your course files and resources
@@ -193,7 +193,7 @@ const StudentFiles = () => {
               textAlign: 'center',
               padding: '4rem 2rem'
             }}>
-              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📁</div>
+              <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>▣</div>
               <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
                 No Study Materials
               </h3>
@@ -211,7 +211,7 @@ const StudentFiles = () => {
                 border: '1px solid #bbf7d0'
               }}>
                 <h3 style={{ margin: '0 0 0.25rem 0', color: '#166534', fontSize: '1rem' }}>
-                  📂 Available Files ({files.length})
+                  Available Files ({files.length})
                 </h3>
                 <p style={{ margin: 0, color: '#16a34a', fontSize: '0.85rem' }}>
                   Click on any file to download or view
@@ -279,8 +279,8 @@ const StudentFiles = () => {
                           color: '#64748b',
                           flexWrap: 'wrap'
                         }}>
-                          <span>👤 {file.uploadedBy?.name}</span>
-                          <span>📅 {new Date(file.createdAt).toLocaleDateString()}</span>
+                          <span>By: {file.uploadedBy?.name}</span>
+                          <span>{new Date(file.createdAt).toLocaleDateString()}</span>
                         </div>
                       </div>
                       <div style={{
@@ -315,7 +315,7 @@ const StudentFiles = () => {
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
           border: '1px solid #e2e8f0'
         }}>
-          <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📚</div>
+          <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>▣</div>
           <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
             No Enrolled Sessions
           </h3>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { useToast } from '../components/Toast';
+import kalviLogo from '../assets/logo.png';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -95,20 +96,17 @@ const Register = () => {
 
           {/* Header */}
           <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-            <div style={{
-              width: '60px',
-              height: '60px',
-              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-              borderRadius: '16px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 1rem',
-              fontSize: '1.5rem',
-              boxShadow: '0 8px 20px rgba(16, 185, 129, 0.3)'
-            }}>
-              🎓
-            </div>
+            <img 
+              src={kalviLogo} 
+              alt="Kalvi Logo" 
+              style={{
+                width: '60px',
+                height: '60px',
+                objectFit: 'contain',
+                margin: '0 auto 1rem',
+                display: 'block'
+              }}
+            />
             <h2 style={{
               fontSize: '1.75rem',
               fontWeight: 800,
@@ -119,7 +117,7 @@ const Register = () => {
               Create Account
             </h2>
             <p style={{ color: '#64748b', fontSize: '0.95rem' }}>
-              Join Tuitix and start your learning journey
+              Join Kalvi and start your learning journey
             </p>
           </div>
 
@@ -131,7 +129,7 @@ const Register = () => {
                 Full Name
               </label>
               <div style={{ position: 'relative' }}>
-                <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', fontSize: '1rem', opacity: 0.5 }}>👤</span>
+                <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', fontSize: '1rem', opacity: 0.5 }}>○</span>
                 <input
                   name="name"
                   type="text"
@@ -152,7 +150,7 @@ const Register = () => {
                 Email Address
               </label>
               <div style={{ position: 'relative' }}>
-                <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', fontSize: '1rem', opacity: 0.5 }}>📧</span>
+                <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', fontSize: '1rem', opacity: 0.5 }}>@</span>
                 <input
                   name="email"
                   type="email"
@@ -229,7 +227,7 @@ const Register = () => {
                     gap: '0.5rem'
                   }}
                 >
-                  <span style={{ fontSize: '1.5rem' }}>🎓</span>
+                  <span style={{ fontSize: '1.5rem' }}>○</span>
                   <span style={{ fontWeight: 600, color: formData.role === 'student' ? '#059669' : '#374151' }}>Student</span>
                 </button>
                 <button
@@ -248,7 +246,7 @@ const Register = () => {
                     gap: '0.5rem'
                   }}
                 >
-                  <span style={{ fontSize: '1.5rem' }}>👨‍🏫</span>
+                  <span style={{ fontSize: '1.5rem' }}>◇</span>
                   <span style={{ fontWeight: 600, color: formData.role === 'tutor' ? '#d97706' : '#374151' }}>Tutor</span>
                 </button>
               </div>
@@ -261,7 +259,7 @@ const Register = () => {
                   Specialization / Subject
                 </label>
                 <div style={{ position: 'relative' }}>
-                  <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', fontSize: '1rem', opacity: 0.5 }}>📚</span>
+                  <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', fontSize: '1rem', opacity: 0.5 }}>▣</span>
                   <input
                     type="text"
                     name="specialization"

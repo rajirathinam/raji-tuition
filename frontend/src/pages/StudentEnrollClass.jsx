@@ -81,7 +81,7 @@ const StudentEnrollClass = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
-            ✅ Enrolled Sessions ({enrolledSessions.length})
+            Enrolled Sessions ({enrolledSessions.length})
           </h2>
 
           <div style={{
@@ -170,7 +170,7 @@ const StudentEnrollClass = () => {
                     fontSize: '0.85rem',
                     fontWeight: 500
                   }}>
-                    📚 {session.subject}
+                    {session.subject}
                   </span>
                   <span style={{
                     backgroundColor: '#fef3c7',
@@ -180,7 +180,7 @@ const StudentEnrollClass = () => {
                     fontSize: '0.85rem',
                     fontWeight: 500
                   }}>
-                    📅 {session.schedule}
+                    {session.schedule}
                   </span>
                 </div>
 
@@ -192,7 +192,7 @@ const StudentEnrollClass = () => {
                   alignItems: 'center',
                   gap: '0.5rem'
                 }}>
-                  <span>👨‍🏫</span> {session.tutor?.name || "N/A"}
+                  Tutor: {session.tutor?.name || "N/A"}
                 </p>
               </div>
             ))}
@@ -212,7 +212,7 @@ const StudentEnrollClass = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
-            📚 Other Available Sessions ({availableSessions.length})
+            Other Available Sessions ({availableSessions.length})
           </h2>
 
           <div style={{
@@ -287,7 +287,7 @@ const StudentEnrollClass = () => {
                     fontSize: '0.85rem',
                     fontWeight: 500
                   }}>
-                    📚 {session.subject}
+                    {session.subject}
                   </span>
                   <span style={{
                     backgroundColor: '#dcfce7',
@@ -297,7 +297,7 @@ const StudentEnrollClass = () => {
                     fontSize: '0.85rem',
                     fontWeight: 500
                   }}>
-                    🎓 Grade {session.classLevel}
+                    Grade {session.classLevel}
                   </span>
                   <span style={{
                     backgroundColor: '#fef3c7',
@@ -307,7 +307,7 @@ const StudentEnrollClass = () => {
                     fontSize: '0.85rem',
                     fontWeight: 500
                   }}>
-                    📅 {session.schedule}
+                    {session.schedule}
                   </span>
                 </div>
 
@@ -319,7 +319,7 @@ const StudentEnrollClass = () => {
                   alignItems: 'center',
                   gap: '0.5rem'
                 }}>
-                  <span>👨‍🏫</span> {session.tutor?.name || "N/A"}
+                  Tutor: {session.tutor?.name || "N/A"}
                 </p>
 
                 <div style={{
@@ -351,7 +351,7 @@ const StudentEnrollClass = () => {
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
           border: '1px solid #e2e8f0'
         }}>
-          <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📚</div>
+          <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>○</div>
           <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
             No sessions available
           </h3>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import kalviLogo from '../assets/logo.png';
 
 const RoleSidebar = ({ role, onWidthChange }) => {
   const location = useLocation();
@@ -14,24 +15,24 @@ const RoleSidebar = ({ role, onWidthChange }) => {
   }, [isCollapsed, onWidthChange]);
 
   const studentMenuItems = [
-    { path: '/student', icon: '📊', label: 'Dashboard' },
-    { path: '/student/performance', icon: '📈', label: 'My Performance' },
-    { path: '/student/ai-prediction', icon: '🤖', label: 'AI Prediction' },
-    { path: '/student/assignments', icon: '📝', label: 'My Assignments' },
-    { path: '/student/files', icon: '📚', label: 'Study Materials' },
-    { path: '/student/enroll', icon: '🎓', label: 'Enrolled Sessions' },
-    { path: '/student/achievements', icon: '🏆', label: 'Achievements' },
-    { path: '/student/timer', icon: '⏲️', label: 'Timer & Stopwatch' },
-    { path: '/student/payments', icon: '💳', label: 'Fee Payments' }
+    { path: '/student', icon: '◇', label: 'Dashboard' },
+    { path: '/student/performance', icon: '△', label: 'My Performance' },
+    { path: '/student/ai-prediction', icon: '⟡', label: 'AI Prediction' },
+    { path: '/student/assignments', icon: '☰', label: 'My Assignments' },
+    { path: '/student/files', icon: '▣', label: 'Study Materials' },
+    { path: '/student/enroll', icon: '○', label: 'Enrolled Sessions' },
+    { path: '/student/achievements', icon: '☆', label: 'Achievements' },
+    { path: '/student/timer', icon: '◎', label: 'Timer & Stopwatch' },
+    { path: '/student/payments', icon: '◈', label: 'Fee Payments' }
   ];
 
   const tutorMenuItems = [
-    { path: '/tutor', icon: '📊', label: 'Dashboard' },
-    { path: '/tutor/assignments', icon: '📝', label: 'Manage Assignments' },
-    { path: '/tutor/sessions', icon: '👥', label: 'My Sessions' },
-    { path: '/tutor/files', icon: '📁', label: 'File Management' },
-    { path: '/tutor/student-progress', icon: '📊', label: 'Student Progress' },
-    { path: '/tutor/analytics', icon: '📈', label: 'Performance Analytics' }
+    { path: '/tutor', icon: '◇', label: 'Dashboard' },
+    { path: '/tutor/assignments', icon: '☰', label: 'Manage Assignments' },
+    { path: '/tutor/sessions', icon: '○', label: 'My Sessions' },
+    { path: '/tutor/files', icon: '▣', label: 'File Management' },
+    { path: '/tutor/student-progress', icon: '△', label: 'Student Progress' },
+    { path: '/tutor/analytics', icon: '⟡', label: 'Performance Analytics' }
   ];
 
   const menuItems = role === 'student' ? studentMenuItems : tutorMenuItems;
@@ -64,19 +65,15 @@ const RoleSidebar = ({ role, onWidthChange }) => {
         }}>
           {!isCollapsed && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <div style={{
-                width: '36px',
-                height: '36px',
-                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                borderRadius: '10px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '1rem',
-                boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
-              }}>
-                {role === 'student' ? '🎓' : '👨‍🏫'}
-              </div>
+              <img 
+                src={kalviLogo} 
+                alt="Kalvi Logo" 
+                style={{
+                  width: '36px',
+                  height: '36px',
+                  objectFit: 'contain'
+                }}
+              />
               <div>
                 <h2 style={{
                   color: 'white',
@@ -227,7 +224,7 @@ const RoleSidebar = ({ role, onWidthChange }) => {
           }}
           title={isCollapsed ? 'Back to Home' : ''}
         >
-          <span style={{ fontSize: '1.1rem' }}>🏠</span>
+          <span style={{ fontSize: '1.1rem' }}>⌂</span>
           {!isCollapsed && (
             <span style={{ fontSize: '0.9rem', fontWeight: 500 }}>Back to Home</span>
           )}

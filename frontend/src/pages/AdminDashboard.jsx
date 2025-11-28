@@ -169,10 +169,10 @@ const AdminDashboard = () => {
   };
 
   const statCards = [
-    { icon: '👨‍🎓', value: stats.activeStudents, label: 'Active Students', color: '#10b981' },
-    { icon: '👨‍🏫', value: stats.expertTutors, label: 'Expert Tutors', color: '#fbbf24' },
-    { icon: '📚', value: stats.completedClasses, label: 'Classes Conducted', color: '#3b82f6' },
-    { icon: '📄', value: stats.studyMaterials, label: 'Study Materials', color: '#8b5cf6' }
+    { value: stats.activeStudents, label: 'Active Students', color: '#10b981' },
+    { value: stats.expertTutors, label: 'Expert Tutors', color: '#fbbf24' },
+    { value: stats.completedClasses, label: 'Classes Conducted', color: '#3b82f6' },
+    { value: stats.studyMaterials, label: 'Study Materials', color: '#8b5cf6' }
   ];
 
   // Loading State
@@ -252,10 +252,14 @@ const AdminDashboard = () => {
                 borderRadius: '12px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '1.5rem'
+                justifyContent: 'center'
               }}>
-                {stat.icon}
+                <div style={{
+                  width: '20px',
+                  height: '20px',
+                  borderRadius: '4px',
+                  background: stat.color
+                }} />
               </div>
             </div>
           </div>
@@ -286,7 +290,7 @@ const AdminDashboard = () => {
             boxShadow: activeTab === "student" ? '0 4px 12px rgba(16, 185, 129, 0.3)' : 'none'
           }}
         >
-          👨‍🎓 Students
+          Students
         </button>
         <button
           onClick={() => setActiveTab("tutor")}
@@ -302,7 +306,7 @@ const AdminDashboard = () => {
             boxShadow: activeTab === "tutor" ? '0 4px 12px rgba(251, 191, 36, 0.3)' : 'none'
           }}
         >
-          👨‍🏫 Tutors
+          Tutors
         </button>
       </div>
 
@@ -336,10 +340,10 @@ const AdminDashboard = () => {
               minWidth: '180px'
             }}
           >
-            <option value="all">📚 All Students ({classCounts.all})</option>
+            <option value="all">All Students ({classCounts.all})</option>
             {['4', '5', '6', '7', '8', '9', '10', '11', '12'].map((cls) => (
               <option key={cls} value={cls}>
-                🎓 Class {cls} ({classCounts[cls]})
+                Class {cls} ({classCounts[cls]})
               </option>
             ))}
           </select>
@@ -400,7 +404,6 @@ const AdminDashboard = () => {
               {data.length === 0 ? (
                 <tr>
                   <td colSpan="4" style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
-                    <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{type === "student" ? '👨‍🎓' : '👨‍🏫'}</div>
                     No {type}s found.
                   </td>
                 </tr>
@@ -487,7 +490,7 @@ const AdminDashboard = () => {
                                 transition: 'all 0.2s ease'
                               }}
                             >
-                              ✓ Approve
+                              Approve
                             </button>
                             <button
                               onClick={() => declineTutor(item._id)}
@@ -503,7 +506,7 @@ const AdminDashboard = () => {
                                 transition: 'all 0.2s ease'
                               }}
                             >
-                              ✕ Decline
+                              Decline
                             </button>
                           </>
                         )}
@@ -527,15 +530,15 @@ const AdminDashboard = () => {
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
           border: '1px solid #e2e8f0'
         }}>
-          <h3 style={{ marginBottom: '1rem', color: '#0f172a', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            📢 Current Announcements
+          <h3 style={{ marginBottom: '1rem', color: '#0f172a', fontWeight: 700 }}>
+            Current Announcements
           </h3>
           <div style={{ display: 'grid', gap: '0.75rem' }}>
             {announcements.map((announcement) => {
               const typeStyles = {
-                urgent: { bg: '#fef2f2', border: '#ef4444', icon: '🚨' },
-                holiday: { bg: '#f0fdf4', border: '#22c55e', icon: '🎉' },
-                general: { bg: '#f8fafc', border: '#10b981', icon: '📌' }
+                urgent: { bg: '#fef2f2', border: '#ef4444' },
+                holiday: { bg: '#f0fdf4', border: '#22c55e' },
+                general: { bg: '#f8fafc', border: '#10b981' }
               };
               const style = typeStyles[announcement.type] || typeStyles.general;
 
@@ -552,12 +555,9 @@ const AdminDashboard = () => {
                     borderRadius: '10px'
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
-                    <span style={{ fontSize: '1.25rem' }}>{style.icon}</span>
-                    <div>
-                      <strong style={{ color: '#0f172a' }}>{announcement.title}</strong>
-                      <p style={{ margin: '0.25rem 0 0', color: '#64748b', fontSize: '0.9rem' }}>{announcement.message}</p>
-                    </div>
+                  <div>
+                    <strong style={{ color: '#0f172a' }}>{announcement.title}</strong>
+                    <p style={{ margin: '0.25rem 0 0', color: '#64748b', fontSize: '0.9rem' }}>{announcement.message}</p>
                   </div>
                   <button
                     onClick={() => deleteAnnouncement(announcement._id)}
@@ -572,7 +572,7 @@ const AdminDashboard = () => {
                       fontSize: '0.8rem'
                     }}
                   >
-                    🗑️ Delete
+                    Delete
                   </button>
                 </div>
               );
@@ -607,7 +607,7 @@ const AdminDashboard = () => {
             animation: 'slideUp 0.3s ease'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>📢 Post Global Announcement</h3>
+              <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>Post Global Announcement</h3>
               <button
                 onClick={() => setShowAnnouncementForm(false)}
                 style={{
@@ -669,9 +669,9 @@ const AdminDashboard = () => {
                     background: 'white'
                   }}
                 >
-                  <option value="general">📌 General</option>
-                  <option value="holiday">🎉 Holiday</option>
-                  <option value="urgent">🚨 Urgent</option>
+                  <option value="general">General</option>
+                  <option value="holiday">Holiday</option>
+                  <option value="urgent">Urgent</option>
                 </select>
               </div>
               <div style={{ marginBottom: '1.5rem' }}>
@@ -711,7 +711,7 @@ const AdminDashboard = () => {
                     boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
                   }}
                 >
-                  📢 Post Announcement
+                  Post Announcement
                 </button>
                 <button
                   type="button"

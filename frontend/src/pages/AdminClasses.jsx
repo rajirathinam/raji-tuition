@@ -81,7 +81,7 @@ const AdminClasses = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
-            📚 All Tuition Sessions
+            All Tuition Sessions
           </h1>
           <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
             Manage all sessions and their assignments
@@ -97,7 +97,7 @@ const AdminClasses = () => {
             boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
             border: '1px solid #e2e8f0'
           }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📚</div>
+            <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>○</div>
             <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
               No Sessions Yet
             </h3>
@@ -146,7 +146,7 @@ const AdminClasses = () => {
                         fontSize: '0.85rem',
                         fontWeight: 500
                       }}>
-                        📚 {cls.subject}
+                        {cls.subject}
                       </span>
                       <span style={{
                         backgroundColor: '#dcfce7',
@@ -156,7 +156,7 @@ const AdminClasses = () => {
                         fontSize: '0.85rem',
                         fontWeight: 500
                       }}>
-                        🎓 Grade {cls.classLevel}
+                        Grade {cls.classLevel}
                       </span>
                       <span style={{
                         backgroundColor: '#fef3c7',
@@ -166,7 +166,7 @@ const AdminClasses = () => {
                         fontSize: '0.85rem',
                         fontWeight: 500
                       }}>
-                        📅 {cls.schedule}
+                        {cls.schedule}
                       </span>
                     </div>
                   </div>
@@ -179,7 +179,7 @@ const AdminClasses = () => {
                       fontSize: '0.85rem',
                       fontWeight: 600
                     }}>
-                      {cls.status === 'completed' ? '✅ Completed' : '📋 Scheduled'}
+                      {cls.status === 'completed' ? 'Completed' : 'Scheduled'}
                     </span>
                     <button
                       onClick={() => handleDeleteClass(cls._id)}
@@ -195,7 +195,7 @@ const AdminClasses = () => {
                         boxShadow: '0 2px 8px rgba(239, 68, 68, 0.3)'
                       }}
                     >
-                      🗑️ Delete
+                      Delete
                     </button>
                   </div>
                 </div>
@@ -208,7 +208,7 @@ const AdminClasses = () => {
                   border: '1px solid #e2e8f0'
                 }}>
                   <h4 style={{ margin: '0 0 0.5rem 0', color: '#374151', fontSize: '0.9rem', fontWeight: 600 }}>
-                    👨‍🏫 Assigned Tutor
+                    Assigned Tutor
                   </h4>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                     <div style={{
@@ -237,7 +237,7 @@ const AdminClasses = () => {
 
                 {cls.scheduledDate && (
                   <div style={{ marginTop: '1rem', fontSize: '0.85rem', color: '#64748b' }}>
-                    📅 Scheduled for: {new Date(cls.scheduledDate).toLocaleDateString()}
+                    Scheduled for: {new Date(cls.scheduledDate).toLocaleDateString()}
                   </div>
                 )}
               </div>

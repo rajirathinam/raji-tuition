@@ -52,8 +52,8 @@ const TutorPerformanceAnalytics = () => {
   };
 
   const getTrendIcon = (trend) => {
-    const icons = { improving: '📈', stable: '➡️', declining: '📉' };
-    return icons[trend] || '📊';
+    const icons = { improving: '↗', stable: '→', declining: '↘' };
+    return icons[trend] || '○';
   };
 
   if (loading && !classDetails) {
@@ -80,10 +80,9 @@ const TutorPerformanceAnalytics = () => {
   }
 
   const overviewCards = [
-    { icon: '🎓', value: classAnalytics.length, label: 'Total Classes', color: '#3b82f6' },
-    { icon: '👥', value: classAnalytics.reduce((sum, cls) => sum + cls.totalStudents, 0), label: 'Total Students', color: '#10b981' },
+    { value: classAnalytics.length, label: 'Total Classes', color: '#3b82f6' },
+    { value: classAnalytics.reduce((sum, cls) => sum + cls.totalStudents, 0), label: 'Total Students', color: '#10b981' },
     {
-      icon: '📈',
       value: classAnalytics.length > 0
         ? `${Math.round((classAnalytics.reduce((sum, cls) => sum + cls.classAverage, 0) / classAnalytics.length) * 100) / 100}%`
         : '0%',
@@ -105,7 +104,7 @@ const TutorPerformanceAnalytics = () => {
           alignItems: 'center',
           gap: '0.5rem'
         }}>
-          📊 Class Performance Analytics
+          Class Performance Analytics
         </h2>
         <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
           Monitor student performance across your classes

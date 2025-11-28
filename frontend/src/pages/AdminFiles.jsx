@@ -110,7 +110,7 @@ const AdminFiles = () => {
         marginBottom: '1rem',
         fontSize: '1.5rem'
       }}>
-        ❌
+        ✕
       </div>
       <p style={{
         color: '#dc2626',
@@ -165,7 +165,7 @@ const AdminFiles = () => {
         marginBottom: '1.5rem',
         fontSize: '2rem'
       }}>
-        📁
+        ▣
       </div>
       <h3 style={{
         color: '#0f172a',
@@ -207,7 +207,7 @@ const AdminFiles = () => {
               alignItems: 'center',
               gap: '0.5rem'
             }}>
-              📄 All Uploaded Files
+              All Uploaded Files
             </h2>
             <p style={{
               color: '#64748b',
@@ -336,7 +336,7 @@ const AdminFiles = () => {
                           justifyContent: 'center',
                           fontSize: '0.9rem'
                         }}>
-                          📄
+                          ▣
                         </span>
                         {file.title}
                       </a>
@@ -374,7 +374,7 @@ const AdminFiles = () => {
                           e.target.style.boxShadow = '0 2px 8px rgba(239, 68, 68, 0.3)';
                         }}
                       >
-                        🗑️ Delete
+                        Delete
                       </button>
                     </td>
                   </tr>

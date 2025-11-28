@@ -144,7 +144,7 @@ const TutorAssignments = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
-            📝 My Assignments
+            My Assignments
           </h2>
           <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
             Create and manage assignments for your students
@@ -282,7 +282,7 @@ const TutorAssignments = () => {
             boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
             border: '1px solid #e2e8f0'
           }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📝</div>
+            <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>☰</div>
             <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Assignments Yet</h3>
             <p style={{ color: '#64748b' }}>Create your first assignment to get started!</p>
           </div>
@@ -304,22 +304,22 @@ const TutorAssignments = () => {
                   <p style={{ color: '#64748b', margin: '0 0 1rem 0', fontSize: '0.9rem' }}>{assignment.description}</p>
                   <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
                     <span style={{ backgroundColor: '#dbeafe', color: '#1e40af', padding: '0.25rem 0.75rem', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 500 }}>
-                      📚 {assignment.subject}
+                      {assignment.subject}
                     </span>
                     <span style={{ backgroundColor: '#dcfce7', color: '#166534', padding: '0.25rem 0.75rem', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 500 }}>
-                      🎓 Class {assignment.className}
+                      Class {assignment.className}
                     </span>
                     <span style={{ backgroundColor: '#f0fdf4', color: '#166534', padding: '0.25rem 0.75rem', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 500 }}>
-                      🎯 {assignment.totalPoints} pts
+                      {assignment.totalPoints} pts
                     </span>
                     <span style={{ backgroundColor: '#fef3c7', color: '#92400e', padding: '0.25rem 0.75rem', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 500 }}>
-                      📅 {new Date(assignment.dueDate).toLocaleString()}
+                      {new Date(assignment.dueDate).toLocaleString()}
                     </span>
                   </div>
                   <div style={{ display: 'flex', gap: '1rem', fontSize: '0.85rem' }}>
-                    <span style={{ color: '#3b82f6' }}>📤 {assignment.submissionCount} submissions</span>
-                    <span style={{ color: '#10b981' }}>✅ {assignment.gradedCount} graded</span>
-                    <span style={{ color: '#fbbf24' }}>⏳ {assignment.pendingGrading} pending</span>
+                    <span style={{ color: '#3b82f6' }}>{assignment.submissionCount} submissions</span>
+                    <span style={{ color: '#10b981' }}>{assignment.gradedCount} graded</span>
+                    <span style={{ color: '#fbbf24' }}>{assignment.pendingGrading} pending</span>
                   </div>
                 </div>
                 <button

@@ -81,9 +81,9 @@ const TutorDashboard = () => {
   }
 
   const statCards = [
-    { icon: '📚', value: stats.totalSessions, label: 'My Sessions', color: '#10b981' },
-    { icon: '👨‍🎓', value: stats.totalStudents, label: 'Total Students', color: '#fbbf24' },
-    { icon: '📝', value: mySessions.reduce((acc, s) => acc + (s.announcements?.length || 0), 0), label: 'Announcements', color: '#3b82f6' }
+    { value: stats.totalSessions, label: 'My Sessions', color: '#10b981' },
+    { value: stats.totalStudents, label: 'Total Students', color: '#fbbf24' },
+    { value: mySessions.reduce((acc, s) => acc + (s.announcements?.length || 0), 0), label: 'Announcements', color: '#3b82f6' }
   ];
 
   return (
@@ -113,7 +113,7 @@ const TutorDashboard = () => {
             fontWeight: 700,
             margin: '0 0 0.5rem 0'
           }}>
-            Welcome back, Tutor! 👋
+            Welcome back, Tutor!
           </h1>
           <p style={{
             fontSize: '1rem',
@@ -170,10 +170,14 @@ const TutorDashboard = () => {
                 borderRadius: '12px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '1.5rem'
+                justifyContent: 'center'
               }}>
-                {stat.icon}
+                <div style={{
+                  width: '20px',
+                  height: '20px',
+                  borderRadius: '4px',
+                  background: stat.color
+                }} />
               </div>
             </div>
           </div>
@@ -187,19 +191,16 @@ const TutorDashboard = () => {
             fontSize: '1.5rem',
             fontWeight: 700,
             color: '#0f172a',
-            marginBottom: '1rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem'
+            marginBottom: '1rem'
           }}>
-            📢 Global Announcements
+            Global Announcements
           </h2>
           <div style={{ display: 'grid', gap: '1rem' }}>
             {announcements.slice(0, 3).map((announcement) => {
               const typeStyles = {
-                urgent: { bg: '#fef2f2', border: '#ef4444', icon: '🚨' },
-                holiday: { bg: '#f0fdf4', border: '#22c55e', icon: '🎉' },
-                general: { bg: '#f8fafc', border: '#10b981', icon: '📌' }
+                urgent: { bg: '#fef2f2', border: '#ef4444' },
+                holiday: { bg: '#f0fdf4', border: '#22c55e' },
+                general: { bg: '#f8fafc', border: '#10b981' }
               };
               const style = typeStyles[announcement.type] || typeStyles.general;
 
@@ -214,19 +215,16 @@ const TutorDashboard = () => {
                     transition: 'all 0.2s ease'
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
-                    <span style={{ fontSize: '1.5rem' }}>{style.icon}</span>
-                    <div style={{ flex: 1 }}>
-                      <h4 style={{ margin: '0 0 0.5rem 0', color: '#0f172a', fontWeight: 600 }}>
-                        {announcement.title}
-                      </h4>
-                      <p style={{ margin: '0 0 0.5rem 0', color: '#475569', lineHeight: 1.5 }}>
-                        {announcement.message}
-                      </p>
-                      <small style={{ color: '#94a3b8' }}>
-                        {new Date(announcement.createdAt).toLocaleDateString()}
-                      </small>
-                    </div>
+                  <div style={{ flex: 1 }}>
+                    <h4 style={{ margin: '0 0 0.5rem 0', color: '#0f172a', fontWeight: 600 }}>
+                      {announcement.title}
+                    </h4>
+                    <p style={{ margin: '0 0 0.5rem 0', color: '#475569', lineHeight: 1.5 }}>
+                      {announcement.message}
+                    </p>
+                    <small style={{ color: '#94a3b8' }}>
+                      {new Date(announcement.createdAt).toLocaleDateString()}
+                    </small>
                   </div>
                 </div>
               );
@@ -242,12 +240,9 @@ const TutorDashboard = () => {
             fontSize: '1.5rem',
             fontWeight: 700,
             color: '#0f172a',
-            marginBottom: '1rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem'
+            marginBottom: '1rem'
           }}>
-            📚 My Sessions
+            My Sessions
           </h2>
           <div style={{
             display: 'grid',
@@ -290,9 +285,11 @@ const TutorDashboard = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '1.5rem'
+                    color: 'white',
+                    fontWeight: 700,
+                    fontSize: '1.2rem'
                   }}>
-                    📖
+                    {session.name?.charAt(0) || 'S'}
                   </div>
                   <span style={{
                     padding: '0.25rem 0.75rem',
@@ -314,11 +311,11 @@ const TutorDashboard = () => {
                   {session.name}
                 </h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span>📘</span> {session.subject}
+                  <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem' }}>
+                    Subject: {session.subject}
                   </p>
-                  <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span>📅</span> {session.schedule}
+                  <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem' }}>
+                    Schedule: {session.schedule}
                   </p>
                 </div>
               </div>
@@ -337,7 +334,6 @@ const TutorDashboard = () => {
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
           border: '1px solid #e2e8f0'
         }}>
-          <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📚</div>
           <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
             No sessions yet
           </h3>

@@ -131,7 +131,7 @@ const StudentPerformance = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
-            📊 My Performance Records
+            My Performance Records
           </h2>
           <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
             Track your academic progress
@@ -171,7 +171,7 @@ const StudentPerformance = () => {
             color: '#0f172a',
             marginBottom: '1.5rem'
           }}>
-            📝 Add Performance Record
+            Add Performance Record
           </h3>
           <form onSubmit={handleSubmit} style={{
             display: 'grid',
@@ -333,7 +333,7 @@ const StudentPerformance = () => {
             padding: '4rem 2rem',
             textAlign: 'center'
           }}>
-            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📊</div>
+            <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#10b981' }}>△</div>
             <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Records Yet</h3>
             <p style={{ color: '#64748b' }}>Add your first performance record to start tracking!</p>
           </div>

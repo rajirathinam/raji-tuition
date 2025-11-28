@@ -166,9 +166,9 @@ const TutorStudentProgress = () => {
           alignItems: 'center',
           gap: '0.5rem'
         }}>
-          {selectedStudent ? `📊 ${selectedStudent.name}'s Performance` :
-            selectedClass ? `👨‍🎓 Class ${selectedClass} Students` :
-              '📚 Student Progress by Class'}
+          {selectedStudent ? `${selectedStudent.name}'s Performance` :
+            selectedClass ? `Class ${selectedClass} Students` :
+              'Student Progress by Class'}
         </h2>
         <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
           {selectedStudent ? 'View detailed performance records' :
@@ -194,7 +194,7 @@ const TutorStudentProgress = () => {
               boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
               border: '1px solid #e2e8f0'
             }}>
-              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📚</div>
+              <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>▣</div>
               <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Students Found</h3>
               <p style={{ color: '#64748b' }}>No students found in your classes</p>
             </div>
@@ -238,7 +238,7 @@ const TutorStudentProgress = () => {
                     fontSize: '1.75rem',
                     boxShadow: '0 8px 20px rgba(16, 185, 129, 0.3)'
                   }}>
-                    📚
+                    ▣
                   </div>
                   <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>
                     Class {className}
@@ -319,7 +319,7 @@ const TutorStudentProgress = () => {
         }}>
           {performances.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '4rem 2rem' }}>
-              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📊</div>
+              <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>△</div>
               <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
                 No Performance Records
               </h3>

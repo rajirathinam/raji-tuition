@@ -87,7 +87,7 @@ const AdminReports = () => {
               alignItems: 'center',
               gap: '0.5rem'
             }}>
-              📊 Reports & Analytics
+              Reports & Analytics
             </h2>
             <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
               Track performance, revenue, and student progress
@@ -127,19 +127,19 @@ const AdminReports = () => {
   }
 
   const tabs = [
-    { id: 'dashboard', icon: '📈', label: 'Dashboard' },
-    { id: 'revenue', icon: '💰', label: 'Revenue' },
-    { id: 'performance', icon: '🎯', label: 'Performance' },
-    { id: 'payments', icon: '💳', label: 'Payments' }
+    { id: 'dashboard', label: 'Dashboard' },
+    { id: 'revenue', label: 'Revenue' },
+    { id: 'performance', label: 'Performance' },
+    { id: 'payments', label: 'Payments' }
   ];
 
   const dashboardCards = dashboardData ? [
-    { icon: '👥', value: dashboardData.totalStudents, label: 'Total Students', color: '#3b82f6' },
-    { icon: '👨‍🏫', value: dashboardData.totalTutors, label: 'Total Tutors', color: '#10b981' },
-    { icon: '💰', value: formatCurrency(dashboardData.currentRevenue), label: 'This Month', color: '#fbbf24', growth: dashboardData.revenueGrowth },
-    { icon: '📊', value: `${dashboardData.avgPerformance}%`, label: 'Avg Performance', color: '#8b5cf6' },
-    { icon: '💳', value: `${dashboardData.collectionRate}%`, label: 'Collection Rate', color: '#06b6d4' },
-    { icon: '⚠️', value: dashboardData.studentsAtRisk, label: 'At Risk', color: '#ef4444' }
+    { value: dashboardData.totalStudents, label: 'Total Students', color: '#3b82f6' },
+    { value: dashboardData.totalTutors, label: 'Total Tutors', color: '#10b981' },
+    { value: formatCurrency(dashboardData.currentRevenue), label: 'This Month', color: '#fbbf24', growth: dashboardData.revenueGrowth },
+    { value: `${dashboardData.avgPerformance}%`, label: 'Avg Performance', color: '#8b5cf6' },
+    { value: `${dashboardData.collectionRate}%`, label: 'Collection Rate', color: '#06b6d4' },
+    { value: dashboardData.studentsAtRisk, label: 'At Risk', color: '#ef4444' }
   ] : [];
 
   return (
@@ -156,7 +156,7 @@ const AdminReports = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
-            📊 Reports & Analytics
+            Reports & Analytics
           </h2>
           <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
             Track performance, revenue, and student progress
@@ -190,7 +190,7 @@ const AdminReports = () => {
                 boxShadow: activeTab === tab.id ? '0 4px 12px rgba(16, 185, 129, 0.3)' : 'none'
               }}
             >
-              {tab.icon} {tab.label}
+              {tab.label}
             </button>
           ))}
         </div>
@@ -238,7 +238,7 @@ const AdminReports = () => {
                         color: card.growth >= 0 ? '#10b981' : '#ef4444',
                         margin: '0.25rem 0 0'
                       }}>
-                        {card.growth >= 0 ? '↗️' : '↘️'} {Math.abs(card.growth)}%
+                        {card.growth >= 0 ? '↗' : '↘'} {Math.abs(card.growth)}%
                       </p>
                     )}
                   </div>
@@ -249,10 +249,14 @@ const AdminReports = () => {
                     borderRadius: '12px',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '1.5rem'
+                    justifyContent: 'center'
                   }}>
-                    {card.icon}
+                    <div style={{
+                      width: '20px',
+                      height: '20px',
+                      borderRadius: '4px',
+                      background: card.color
+                    }} />
                   </div>
                 </div>
               </div>
@@ -278,7 +282,7 @@ const AdminReports = () => {
               alignItems: 'center',
               gap: '0.5rem'
             }}>
-              📈 Revenue Trends (Last 6 Months)
+              Revenue Trends (Last 6 Months)
             </h3>
 
             {revenueTrends.length === 0 ? (
@@ -360,7 +364,7 @@ const AdminReports = () => {
                 alignItems: 'center',
                 gap: '0.5rem'
               }}>
-                🎯 Performance by Class
+                Performance by Class
               </h3>
 
               {performanceByClass.length === 0 ? (
@@ -428,7 +432,7 @@ const AdminReports = () => {
                 alignItems: 'center',
                 gap: '0.5rem'
               }}>
-                📚 Subject Performance
+                Subject Performance
               </h3>
 
               {subjectPerformance.length === 0 ? (
@@ -458,7 +462,7 @@ const AdminReports = () => {
                       </p>
                       {subject.studentsBelow50 > 0 && (
                         <p style={{ fontSize: '0.8rem', color: '#ef4444', margin: '0.25rem 0 0' }}>
-                          ⚠️ {subject.studentsBelow50} students below 50%
+                          {subject.studentsBelow50} students below 50%
                         </p>
                       )}
                     </div>
@@ -487,7 +491,7 @@ const AdminReports = () => {
               alignItems: 'center',
               gap: '0.5rem'
             }}>
-              💳 Payment Distribution
+              Payment Distribution
             </h3>
 
             {paymentDistribution.length === 0 ? (
@@ -499,7 +503,7 @@ const AdminReports = () => {
                 gap: '1.5rem'
               }}>
                 {paymentDistribution.map((payment, index) => {
-                  const icons = { verified: '✅', pending: '⏳', rejected: '❌' };
+                  const icons = { verified: '✓', pending: '○', rejected: '✕' };
                   return (
                     <div
                       key={index}
@@ -513,7 +517,7 @@ const AdminReports = () => {
                       }}
                     >
                       <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>
-                        {icons[payment.status] || '💸'}
+                        {icons[payment.status] || '◈'}
                       </div>
                       <h4 style={{
                         fontSize: '1.75rem',

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { useToast } from '../components/Toast';
+import kalviLogo from '../assets/logo.png';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -77,20 +78,17 @@ const Login = () => {
 
           {/* Header */}
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <div style={{
-              width: '60px',
-              height: '60px',
-              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-              borderRadius: '16px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 1rem',
-              fontSize: '1.5rem',
-              boxShadow: '0 8px 20px rgba(16, 185, 129, 0.3)'
-            }}>
-              👋
-            </div>
+            <img 
+              src={kalviLogo} 
+              alt="Kalvi Logo" 
+              style={{
+                width: '60px',
+                height: '60px',
+                objectFit: 'contain',
+                margin: '0 auto 1rem',
+                display: 'block'
+              }}
+            />
             <h2 style={{
               fontSize: '1.75rem',
               fontWeight: 800,
@@ -127,7 +125,7 @@ const Login = () => {
                   fontSize: '1rem',
                   opacity: 0.5
                 }}>
-                  📧
+                  @
                 </span>
                 <input
                   name="email"

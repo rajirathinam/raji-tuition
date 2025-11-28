@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
+import kalviLogo from '../assets/logo.png';
 
 const WelcomePortal = () => {
   return (
@@ -53,20 +54,17 @@ const WelcomePortal = () => {
           zIndex: 1
         }}>
           {/* Logo */}
-          <div style={{
-            width: '80px',
-            height: '80px',
-            background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-            borderRadius: '20px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            margin: '0 auto 1.5rem',
-            fontSize: '2rem',
-            boxShadow: '0 10px 30px rgba(16, 185, 129, 0.3)'
-          }}>
-            📚
-          </div>
+          <img 
+            src={kalviLogo} 
+            alt="Kalvi Logo" 
+            style={{
+              width: '80px',
+              height: '80px',
+              objectFit: 'contain',
+              margin: '0 auto 1.5rem',
+              display: 'block'
+            }}
+          />
 
           <h1 style={{
             fontSize: '2.5rem',
@@ -82,7 +80,7 @@ const WelcomePortal = () => {
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
             }}>
-              Tuitix
+              Kalvi
             </span>
           </h1>
           

@@ -119,7 +119,7 @@ const TutorFiles = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
-            📁 File Management
+            File Management
           </h2>
           <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
             Upload and manage study materials for your sessions
@@ -143,7 +143,7 @@ const TutorFiles = () => {
             gap: '0.5rem'
           }}
         >
-          📁 Upload New File
+          Upload New File
         </button>
       </div>
 
@@ -157,7 +157,7 @@ const TutorFiles = () => {
       }}>
         {files.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '4rem 2rem' }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📁</div>
+            <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>▣</div>
             <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
               No Files Uploaded
             </h3>
@@ -219,7 +219,7 @@ const TutorFiles = () => {
               marginBottom: '1.5rem'
             }}>
               <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700, fontSize: '1.25rem' }}>
-                📁 Upload Study Material
+                Upload Study Material
               </h3>
               <button
                 onClick={() => setShowUploadModal(false)}

@@ -151,7 +151,7 @@ const ClassManagePage = () => {
           onMouseEnter={(e) => e.target.style.backgroundColor = '#059669'}
           onMouseLeave={(e) => e.target.style.backgroundColor = '#10b981'}
         >
-          🔗 Add Resource
+          Add Resource
         </button>
       </div>
 

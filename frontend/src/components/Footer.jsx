@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import kalviLogo from '../assets/logo.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -32,24 +33,21 @@ const Footer = () => {
               gap: '0.5rem',
               marginBottom: '0.75rem'
             }}>
-              <div style={{
-                width: '36px',
-                height: '36px',
-                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                borderRadius: '10px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '1rem'
-              }}>
-                📚
-              </div>
+              <img 
+                src={kalviLogo} 
+                alt="Kalvi Logo" 
+                style={{
+                  width: '36px',
+                  height: '36px',
+                  objectFit: 'contain'
+                }}
+              />
               <span style={{
                 fontSize: '1.3rem',
                 fontWeight: 700,
                 letterSpacing: '-0.02em'
               }}>
-                Tuitix
+                Kalvi
               </span>
             </div>
             <p style={{
@@ -107,19 +105,10 @@ const Footer = () => {
             }}>
               Contact Us
             </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span style={{ fontSize: '0.9rem' }}>📧</span>
-                <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>support@tuitix.com</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span style={{ fontSize: '0.9rem' }}>📞</span>
-                <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>+1 (555) 123-4567</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span style={{ fontSize: '0.9rem' }}>🕒</span>
-                <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Mon-Fri: 9AM-6PM</span>
-              </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>support@kalvi.com</span>
+              <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>+1 (555) 123-4567</span>
+              <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Mon-Fri: 9AM-6PM</span>
             </div>
           </div>
         </div>
@@ -138,7 +127,7 @@ const Footer = () => {
           margin: 0,
           textAlign: 'center'
         }}>
-          © {currentYear} Tuitix. All rights reserved.
+          © {currentYear} Kalvi. All rights reserved.
         </p>
       </div>
     </footer>

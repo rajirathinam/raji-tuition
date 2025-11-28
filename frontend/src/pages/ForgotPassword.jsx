@@ -157,7 +157,7 @@ const ForgotPassword = () => {
                       fontSize: '1rem',
                       opacity: 0.5
                     }}>
-                      📧
+                      @
                     </span>
                     <input
                       type="email"

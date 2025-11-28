@@ -205,7 +205,7 @@ const AdminCreateClass = () => {
                 <option value="">Select a tutor...</option>
                 {tutors.map(tutor => (
                   <option key={tutor._id} value={tutor._id}>
-                    👨‍🏫 {tutor.name} ({tutor.email})
+                    {tutor.name} ({tutor.email})
                   </option>
                 ))}
               </select>
@@ -224,7 +224,7 @@ const AdminCreateClass = () => {
               >
                 <option value="">Select class level...</option>
                 {classLevels.map(level => (
-                  <option key={level} value={level}>🎓 Class {level}</option>
+                  <option key={level} value={level}>Class {level}</option>
                 ))}
               </select>
             </div>

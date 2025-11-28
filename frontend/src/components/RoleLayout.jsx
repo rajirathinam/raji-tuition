@@ -124,7 +124,7 @@ const RoleLayout = ({ role }) => {
                 fontWeight: 700,
                 fontSize: '0.9rem'
               }}>
-                {role === 'student' ? '🎓' : '👨‍🏫'}
+                {role === 'student' ? '○' : '◇'}
               </div>
               <div>
                 <p style={{
@@ -202,7 +202,7 @@ const RoleLayout = ({ role }) => {
             fontSize: '0.85rem',
             color: '#94a3b8'
           }}>
-            © {new Date().getFullYear()} Tuitix. Built for better learning.
+            © {new Date().getFullYear()} Kalvi. Built for better learning.
           </p>
         </footer>
       </div>

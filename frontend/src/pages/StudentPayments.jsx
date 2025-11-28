@@ -140,8 +140,8 @@ const StudentPayments = () => {
   };
 
   const getStatusIcon = (status) => {
-    const icons = { pending: '⏳', verified: '✅', rejected: '❌' };
-    return icons[status] || '📄';
+    const icons = { pending: '○', verified: '✓', rejected: '✕' };
+    return icons[status] || '▣';
   };
 
   const inputStyle = {
@@ -168,7 +168,7 @@ const StudentPayments = () => {
           alignItems: 'center',
           gap: '0.5rem'
         }}>
-          💳 Fee Payments
+          Fee Payments
         </h2>
         <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
           Submit and track your fee payments
@@ -269,7 +269,7 @@ const StudentPayments = () => {
             boxShadow: showPaymentForm ? 'none' : '0 4px 15px rgba(16, 185, 129, 0.4)'
           }}
         >
-          {showPaymentForm ? '✕ Cancel' : '💰 Submit New Payment'}
+          {showPaymentForm ? 'Cancel' : 'Submit New Payment'}
         </button>
       </div>
 
@@ -422,7 +422,7 @@ const StudentPayments = () => {
 
         {payments.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '3rem' }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>💳</div>
+            <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>◈</div>
             <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
               No Payments Yet
             </h3>
@@ -525,7 +525,7 @@ const StudentPayments = () => {
                           fontWeight: 500
                         }}
                       >
-                        ❌ Cancel
+                        Cancel
                       </button>
                     )}
 

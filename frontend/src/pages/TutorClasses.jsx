@@ -69,7 +69,7 @@ const TutorClasses = () => {
           alignItems: 'center',
           gap: '0.5rem'
         }}>
-          📚 My Sessions
+          My Sessions
         </h2>
         <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
           Manage your assigned teaching sessions
@@ -85,7 +85,7 @@ const TutorClasses = () => {
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
           border: '1px solid #e2e8f0'
         }}>
-          <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📚</div>
+          <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>○</div>
           <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
             No Sessions Assigned
           </h3>
@@ -168,7 +168,7 @@ const TutorClasses = () => {
                   fontSize: '0.85rem',
                   fontWeight: 500
                 }}>
-                  📚 {cls.subject}
+                  {cls.subject}
                 </span>
                 <span style={{
                   backgroundColor: '#fef3c7',
@@ -178,7 +178,7 @@ const TutorClasses = () => {
                   fontSize: '0.85rem',
                   fontWeight: 500
                 }}>
-                  📅 {cls.schedule}
+                  {cls.schedule}
                 </span>
               </div>
 

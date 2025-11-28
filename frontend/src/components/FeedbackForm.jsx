@@ -81,7 +81,7 @@ const FeedbackForm = ({ onClose }) => {
           marginBottom: '1.5rem'
         }}>
           <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>
-            💬 Share Your Experience
+            Share Your Experience
           </h3>
           <button
             onClick={onClose}
@@ -139,9 +139,9 @@ const FeedbackForm = ({ onClose }) => {
               onChange={(e) => setFormData({ ...formData, role: e.target.value })}
               style={{ ...inputStyle, background: 'white' }}
             >
-              <option value="Student">👨‍🎓 Student</option>
-              <option value="Parent">👪 Parent</option>
-              <option value="Tutor">👨‍🏫 Tutor</option>
+              <option value="Student">Student</option>
+              <option value="Parent">Parent</option>
+              <option value="Tutor">Tutor</option>
             </select>
           </div>
 
@@ -188,7 +188,7 @@ const FeedbackForm = ({ onClose }) => {
               Your Message
             </label>
             <textarea
-              placeholder="Share your experience with Tuitix..."
+              placeholder="Share your experience with Kalvi..."
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               required

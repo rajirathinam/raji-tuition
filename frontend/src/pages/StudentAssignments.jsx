@@ -132,7 +132,7 @@ const StudentAssignments = () => {
           alignItems: 'center',
           gap: '0.5rem'
         }}>
-          📝 My Assignments
+          My Assignments
         </h2>
         <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
           View and submit your assignments
@@ -150,8 +150,8 @@ const StudentAssignments = () => {
         width: 'fit-content'
       }}>
         {[
-          { id: 'assignments', label: '📋 Available', count: assignments.length },
-          { id: 'submissions', label: '✅ Submissions', count: submissions.length }
+          { id: 'assignments', label: 'Available', count: assignments.length },
+          { id: 'submissions', label: 'Submissions', count: submissions.length }
         ].map(tab => (
           <button
             key={tab.id}
@@ -186,7 +186,7 @@ const StudentAssignments = () => {
               boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
               border: '1px solid #e2e8f0'
             }}>
-              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📝</div>
+              <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>☰</div>
               <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Assignments</h3>
               <p style={{ color: '#64748b' }}>No assignments available at the moment.</p>
             </div>
@@ -223,7 +223,7 @@ const StudentAssignments = () => {
                           fontSize: '0.8rem',
                           fontWeight: 500
                         }}>
-                          📚 {assignment.subject}
+                          {assignment.subject}
                         </span>
                         <span style={{
                           backgroundColor: '#f0fdf4',
@@ -233,7 +233,7 @@ const StudentAssignments = () => {
                           fontSize: '0.8rem',
                           fontWeight: 500
                         }}>
-                          🎯 {assignment.totalPoints} pts
+                          {assignment.totalPoints} pts
                         </span>
                         <span style={{
                           backgroundColor: diffStyle.bg,
@@ -253,7 +253,7 @@ const StudentAssignments = () => {
                           fontSize: '0.8rem',
                           fontWeight: 500
                         }}>
-                          📅 Due: {new Date(assignment.dueDate).toLocaleDateString()}
+                          Due: {new Date(assignment.dueDate).toLocaleDateString()}
                         </span>
                       </div>
                       {assignment.instructions && (
@@ -338,7 +338,7 @@ const StudentAssignments = () => {
         }}>
           {submissions.length === 0 ? (
             <div style={{ padding: '4rem 2rem', textAlign: 'center' }}>
-              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>✅</div>
+              <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>✓</div>
               <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Submissions Yet</h3>
               <p style={{ color: '#64748b' }}>Submit your first assignment to see it here.</p>
             </div>

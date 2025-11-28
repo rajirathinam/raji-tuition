@@ -93,7 +93,7 @@ const AdminFeedback = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
-            💬 Manage Feedback
+            Manage Feedback
           </h1>
           <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
             Review and approve student testimonials
@@ -109,7 +109,7 @@ const AdminFeedback = () => {
             boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
             border: '1px solid #e2e8f0'
           }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>💬</div>
+            <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>○</div>
             <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
               No Feedback Yet
             </h3>
@@ -181,7 +181,7 @@ const AdminFeedback = () => {
                     fontSize: '0.85rem',
                     fontWeight: 600
                   }}>
-                    {item.approved ? '✅ Approved' : '⏳ Pending'}
+                    {item.approved ? 'Approved' : 'Pending'}
                   </span>
                 </div>
 
@@ -218,7 +218,7 @@ const AdminFeedback = () => {
                         boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
                       }}
                     >
-                      ✅ Approve
+                      Approve
                     </button>
                   )}
                   <button
@@ -235,7 +235,7 @@ const AdminFeedback = () => {
                       boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)'
                     }}
                   >
-                    🗑️ Delete
+                    Delete
                   </button>
                 </div>
               </div>

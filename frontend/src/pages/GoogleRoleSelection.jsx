@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../components/Header';
 import { useToast } from '../components/Toast';
+import kalviLogo from '../assets/logo.png';
 
 const GoogleRoleSelection = () => {
   const [searchParams] = useSearchParams();
@@ -142,20 +143,17 @@ const GoogleRoleSelection = () => {
           }} />
 
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <div style={{
-              width: '60px',
-              height: '60px',
-              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-              borderRadius: '16px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 1rem',
-              fontSize: '1.5rem',
-              boxShadow: '0 8px 20px rgba(16, 185, 129, 0.3)'
-            }}>
-              ✓
-            </div>
+            <img 
+              src={kalviLogo} 
+              alt="Kalvi Logo" 
+              style={{
+                width: '60px',
+                height: '60px',
+                objectFit: 'contain',
+                margin: '0 auto 1rem',
+                display: 'block'
+              }}
+            />
             <h2 style={{
               fontSize: '1.5rem',
               fontWeight: 800,
@@ -202,8 +200,8 @@ const GoogleRoleSelection = () => {
                 style={{ ...inputStyle, background: 'white' }}
               >
                 <option value="">Choose your role</option>
-                <option value="student">👨‍🎓 Student</option>
-                <option value="tutor">👨‍🏫 Tutor</option>
+                <option value="student">Student</option>
+                <option value="tutor">Tutor</option>
               </select>
             </div>
 
@@ -225,15 +223,15 @@ const GoogleRoleSelection = () => {
                   style={{ ...inputStyle, background: 'white' }}
                 >
                   <option value="">Select your class</option>
-                  <option value="4">🎓 Class 4</option>
-                  <option value="5">🎓 Class 5</option>
-                  <option value="6">🎓 Class 6</option>
-                  <option value="7">🎓 Class 7</option>
-                  <option value="8">🎓 Class 8</option>
-                  <option value="9">🎓 Class 9</option>
-                  <option value="10">🎓 Class 10</option>
-                  <option value="11">🎓 Class 11</option>
-                  <option value="12">🎓 Class 12</option>
+                  <option value="4">Class 4</option>
+                  <option value="5">Class 5</option>
+                  <option value="6">Class 6</option>
+                  <option value="7">Class 7</option>
+                  <option value="8">Class 8</option>
+                  <option value="9">Class 9</option>
+                  <option value="10">Class 10</option>
+                  <option value="11">Class 11</option>
+                  <option value="12">Class 12</option>
                 </select>
               </div>
             )}

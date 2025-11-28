@@ -32,11 +32,11 @@ const PerformancePrediction = () => {
 
   const getTrendIcon = (trend) => {
     const icons = {
-      improving: '📈',
-      declining: '📉',
-      stable: '➡️'
+      improving: '↗',
+      declining: '↘',
+      stable: '→'
     };
-    return icons[trend] || '📊';
+    return icons[trend] || '○';
   };
 
   const getTrendColor = (trend) => {
@@ -68,7 +68,7 @@ const PerformancePrediction = () => {
   if (Object.keys(predictions).length === 0) {
     return (
       <div style={{ textAlign: 'center', padding: '3rem', backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
-        <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📊</div>
+        <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#10b981' }}>△</div>
         <h3 style={{ color: '#20205c', marginBottom: '1rem' }}>No Performance Data</h3>
         <p style={{ color: '#666' }}>Complete some assignments to see your performance predictions!</p>
       </div>
@@ -82,7 +82,7 @@ const PerformancePrediction = () => {
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
       <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#20205c', marginBottom: '2rem', textAlign: 'center' }}>
-        🤖 AI Performance Prediction
+        AI Performance Prediction
       </h2>
 
       {/* Subject Selector */}
@@ -110,7 +110,7 @@ const PerformancePrediction = () => {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
         {/* Next Score Prediction */}
         <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', textAlign: 'center' }}>
-          <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🎯</div>
+          <div style={{ fontSize: '2rem', marginBottom: '0.5rem', color: '#3b82f6' }}>◎</div>
           <h3 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#3b82f6', margin: '0' }}>
             {currentPrediction?.nextAssignmentScore || 'N/A'}%
           </h3>
@@ -154,7 +154,7 @@ const PerformancePrediction = () => {
 
         {/* Achievement Score */}
         <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', textAlign: 'center' }}>
-          <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🏆</div>
+          <div style={{ fontSize: '2rem', marginBottom: '0.5rem', color: '#f59e0b' }}>☆</div>
           <h3 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#f59e0b', margin: '0' }}>
             {currentPrediction?.historicalData?.achievementScore || 0}
           </h3>
@@ -163,7 +163,7 @@ const PerformancePrediction = () => {
 
         {/* Motivation Level */}
         <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', textAlign: 'center' }}>
-          <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🔥</div>
+          <div style={{ fontSize: '2rem', marginBottom: '0.5rem', color: '#8b5cf6' }}>◆</div>
           <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#8b5cf6', margin: '0' }}>
             {currentPrediction?.motivationLevel || 'Unknown'}
           </h3>

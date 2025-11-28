@@ -83,10 +83,10 @@ const StudentGamification = () => {
   }
 
   const statCards = stats ? [
-    { icon: '🎯', value: stats.points.total, label: 'Total Points', color: '#10b981' },
-    { icon: '🔥', value: stats.streaks.current, label: 'Current Streak', color: '#ef4444' },
-    { icon: '🏅', value: badges.length, label: 'Badges Earned', color: '#fbbf24' },
-    { icon: '⭐', value: `Level ${stats.level.current}`, label: `${stats.level.xp}/${stats.level.xpToNext} XP`, color: '#8b5cf6', showProgress: true }
+    { value: stats.points.total, label: 'Total Points', color: '#10b981' },
+    { value: stats.streaks.current, label: 'Current Streak', color: '#ef4444' },
+    { value: badges.length, label: 'Badges Earned', color: '#fbbf24' },
+    { value: `Level ${stats.level.current}`, label: `${stats.level.xp}/${stats.level.xpToNext} XP`, color: '#8b5cf6', showProgress: true }
   ] : [];
 
   return (
@@ -102,7 +102,7 @@ const StudentGamification = () => {
           alignItems: 'center',
           gap: '0.5rem'
         }}>
-          🏆 Achievements & Progress
+          Achievements & Progress
         </h2>
         <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
           Track your learning journey and earn rewards
@@ -188,9 +188,9 @@ const StudentGamification = () => {
         width: 'fit-content'
       }}>
         {[
-          { id: 'overview', icon: '📊', label: 'Overview' },
-          { id: 'badges', icon: '🏅', label: 'Badges' },
-          { id: 'leaderboard', icon: '🏆', label: 'Leaderboard' }
+          { id: 'overview', label: 'Overview' },
+          { id: 'badges', label: 'Badges' },
+          { id: 'leaderboard', label: 'Leaderboard' }
         ].map(tab => (
           <button
             key={tab.id}
@@ -230,12 +230,12 @@ const StudentGamification = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
-            🏅 Your Badges ({badges.length}/{allBadges.length})
+            Your Badges ({badges.length}/{allBadges.length})
           </h3>
 
           {badges.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '3rem' }}>
-              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🏅</div>
+              <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#fbbf24' }}>☆</div>
               <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Badges Yet!</h3>
               <p style={{ color: '#64748b' }}>Complete assignments and maintain streaks to earn badges.</p>
             </div>
@@ -309,12 +309,12 @@ const StudentGamification = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
-            🏆 Leaderboard
+            Leaderboard
           </h3>
 
           {leaderboard.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '3rem' }}>
-              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🏆</div>
+              <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#fbbf24' }}>☆</div>
               <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Rankings Yet</h3>
               <p style={{ color: '#64748b' }}>Be the first to earn points!</p>
             </div>
@@ -362,10 +362,10 @@ const StudentGamification = () => {
                   <div style={{ flex: 1 }}>
                     <h4 style={{ margin: '0 0 0.25rem 0', color: '#0f172a', fontWeight: 600 }}>{entry.user.name}</h4>
                     <div style={{ display: 'flex', gap: '1rem', fontSize: '0.85rem', color: '#64748b', flexWrap: 'wrap' }}>
-                      <span>🎯 {entry.points.total} pts</span>
-                      <span>🔥 {entry.streaks.current} streak</span>
-                      <span>🏅 {entry.badgesCount} badges</span>
-                      <span>⭐ Lvl {entry.level.current}</span>
+                      <span>{entry.points.total} pts</span>
+                      <span>{entry.streaks.current} streak</span>
+                      <span>{entry.badgesCount} badges</span>
+                      <span>Lvl {entry.level.current}</span>
                     </div>
                   </div>
                 </div>
@@ -397,7 +397,7 @@ const StudentGamification = () => {
               alignItems: 'center',
               gap: '0.5rem'
             }}>
-              🏅 Recent Badges
+              Recent Badges
             </h3>
             {badges.length === 0 ? (
               <p style={{ color: '#64748b', textAlign: 'center', padding: '1rem' }}>No badges earned yet</p>
@@ -440,15 +440,15 @@ const StudentGamification = () => {
               alignItems: 'center',
               gap: '0.5rem'
             }}>
-              📈 Progress Summary
+              Progress Summary
             </h3>
             {stats && (
               <div style={{ display: 'grid', gap: '0.75rem' }}>
                 {[
-                  { icon: '📚', label: 'Assignments Completed', value: stats.achievements.assignmentsCompleted },
-                  { icon: '📊', label: 'Average Score', value: `${stats.achievements.averageScore}%` },
-                  { icon: '📅', label: 'Login Days', value: stats.achievements.loginDays },
-                  { icon: '🔥', label: 'Longest Streak', value: `${stats.streaks.longest} days` }
+                  { label: 'Assignments Completed', value: stats.achievements.assignmentsCompleted },
+                  { label: 'Average Score', value: `${stats.achievements.averageScore}%` },
+                  { label: 'Login Days', value: stats.achievements.loginDays },
+                  { label: 'Longest Streak', value: `${stats.streaks.longest} days` }
                 ].map((item, index) => (
                   <div
                     key={index}
